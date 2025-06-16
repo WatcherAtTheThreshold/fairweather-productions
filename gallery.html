@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fairweather Gallery</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: linear-gradient(
+        to bottom,
+        rgba(25, 35, 70, 1) 0%,
+        rgba(15, 25, 60, 1) 25%,
+        rgba(10, 20, 50, 1) 50%,
+        rgba(15, 25, 60, 1) 75%,
+        rgba(25, 35, 70, 1) 100%
+      );
+      background-attachment: fixed;
+      color: #e8e8e8;
+      overflow-x: hidden;
+      line-height: 1.6;
+      padding-top: 5rem;
+      margin: 0;
+      min-height: 100vh;
+      transition: all 0.6s ease;
+    }
+
+    /* Light Studio View Theme */
+    body.studio-theme {
+      background: linear-gradient(
+        to bottom,
+        rgba(240, 245, 255, 1) 0%,
+        rgba(250, 252, 255, 1) 25%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(250, 252, 255, 1) 75%,
+        rgba(240, 245, 255, 1) 100%
+      );
+      color: #2c3e50;
+    }
+
+    /* Floating particles animation */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: radial-gradient(circle, rgba(222, 184, 135, 0.9) 0%, rgba(222, 184, 135, 0.4) 50%, transparent 100%);
+      border-radius: 50%;
+      animation: twinkle 4s infinite ease-in-out;
+      box-shadow: 0 0 3px rgba(222, 184, 135, 0.6);
+    }
+
+    body.studio-theme .particle {
+      background: radial-gradient(circle, rgba(100, 150, 200, 0.6) 0%, rgba(100, 150, 200, 0.2) 50%, transparent 100%);
+      box-shadow: 0 0 2px rgba(100, 150, 200, 0.4);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { 
+        opacity: 0; 
+        transform: scale(0.3);
+      }
+      25% { 
+        opacity: 0.8; 
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+      }
+      75% { 
+        opacity: 0.6; 
+        transform: scale(0.8);
+      }
+    }
+
+    /* Navigation - keep blue theme even in studio view */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(25, 35, 70, 0.9);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+      padding: 1rem 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #deb887;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: #f4e4bc;
+      border-color: #deb887;
+      background: rgba(222, 184, 135, 0.1);
+    }
+
+    /* Gallery Header */
+    .gallery-header {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      padding: 4rem 2rem 2rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .gallery-title {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #deb887, #f4e4bc, #cd853f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: 300;
+      letter-spacing: 2px;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 5px rgba(222, 184, 135, 0.3)); }
+      100% { filter: drop-shadow(0 0 15px rgba(222, 184, 135, 0.6)); }
+    }
+
+    .gallery-subtitle {
+      font-size: 1.3rem;
+      color: #c9c9c9;
+      margin-bottom: 3rem;
+      font-style: italic;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      opacity: 0.9;
+    }
+
+    body.studio-theme .gallery-subtitle {
+      color: #7f8c8d;
+      text-shadow: none;
+    }
+
+    /* Gallery Controls */
+    .gallery-controls {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .view-toggle {
+      padding: 0.8rem 1.5rem;
+      background: rgba(25, 35, 70, 0.8);
+      border: 1px solid rgba(139, 69, 19, 0.4);
+      color: #deb887;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Georgia', serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body.studio-theme .view-toggle {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(200, 200, 200, 0.4);
+      color: #2c3e50;
+    }
+
+    .view-toggle:hover,
+    .view-toggle.active {
+      background: linear-gradient(45deg, #8B4513, #A0522D);
+      border-color: #deb887;
+      color: #f4e4bc;
+      transform: translateY(-2px);
+    }
+
+    body.studio-theme .view-toggle:hover,
+    body.studio-theme .view-toggle.active {
+      background: linear-gradient(45deg, #1a2650, #0f1940, #253246);
+      border-color: #1a2650;
+      color: #f4e4bc;
+    }
+
+    /* Button star particles for studio theme */
+    .button-star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: radial-gradient(circle, #f4e4bc 0%, #deb887 50%, transparent 100%);
+      border-radius: 50%;
+      animation: buttonTwinkle 3s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes buttonTwinkle {
+      0%, 100% { 
+        opacity: 0; 
+        transform: scale(0.3);
+      }
+      25% { 
+        opacity: 0.6; 
+        transform: scale(0.8);
+      }
+      50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+      }
+      75% { 
+        opacity: 0.4; 
+        transform: scale(0.6);
+      }
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      padding: 2rem 3rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      transition: all 0.5s ease;
+    }
+
+    .gallery-grid.masonry {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-auto-rows: 10px;
+    }
+
+    .gallery-item {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: revealImage 0.6s ease forwards;
+    }
+
+    /* Dark theme styling for gallery items */
+    body:not(.studio-theme) .gallery-item {
+      background: rgba(20, 20, 20, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(139, 69, 19, 0.3);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      color: #e8e8e8;
+    }
+
+    body:not(.studio-theme) .gallery-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 215, 0, 0.15), 0 0 60px rgba(255, 215, 0, 0.08);
+      border-color: rgba(222, 184, 135, 0.5);
+      background: rgba(30, 25, 20, 0.95);
+    }
+
+    /* Studio theme styling for gallery items */
+    body.studio-theme .gallery-item {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(220, 220, 220, 0.6);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      color: #2c3e50;
+    }
+
+    body.studio-theme .gallery-item:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      border-color: rgba(180, 180, 180, 0.8);
+      background: rgba(255, 255, 255, 1);
+    }
+
+    /* Artistic View Styling for Dark Theme */
+    body:not(.studio-theme) .gallery-grid.masonry .gallery-item {
+      border-radius: 25px;
+      background: linear-gradient(135deg, 
+        rgba(30, 25, 20, 0.95) 0%, 
+        rgba(40, 30, 25, 0.95) 50%, 
+        rgba(25, 20, 15, 0.95) 100%
+      );
+      border: 2px solid rgba(205, 133, 63, 0.4);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(222, 184, 135, 0.2);
+      transform: translateY(30px) rotate(0deg);
+    }
+
+    body:not(.studio-theme) .gallery-grid.masonry .gallery-item:nth-child(3n+1) {
+      border-radius: 20px 5px 20px 5px;
+      transform: translateY(30px) rotate(-1deg);
+    }
+
+    body:not(.studio-theme) .gallery-grid.masonry .gallery-item:nth-child(3n+2) {
+      border-radius: 5px 20px 5px 20px;
+      transform: translateY(30px) rotate(1deg);
+    }
+
+    body:not(.studio-theme) .gallery-grid.masonry .gallery-item:nth-child(3n+3) {
+      border-radius: 15px;
+      transform: translateY(30px) rotate(-0.5deg);
+    }
+
+    body:not(.studio-theme) .gallery-grid.masonry .gallery-item:hover {
+      transform: translateY(-12px) scale(1.03) rotate(0deg);
+      box-shadow: 
+        0 20px 50px rgba(139, 69, 19, 0.4),
+        inset 0 1px 0 rgba(222, 184, 135, 0.3);
+      border-color: rgba(222, 184, 135, 0.7);
+    }
+
+    body:not(.studio-theme) .gallery-grid.masonry .gallery-item img {
+      filter: sepia(0.1) contrast(1.05) brightness(1.02);
+      transition: all 0.5s ease;
+    }
+
+    body:not(.studio-theme) .gallery-grid.masonry .gallery-item:hover img {
+      filter: sepia(0.15) contrast(1.1) brightness(1.08) saturate(1.1);
+      transform: scale(1.03);
+    }
+
+    body:not(.studio-theme) .gallery-grid.masonry .image-caption {
+      background: linear-gradient(135deg, 
+        rgba(139, 69, 19, 0.15) 0%, 
+        rgba(222, 184, 135, 0.1) 100%
+      );
+      color: #f4e4bc;
+      font-style: italic;
+      letter-spacing: 0.5px;
+    }
+
+    /* Studio Theme Masonry Styling */
+    body.studio-theme .gallery-grid.masonry .gallery-item {
+      background: rgba(248, 250, 255, 0.98);
+      border: 1px solid rgba(200, 210, 220, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    body.studio-theme .gallery-grid.masonry .gallery-item:hover {
+      transform: translateY(-2px) scale(1.005);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      border-color: rgba(150, 160, 170, 0.8);
+    }
+
+    .gallery-item.masonry {
+      grid-row-end: span var(--row-span);
+    }
+
+    @keyframes revealImage {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Shimmer effect - removed for studio theme */
+    body:not(.studio-theme) .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(222, 184, 135, 0.15),
+        transparent
+      );
+      transition: left 0.6s ease;
+      z-index: 1;
+    }
+
+    body:not(.studio-theme) .gallery-item:hover::before {
+      left: 100%;
+    }
+
+    /* Artistic frame effect - removed for studio theme */
+    body:not(.studio-theme) .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #deb887, #f4e4bc) border-box;
+      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      mask-composite: xor;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    body:not(.studio-theme) .gallery-item:hover::after {
+      opacity: 0.3;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 0;
+    }
+
+    body:not(.studio-theme) .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.1) contrast(1.05);
+    }
+
+    body.studio-theme .gallery-item:hover img {
+      transform: scale(1.02);
+      filter: brightness(1.02) contrast(1.02);
+    }
+
+    .image-caption {
+      padding: 1.5rem;
+      font-size: 1.1rem;
+      text-align: center;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    body:not(.studio-theme) .image-caption {
+      color: #deb887;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    body:not(.studio-theme) .gallery-item:hover .image-caption {
+      color: #f4e4bc;
+    }
+
+    body.studio-theme .image-caption {
+      color: #2c3e50;
+      text-shadow: none;
+    }
+
+    body.studio-theme .gallery-item:hover .image-caption {
+      color: #1a252f;
+    }
+
+    /* Spotlight effect - only for dark theme */
+    .gallery-spotlight {
+      position: fixed;
+      pointer-events: none;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(
+        circle,
+        rgba(222, 184, 135, 0.08) 0%,
+        rgba(222, 184, 135, 0.03) 40%,
+        transparent 70%
+      );
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 3;
+      mix-blend-mode: screen;
+    }
+
+    body.studio-theme .gallery-spotlight {
+      display: none;
+    }
+
+    /* Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffd700 0%, #ffed4a 30%, #f39c12 70%, transparent 100%);
+      border-radius: 50%;
+      animation: sparkle 2s infinite;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.9), 0 0 24px rgba(255, 215, 0, 0.6);
+      z-index: 4;
+    }
+
+    body.studio-theme .sparkle {
+      background: radial-gradient(circle, #3498db 0%, #5dade2 30%, #85c1e9 70%, transparent 100%);
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.6), 0 0 16px rgba(52, 152, 219, 0.3);
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
+    }
+
+    /* Back to Top Button */
+    #backToTopBtn {
+      position: fixed;
+      bottom: 40px;
+      right: 30px;
+      z-index: 999;
+      background: linear-gradient(45deg, #8B4513, #A0522D, #CD853F);
+      color: #f4e4bc;
+      border: none;
+      border-radius: 50px;
+      padding: 0.7rem 1.2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+      transition: opacity 0.3s ease, transform 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    body.studio-theme #backToTopBtn {
+      background: linear-gradient(45deg, #1a2650, #0f1940, #253246);
+      color: #f4e4bc;
+      box-shadow: 0 4px 15px rgba(26, 38, 80, 0.3);
+    }
+
+    #backToTopBtn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #backToTopBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(139, 69, 19, 0.5);
+    }
+
+    body.studio-theme #backToTopBtn:hover {
+      box-shadow: 0 8px 25px rgba(26, 38, 80, 0.5);
+    }
+
+    /* Lightbox */
+    #lightboxOverlay {
+      position: fixed;
+      display: none;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(5px);
+    }
+
+    #lightboxOverlay img {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 90%;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      box-shadow: 0 0 50px rgba(222, 184, 135, 0.3);
+      border-radius: 8px;
+    }
+
+    #lightboxOverlay::before {
+      content: '✕';
+      position: absolute;
+      top: 2rem;
+      right: 3rem;
+      color: #deb887;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 1001;
+      transition: color 0.3s ease;
+    }
+
+    #lightboxOverlay:hover::before {
+      color: #f4e4bc;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 5;
+      background: rgba(25, 35, 70, 0.95);
+      backdrop-filter: blur(15px);
+      color: #888;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(139, 69, 19, 0.3);
+      margin-top: 5rem;
+      transition: all 0.3s ease;
+    }
+
+    body.studio-theme footer {
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(200, 200, 200, 0.3);
+      color: #7f8c8d;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #b8b8b8;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    body.studio-theme .footer-links a {
+      color: #7f8c8d;
+    }
+
+    .footer-links a:hover {
+      color: #deb887;
+    }
+
+    body.studio-theme .footer-links a:hover {
+      color: #2c3e50;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .gallery-title {
+        font-size: 3rem;
+      }
+
+      .nav-links {
+        gap: 2rem;
+        font-size: 0.95rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery-title {
+        font-size: 2.5rem;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .gallery-item img {
+        height: 250px;
+      }
+
+      .gallery-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-title {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.85rem;
+      }
+
+      nav {
+        padding: 0.8rem 1rem;
+      }
+
+      .gallery-header {
+        padding: 3rem 1rem 1rem 1rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating particles -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Gallery spotlight effect -->
+  <div class="gallery-spotlight" id="gallerySpotlight"></div>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <header class="gallery-header">
+    <h1 class="gallery-title">Sacred Gallery</h1>
+    <p class="gallery-subtitle">Where divine inspiration meets earthly creation</p>
+  </header>
+
+  <div class="gallery-controls">
+    <button class="view-toggle active" data-view="grid">Gallery View</button>
+    <button class="view-toggle" data-view="masonry">Studio View</button>
+  </div>
+
+  <main>
+    <section class="gallery-grid" id="galleryGrid">
+      <!-- BEGIN GALLERY ITEMS -->
+      <div class="gallery-item"><img src="images/AlexandraPortrait.png" alt="Alexandra Portrait"><div class="image-caption">Alexandra Portrait</div></div>
+      <div class="gallery-item"><img src="images/Atrium2.png" alt="Atrium2"><div class="image-caption">Sacred Atrium</div></div>
+      <div class="gallery-item"><img src="images/IMG-3870.png" alt="IMG-3870"><div class="image-caption">Light Study</div></div>
+      <div class="gallery-item"><img src="images/BarnOwlandSnowMoon.webp" alt="BarnOwlandSnowMoon"><div class="image-caption">Barn Owl & Snow Moon</div></div>
+      <div class="gallery-item"><img src="images/Birch.png" alt="Birch"><div class="image-caption">Birch Grove</div></div>
+      <div class="gallery-item"><img src="images/BirchesWc.png" alt="BirchesWc"><div class="image-caption">Birches in Watercolor</div></div>
+      <div class="gallery-item"><img src="images/BirchMeadow.png" alt="BirchMeadow"><div class="image-caption">Birch Meadow</div></div>
+      <div class="gallery-item"><img src="images/BlueLandscape.png" alt="BlueLandscape"><div class="image-caption">Blue Landscape</div></div>
+      <div class="gallery-item"><img src="images/Chickadee.png" alt="Chickadee"><div class="image-caption">Chickadee</div></div>
+      <div class="gallery-item"><img src="images/DylansBDayCard.png" alt="DylansBDayCard"><div class="image-caption">Dylan's Birthday Card</div></div>
+      <div class="gallery-item"><img src="images/Ellie and the Cosmic Swaddle.png" alt="Ellie and the Cosmic Swaddle"><div class="image-caption">Ellie & the Cosmic Swaddle</div></div>
+      <div class="gallery-item"><img src="images/EvenTheSmallestThings.png" alt="EvenTheSmallestThings"><div class="image-caption">Even the Smallest Things</div></div>
+      <div class="gallery-item"><img src="images/FeePortrait.png" alt="FeePortrait"><div class="image-caption">Fee Portrait</div></div>
+      <div class="gallery-item"><img src="images/Flowers.png" alt="Flowers"><div class="image-caption">Botanical Dreams</div></div>
+      <div class="gallery-item"><img src="images/GazingBall-2.png" alt="GazingBall"><div class="image-caption">Gazing Ball</div></div>
+      <div class="gallery-item"><img src="images/GoldenInvitation.png" alt="GoldenInvitation"><div class="image-caption">Golden Invitation</div></div>
+      <div class="gallery-item"><img src="images/IMG_0131.png" alt="IMG_0131"><div class="image-caption">Color Study</div></div>
+      <div class="gallery-item"><img src="images/under-the-aegis-of-ishtarr.webp" alt="Under the Aegis of Ishtar"><div class="image-caption">Under the Aegis of Ishtar</div></div>
+      <div class="gallery-item"><img src="images/IMG-3868.png" alt="IMG-3868"><div class="image-caption">Shadow Study</div></div>
+      <div class="gallery-item"><img src="images/IMG-3869.png" alt="IMG-3869"><div class="image-caption">Form Study</div></div>
+      <div class="gallery-item"><img src="images/Shan-Flame.png" alt="Shan-Flame"><div class="image-caption">Shannon in Flame</div></div>
+      <div class="gallery-item"><img src="images/JenAndTerry.png" alt="JenAndTerry"><div class="image-caption">Jen & Terry</div></div>
+      <div class="gallery-item"><img src="images/JessopPortrait.png" alt="JessopPortrait"><div class="image-caption">Jessop Portrait</div></div>
+      <div class="gallery-item"><img src="images/LaPuertaAzul.png" alt="LaPuertaAzul"><div class="image-caption">La Puerta Azul</div></div>
+      <div class="gallery-item"><img src="images/MinervasWisdom.webp" alt="MinervasWisdom"><div class="image-caption">Minerva's Wisdom</div></div>
+      <div class="gallery-item"><img src="images/Shan-Forget-Ink22.png" alt="Shan-Forget-Ink22"><div class="image-caption">Forget-Me-Not Ink</div></div>
+      <div class="gallery-item"><img src="images/MoonGarden-CC.png" alt="MoonGarden"><div class="image-caption">Moon Garden</div></div>
+      <div class="gallery-item"><img src="images/MoonlightDoctrine.png" alt="MoonlightDoctrine"><div class="image-caption">Moonlight Doctrine</div></div>
+      <div class="gallery-item"><img src="images/MorningPrayer.png" alt="MorningPrayer"><div class="image-caption">Morning Prayer</div></div>
+      <div class="gallery-item"><img src="images/MrBinnSmallerFile.png" alt="MrBinn"><div class="image-caption">Mr. Binn</div></div>
+      <div class="gallery-item"><img src="images/NerudaAoede-CC.png" alt="NerudaAoede"><div class="image-caption">Neruda Aoede</div></div>
+      <div class="gallery-item"><img src="images/Nuthatch.png" alt="Nuthatch"><div class="image-caption">Nuthatch</div></div>
+      <div class="gallery-item"><img src="images/PaintedLady.png" alt="PaintedLady"><div class="image-caption">Painted Lady</div></div>
+      <div class="gallery-item"><img src="images/PotniaTheron.webp" alt="PotniaTheron"><div class="image-caption">Potnia Theron</div></div>
+      <div class="gallery-item"><img src="images/RowanPortrait.png" alt="RowanPortrait"><div class="image-caption">Rowan Portrait</div></div>
+      <div class="gallery-item"><img src="images/SaraQuinn.png" alt="SaraQuinn"><div class="image-caption">Sara Quinn</div></div>
+      <div class="gallery-item"><img src="images/ShadowoftheMountain.png" alt="ShadowoftheMountain"><div class="image-caption">Shadow of the Mountain</div></div>
+      <div class="gallery-item"><img src="images/Shan-Crabby.png" alt="Shan-Crabby"><div class="image-caption">Crabby Mood</div></div>
+      <div class="gallery-item"><img src="images/Shan-Ego-Ink22.png" alt="Shan-Ego-Ink22"><div class="image-caption">Ego Ink Study</div></div>
+      <div class="gallery-item"><img src="images/under-the-aegis-of-inanna.webp" alt="Under the Aegis of Inanna"><div class="image-caption">Under the Aegis of Inanna</div></div>
+      <div class="gallery-item"><img src="images/ShanPortrait.png" alt="ShanPortrait"><div class="image-caption">Shannon Portrait</div></div>
+      <div class="gallery-item"><img src="images/Shan-Trip-Ink22-ForWeb.png" alt="Shan-Trip-Ink22-ForWeb"><div class="image-caption">Triptych Ink Study</div></div>
+      <div class="gallery-item"><img src="images/Solitude.png" alt="Solitude"><div class="image-caption">Solitude</div></div>
+      <div class="gallery-item"><img src="images/StarryBackground.png" alt="StarryBackground"><div class="image-caption">Starry Background</div></div>
+      <div class="gallery-item"><img src="images/SummerStroll.png" alt="SummerStroll"><div class="image-caption">Summer Stroll</div></div>
+      <div class="gallery-item"><img src="images/SunriseDoctrine.png" alt="SunriseDoctrine"><div class="image-caption">Sunrise Doctrine</div></div>
+      <div class="gallery-item"><img src="images/TheExplorerandBlueWing.png" alt="TheExplorerandBlueWing"><div class="image-caption">The Explorer & Blue Wing</div></div>
+      <div class="gallery-item"><img src="images/ThePaintedLady.png" alt="ThePaintedLady"><div class="image-caption">The Painted Lady</div></div>
+      <div class="gallery-item"><img src="images/ThePokeWitch.png" alt="ThePokeWitch"><div class="image-caption">The Poke Witch</div></div>
+      <div class="gallery-item"><img src="images/TheSoundofFallingSnow.webp" alt="TheSoundofFallingSnow"><div class="image-caption">The Sound of Falling Snow</div></div>
+      <div class="gallery-item"><img src="images/TwoChickadees.png" alt="TwoChickadees"><div class="image-caption">Two Chickadees</div></div>
+      <div class="gallery-item"><img src="images/WizardScreen.png" alt="WizardScreen"><div class="image-caption">Wizard Screen</div></div>
+      <div class="gallery-item"><img src="images/WoodsView.png" alt="WoodsView"><div class="image-caption">Woods View</div></div>
+      <div class="gallery-item"><img src="images/WoodsView2Screen.png" alt="WoodsView2Screen"><div class="image-caption">Woods View II</div></div>
+      <div class="gallery-item"><img src="images/WorkingThrough.png" alt="WorkingThrough"><div class="image-caption">Working Through</div></div>
+      <div class="gallery-item"><img src="images/YellowLandscape.png" alt="YellowLandscape"><div class="image-caption">Golden Fields</div></div>
+      <!-- END GALLERY ITEMS -->
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="https://watcheratthethreshold.github.io/sketchy-ponderings/">Sketchy Ponderings</a>
+      <a href="https://watcheratthethreshold.github.io/the-second-gaze/">The Second Gaze</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#commission">Commissions</a>
+    </div>
+    <p style="color: #888; margin-top: 1rem;">
+      © 2025 Fairweather Studios • Jessop & Shannon Hunt • Where Art & Love Converge
+    </p>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" title="Back to Top">↑ Top</button>
+
+  <!-- Lightbox -->
+  <div id="lightboxOverlay"><img id="lightboxImg" src=""></div>
+
+  <script>
+    // Create twinkling star particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 80;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 4 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Add sparkles randomly
+    function addRandomSparkles() {
+      const sparkleCount = 5;
+      const body = document.body;
+      
+      for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.position = 'fixed';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.animationDelay = Math.random() * 2 + 's';
+        sparkle.style.zIndex = '2';
+        body.appendChild(sparkle);
+        
+        // Remove sparkle after animation
+        setTimeout(() => {
+          if (sparkle.parentNode) {
+            sparkle.parentNode.removeChild(sparkle);
+          }
+        }, 2000);
+      }
+    }
+
+    // Gallery spotlight effect - only active in dark mode
+    const spotlight = document.getElementById('gallerySpotlight');
+    let isSpotlightActive = false;
+
+    document.addEventListener('mousemove', (e) => {
+      if (!document.body.classList.contains('studio-theme') && e.target.closest('.gallery-item')) {
+        spotlight.style.left = e.clientX + 'px';
+        spotlight.style.top = e.clientY + 'px';
+        spotlight.style.opacity = '1';
+        isSpotlightActive = true;
+      } else if (isSpotlightActive) {
+        spotlight.style.opacity = '0';
+        isSpotlightActive = false;
+      }
+    });
+
+    // View toggle functionality
+    const viewToggles = document.querySelectorAll('.view-toggle');
+    const galleryGrid = document.getElementById('galleryGrid');
+
+    viewToggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        viewToggles.forEach(t => t.classList.remove('active'));
+        toggle.classList.add('active');
+        
+        const view = toggle.dataset.view;
+        if (view === 'masonry') {
+          enableStudioView();
+        } else {
+          enableGalleryView();
+        }
+      });
+    });
+
+    function enableStudioView() {
+      // Switch to light theme but keep regular grid layout
+      document.body.classList.add('studio-theme');
+      galleryGrid.classList.remove('masonry');
+      
+      const items = document.querySelectorAll('.gallery-item');
+      
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          // Remove any masonry properties
+          item.classList.remove('masonry');
+          item.style.removeProperty('--row-span');
+          
+          // Add reveal animation
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(30px)';
+          
+          setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, 50);
+          
+        }, index * 30);
+      });
+
+      // Add twinkling stars to buttons
+      setTimeout(() => {
+        addButtonStars();
+      }, 500);
+    }
+
+    function enableGalleryView() {
+      // Switch to dark theme
+      document.body.classList.remove('studio-theme');
+      galleryGrid.classList.remove('masonry');
+      
+      const items = document.querySelectorAll('.gallery-item');
+      
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.remove('masonry');
+          item.style.removeProperty('--row-span');
+          
+          // Reset any transforms
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(30px)';
+          
+          setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, 50);
+          
+        }, index * 30);
+      });
+
+      // Remove button stars
+      removeButtonStars();
+    }
+
+    // Add twinkling stars to buttons in studio view
+    function addButtonStars() {
+      const buttons = document.querySelectorAll('.view-toggle');
+      buttons.forEach(button => {
+        addStarsToButton(button);
+      });
+    }
+
+    // Remove stars from buttons
+    function removeButtonStars() {
+      const stars = document.querySelectorAll('.button-star');
+      stars.forEach(star => star.remove());
+    }
+
+    // Staggered image reveal animation
+    function animateGalleryItems() {
+      const items = document.querySelectorAll('.gallery-item');
+      items.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+      });
+    }
+
+    // Helper function to add stars to a single button
+    function addStarsToButton(button) {
+      const starCount = Math.floor(Math.random() * 3) + 3;
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'button-star';
+        star.style.left = Math.random() * 80 + 10 + '%';
+        star.style.top = Math.random() * 60 + 20 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        button.appendChild(star);
+      }
+    }
+
+    // Back to top logic
+    const backToTopBtn = document.getElementById("backToTopBtn");
+    window.addEventListener("scroll", () => {
+      backToTopBtn.classList.toggle("show", window.scrollY > 300);
+    });
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Lightbox logic
+    const lightbox = document.getElementById("lightboxOverlay");
+    const lightboxImg = document.getElementById("lightboxImg");
+
+    document.querySelectorAll(".gallery-item img").forEach(img => {
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = "block";
+        lightbox.style.animation = 'fadeIn 0.3s ease';
+      });
+    });
+
+    lightbox.addEventListener("click", () => {
+      lightbox.style.display = "none";
+    });
+
+    // Add hover sparkles to gallery items - only in dark mode
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        if (!document.body.classList.contains('studio-theme')) {
+          const sparkleCount = 3;
+          for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.position = 'absolute';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            this.appendChild(sparkle);
+            
+            setTimeout(() => {
+              if (sparkle.parentNode) {
+                sparkle.parentNode.removeChild(sparkle);
+              }
+            }, 2000);
+          }
+        }
+      });
+    });
+
+    // Initialize effects
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+      setInterval(addRandomSparkles, 4000);
+      animateGalleryItems();
+      
+      // Ensure page starts at top on load
+      window.scrollTo(0, 0);
+      
+      // Wait for images to load before enabling masonry calculations
+      const images = document.querySelectorAll('.gallery-item img');
+      let loadedImages = 0;
+      
+      images.forEach(img => {
+        if (img.complete) {
+          loadedImages++;
+        } else {
+          img.addEventListener('load', () => {
+            loadedImages++;
+          });
+        }
+      });
+    });
+
+    // Add fade-in animation for lightbox
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
