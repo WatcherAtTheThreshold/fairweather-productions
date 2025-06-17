@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Musings — Sketchy Ponderings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    /* Existing styles remain unchanged, only adding new ones */
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: #eee;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      margin: 0 0.25rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(138, 43, 226, 0.3);
+      border-color: rgba(138, 43, 226, 0.5);
+      color: #fff;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      color: #f2f2f2;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .musing-filters {
+      text-align: center;
+      margin: 1rem auto 2rem;
+    }
+
+    .story-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .story {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .story h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #f2f2f2;
+    }
+
+    .story-excerpt {
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .story-type {
+      font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+    }
+
+    .story-link {
+      background: rgba(138, 43, 226, 0.2);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Musings</h1>
+    <p class="subtitle">Fragments, wonders, and whispers from the edge of thought</p>
+  </div>
+
+  <div class="musing-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="verse">Verse</button>
+    <button class="filter-btn" data-filter="lore">Lore</button>
+    <button class="filter-btn" data-filter="logbook">Logbook</button>
+  </div>
+
+  <div class="story-container">
+    <div class="story verse">
+      <h2><a href="shan-poem.html">Love Letter to Shan</a></h2>
+      <p class="story-excerpt">A tender confession spanning time, space, and shared transformation...</p>
+      <div class="story-meta">
+        <span class="story-type">Verse</span>
+        <a href="shan-poem.html" class="story-link">Read</a>
+      </div>
+    </div>
+
+    <div class="story logbook">
+      <h2><a href="story1.html">Handwarmers</a></h2>
+      <p class="story-excerpt">A mouse takes refuge in a slipper on a cold winter night...</p>
+      <div class="story-meta">
+        <span class="story-type">Logbook</span>
+        <a href="story1.html" class="story-link">Read</a>
+      </div>
+    </div>
+
+    <div class="story lore">
+      <h2><a href="story3.html">The Hollow Stone</a></h2>
+      <p class="story-excerpt">A winter hike leads through a cracked boulder into a hidden grove...</p>
+      <div class="story-meta">
+        <span class="story-type">Lore</span>
+        <a href="story3.html" class="story-link">Read</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const stories = document.querySelectorAll('.story');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        stories.forEach(story => {
+          if (filter === 'all' || story.classList.contains(filter)) {
+            story.style.display = 'block';
+          } else {
+            story.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
