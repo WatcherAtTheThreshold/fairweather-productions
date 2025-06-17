@@ -1,0 +1,209 @@
+
+/* ========== GENERAL STYLES ========== */
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: #0a0a0a;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.background {
+  background: rgba(20, 20, 30, 0.8);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.mist-overlay {
+  background: url('images/mist-overlay.png') repeat;
+  opacity: 0.4;
+  position: fixed;
+  width: 100%;
+  height: 250vh;
+  z-index: -1;
+  animation: mistScroll 120s linear infinite;
+}
+
+@keyframes mistScroll {
+  from { background-position: 0 0; }
+  to { background-position: -500px 500px; }
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Navigation */
+.nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  padding: 0 2rem;
+}
+
+.nav a {
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-decoration: none;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.nav a.current {
+  background: rgba(138, 43, 226, 0.2);
+  border-color: rgba(138, 43, 226, 0.6);
+}
+
+/* ========== MUSIC SECTION STYLES ========== */
+.music-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.intro-section {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+/* Playlist Controls */
+.playlist-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.continuous-play-toggle,
+.shuffle-button,
+.repeat-button {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Track Card */
+.track-card {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.track-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.track-description {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1rem;
+}
+
+/* Audio Player */
+.audio-player {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+}
+
+.play-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  background: rgba(138, 43, 226, 0.3);
+  border: 2px solid rgba(138, 43, 226, 0.6);
+  color: white;
+  cursor: pointer;
+}
+
+/* Now Playing Bar */
+.now-playing-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 10, 10, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 10;
+}
+
+.global-play-button {
+  background: rgba(138, 43, 226, 0.4);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.3rem;
+  padding: 0.6rem 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
