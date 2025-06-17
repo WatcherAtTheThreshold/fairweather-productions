@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — Sketchy Ponderings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(3, 3, 3, 0.4);
+      opacity: 1;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: url('images/mist-overlay.png') repeat;
+      opacity: 0.9;
+      position: fixed;
+      width: 100%;
+      height: 500vh;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    /* Enhanced floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 25s infinite linear;
+      opacity: 0;
+    }
+
+    .particle.golden {
+      background: radial-gradient(circle, rgba(222, 184, 135, 0.6) 0%, rgba(222, 184, 135, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 4px rgba(222, 184, 135, 0.4);
+    }
+
+    .particle.purple {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, rgba(138, 43, 226, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 4px rgba(138, 43, 226, 0.3);
+    }
+
+    .particle.silver {
+      background: radial-gradient(circle, rgba(192, 192, 192, 0.4) 0%, rgba(192, 192, 192, 0.08) 70%, transparent 100%);
+      box-shadow: 0 0 3px rgba(192, 192, 192, 0.2);
+    }
+
+    @keyframes float {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3); 
+        opacity: 0; 
+      }
+      5% { 
+        opacity: 0.6;
+        transform: translateY(95vh) translateX(10px) rotate(18deg) scale(0.5);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 50px)) rotate(180deg) scale(0.8);
+        opacity: 0.4;
+      }
+      95% { 
+        opacity: 0.3; 
+      }
+      100% { 
+        transform: translateY(-10vh) translateX(calc(var(--drift, 50px) * 2)) rotate(360deg) scale(0.1); 
+        opacity: 0; 
+      }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2);
+      margin-bottom: 0.5rem;
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2); }
+      100% { text-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 50px rgba(138, 43, 226, 0.4); }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.current {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: none !important;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .image-card {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .image-card:nth-child(2n) {
+      animation-delay: 0.1s;
+    }
+
+    .image-card:nth-child(3n) {
+      animation-delay: 0.2s;
+    }
+
+    .image-card:nth-child(4n) {
+      animation-delay: 0.3s;
+    }
+
+    .image-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
+    }
+
+    .image-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .image-card:hover::before {
+      opacity: 1;
+    }
+
+    .image-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(138, 43, 226, 0.1) 50%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .image-card:hover::after {
+      opacity: 1;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .image-container {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      filter: brightness(0.9) contrast(1.1);
+    }
+
+    .image-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(1) contrast(1.2);
+    }
+
+    .caption {
+      padding: 1rem;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      font-weight: 400;
+      position: relative;
+      z-index: 2;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Source Sans Pro', sans-serif;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem;
+      }
+
+      .header {
+        padding: 2rem 1rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Enhanced Lightbox styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      animation: lightboxFadeIn 0.3s ease;
+    }
+
+    @keyframes lightboxFadeIn {
+      from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+      to {
+        opacity: 1;
+        backdrop-filter: blur(20px);
+      }
+    }
+
+    .lightbox-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 98vw;
+      max-height: 98vh;
+      animation: lightboxZoomIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    @keyframes lightboxZoomIn {
+      from {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 100px rgba(138, 43, 226, 0.3);
+      filter: brightness(1.1) contrast(1.1);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2001;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .lightbox-close:hover {
+      color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      border-color: rgba(138, 43, 226, 0.4);
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Loading animation for images */
+    .image-card img {
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    .image-card img.loaded {
+      opacity: 1;
+    }
+
+    /* Enhanced particle effects on hover */
+    .image-card:hover {
+      animation: cardPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes cardPulse {
+      0%, 100% {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
+      }
+      50% {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.4);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="header">
+    <h1>Gallery</h1>
+    <p class="subtitle">Visual explorations from the threshold</p>
+  </div>
+
+  <div class="nav">
+    <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="gallery.html" class="current">Gallery</a>
+      <a href="games.html" class="creative">Games</a>
+      <a href="music.html" class="creative">Music</a>
+      <a href="stories.html">Stories</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" class="cruxfade-link" title="Enter Cruxfade">⟁ Cruxfade</a>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <div class="image-card" onclick="openLightbox('images/Atrium2.png', 'Atrium2')">
+      <div class="image-container">
+        <img src="images/Atrium2.png" alt="Atrium2" />
+      </div>
+      <div class="caption">Atrium2</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/Birch.png', 'Birch')">
+      <div class="image-container">
+        <img src="images/Birch.png" alt="Birch" />
+      </div>
+      <div class="caption">Birch</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/BirchesWc.png', 'BirchesWc')">
+      <div class="image-container">
+        <img src="images/BirchesWc.png" alt="BirchesWc" />
+      </div>
+      <div class="caption">BirchesWc</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/BirchMeadow.png', 'BirchMeadow')">
+      <div class="image-container">
+        <img src="images/BirchMeadow.png" alt="BirchMeadow" />
+      </div>
+      <div class="caption">Birch Meadow</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/BlueLandscape.png', 'BlueLandscape')">
+      <div class="image-container">
+        <img src="images/BlueLandscape.png" alt="BlueLandscape" />
+      </div>
+      <div class="caption">Blue Landscape</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/Chickadee.png', 'Chickadee')">
+      <div class="image-container">
+        <img src="images/Chickadee.png" alt="Chickadee" />
+      </div>
+      <div class="caption">Chickadee</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/DylansBDayCard.png', 'DylansBDayCard')">
+      <div class="image-container">
+        <img src="images/DylansBDayCard.png" alt="DylansBDayCard" />
+      </div>
+      <div class="caption">Dylan's Birthday Card</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/EvenTheSmallestThings.png', 'EvenTheSmallestThings')">
+      <div class="image-container">
+        <img src="images/EvenTheSmallestThings.png" alt="EvenTheSmallestThings" />
+      </div>
+      <div class="caption">Even The Smallest Things</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/GoldenInvitation.png', 'GoldenInvitation')">
+      <div class="image-container">
+        <img src="images/GoldenInvitation.png" alt="GoldenInvitation" />
+      </div>
+      <div class="caption">Golden Invitation</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/IMG-3868.png', 'IMG-3868')">
+      <div class="image-container">
+        <img src="images/IMG-3868.png" alt="IMG-3868" />
+      </div>
+      <div class="caption">Untitled Study</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/IMG-3869.png', 'IMG-3869')">
+      <div class="image-container">
+        <img src="images/IMG-3869.png" alt="IMG-3869" />
+      </div>
+      <div class="caption">Untitled Study</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/IMG-3870.png', 'IMG-3870')">
+      <div class="image-container">
+        <img src="images/IMG-3870.png" alt="IMG-3870" />
+      </div>
+      <div class="caption">Untitled Study</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/LaPuertaAzul.png', 'LaPuertaAzul')">
+      <div class="image-container">
+        <img src="images/LaPuertaAzul.png" alt="LaPuertaAzul" />
+      </div>
+      <div class="caption">La Puerta Azul</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/MoonlightDoctrine.png', 'MoonlightDoctrine')">
+      <div class="image-container">
+        <img src="images/MoonlightDoctrine.png" alt="MoonlightDoctrine" />
+      </div>
+      <div class="caption">Moonlight Doctrine</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/MorningPrayer.png', 'MorningPrayer')">
+      <div class="image-container">
+        <img src="images/MorningPrayer.png" alt="MorningPrayer" />
+      </div>
+      <div class="caption">Morning Prayer</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/Nuthatch.png', 'Nuthatch')">
+      <div class="image-container">
+        <img src="images/Nuthatch.png" alt="Nuthatch" />
+      </div>
+      <div class="caption">Nuthatch</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/PaintedLady.png', 'PaintedLady')">
+      <div class="image-container">
+        <img src="images/PaintedLady.png" alt="PaintedLady" />
+      </div>
+      <div class="caption">Painted Lady</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/ShadowoftheMountain.png', 'ShadowoftheMountain')">
+      <div class="image-container">
+        <img src="images/ShadowoftheMountain.png" alt="ShadowoftheMountain" />
+      </div>
+      <div class="caption">Shadow of the Mountain</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/Solitude.png', 'Solitude')">
+      <div class="image-container">
+        <img src="images/Solitude.png" alt="Solitude" />
+      </div>
+      <div class="caption">Solitude</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/StarryBackground.png', 'StarryBackground')">
+      <div class="image-container">
+        <img src="images/StarryBackground.png" alt="StarryBackground" />
+      </div>
+      <div class="caption">Starry Background</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/SummerStroll.png', 'SummerStroll')">
+      <div class="image-container">
+        <img src="images/SummerStroll.png" alt="SummerStroll" />
+      </div>
+      <div class="caption">Summer Stroll</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/SunriseDoctrine.png', 'SunriseDoctrine')">
+      <div class="image-container">
+        <img src="images/SunriseDoctrine.png" alt="SunriseDoctrine" />
+      </div>
+      <div class="caption">Sunrise Doctrine</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/TheExplorerandBlueWing.png', 'TheExplorerandBlueWing')">
+      <div class="image-container">
+        <img src="images/TheExplorerandBlueWing.png" alt="TheExplorerandBlueWing" />
+      </div>
+      <div class="caption">The Explorer and Blue Wing</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/ThePaintedLady.png', 'ThePaintedLady')">
+      <div class="image-container">
+        <img src="images/ThePaintedLady.png" alt="ThePaintedLady" />
+      </div>
+      <div class="caption">The Painted Lady</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/ThePokeWitch.png', 'ThePokeWitch')">
+      <div class="image-container">
+        <img src="images/ThePokeWitch.png" alt="ThePokeWitch" />
+      </div>
+      <div class="caption">The Poke Witch</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/TwoChickadees.png', 'TwoChickadees')">
+      <div class="image-container">
+        <img src="images/TwoChickadees.png" alt="TwoChickadees" />
+      </div>
+      <div class="caption">Two Chickadees</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/WizardScreen.png', 'WizardScreen')">
+      <div class="image-container">
+        <img src="images/WizardScreen.png" alt="WizardScreen" />
+      </div>
+      <div class="caption">Wizard Screen</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/WoodsView.png', 'WoodsView')">
+      <div class="image-container">
+        <img src="images/WoodsView.png" alt="WoodsView" />
+      </div>
+      <div class="caption">Woods View</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/WoodsView2Screen.png', 'WoodsView2Screen')">
+      <div class="image-container">
+        <img src="images/WoodsView2Screen.png" alt="WoodsView2Screen" />
+      </div>
+      <div class="caption">Woods View 2</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/WorkingThrough.png', 'WorkingThrough')">
+      <div class="image-container">
+        <img src="images/WorkingThrough.png" alt="WorkingThrough" />
+      </div>
+      <div class="caption">Working Through</div>
+    </div>
+    <div class="image-card" onclick="openLightbox('images/YellowLandscape.png', 'YellowLandscape')">
+      <div class="image-container">
+        <img src="images/YellowLandscape.png" alt="YellowLandscape" />
+      </div>
+      <div class="caption">Yellow Landscape</div>
+    </div>
+  </div>
+
+  <!-- Enhanced Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+    </div>
+  </div>
+
+  <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
+
+  <footer>
+    &copy; 2025 Sketchy Ponderings — quietly relentless.
+  </footer>
+
+  <script>
+    // Enhanced floating particles
+    const container = document.getElementById('particles');
+    const colors = ['golden', 'purple', 'silver'];
+    
+    for (let i = 0; i < 60; i++) {
+      const particle = document.createElement('div');
+      particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
+      
+      // Random size between 1px and 6px
+      const size = Math.random() * 5 + 1;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      // Random horizontal position
+      particle.style.left = Math.random() * 100 + '%';
+      
+      // Random animation delay
+      particle.style.animationDelay = Math.random() * 30 + 's';
+      
+      // Random animation duration between 20-40 seconds
+      particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+      
+      // Random horizontal drift
+      particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
+      
+      container.appendChild(particle);
+    }
+
+    // Back to top functionality
+    const topButton = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        topButton.classList.add('show');
+      } else {
+        topButton.classList.remove('show');
+      }
+    });
+
+    topButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Enhanced lightbox functionality
+    function openLightbox(imageSrc, imageAlt) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = imageSrc;
+      lightboxImg.alt = imageAlt;
+      lightbox.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      
+      // Prevent event bubbling
+      event.stopPropagation();
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close lightbox with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    // Prevent lightbox close when clicking on image
+    document.getElementById('lightbox-img').addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // Enhanced parallax effect for mist
+    let ticking = false;
+    function updateParallax() {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick);
+
+    // Image loading animation
+    document.querySelectorAll('.image-card img').forEach(img => {
+      img.addEventListener('load', function() {
+        this.classList.add('loaded');
+      });
+      
+      // Handle images that are already cached
+      if (img.complete) {
+        img.classList.add('loaded');
+      }
+    });
+
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      
+      // Update button text and icon
+      if (navLinks.classList.contains('open')) {
+        mobileMenuButton.textContent = '✕ Close';
+      } else {
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Enhanced card animations with staggered delays
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.animationDelay = '0s';
+            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+          }, index * 100);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '50px'
+    });
+
+    document.querySelectorAll('.image-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
