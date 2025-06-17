@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games - Sketchy Ponderings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(3, 3, 3, 0.4);
+      opacity: 1;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: url('images/mist-overlay.png') repeat;
+      opacity: 0.9;
+      position: fixed;
+      width: 100%;
+      height: 500vh;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    /* Enhanced floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 25s infinite linear;
+      opacity: 0;
+    }
+
+    .particle.golden {
+      background: radial-gradient(circle, rgba(222, 184, 135, 0.6) 0%, rgba(222, 184, 135, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 4px rgba(222, 184, 135, 0.4);
+    }
+
+    .particle.purple {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, rgba(138, 43, 226, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 4px rgba(138, 43, 226, 0.3);
+    }
+
+    .particle.silver {
+      background: radial-gradient(circle, rgba(192, 192, 192, 0.4) 0%, rgba(192, 192, 192, 0.08) 70%, transparent 100%);
+      box-shadow: 0 0 3px rgba(192, 192, 192, 0.2);
+    }
+
+    @keyframes float {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3); 
+        opacity: 0; 
+      }
+      5% { 
+        opacity: 0.6;
+        transform: translateY(95vh) translateX(10px) rotate(18deg) scale(0.5);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 50px)) rotate(180deg) scale(0.8);
+        opacity: 0.4;
+      }
+      95% { 
+        opacity: 0.3; 
+      }
+      100% { 
+        transform: translateY(-10vh) translateX(calc(var(--drift, 50px) * 2)) rotate(360deg) scale(0.1); 
+        opacity: 0; 
+      }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2);
+      margin-bottom: 0.5rem;
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2); }
+      100% { text-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 50px rgba(138, 43, 226, 0.4); }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.current {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .game-card {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 2rem;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .game-card:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .game-card:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .game-card:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
+      animation: cardPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes cardPulse {
+      0%, 100% {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
+      }
+      50% {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.4);
+      }
+    }
+
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .game-card:hover::before {
+      opacity: 1;
+    }
+
+    .game-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(138, 43, 226, 0.1) 50%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .game-card:hover::after {
+      opacity: 1;
+    }
+
+    .game-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #f2f2f2;
+    }
+
+    .game-status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      animation: statusPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .status-active {
+      background: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+      border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+
+    .status-development {
+      background: rgba(241, 196, 15, 0.2);
+      color: #f1c40f;
+      border: 1px solid rgba(241, 196, 15, 0.3);
+    }
+
+    .status-published {
+      background: rgba(52, 152, 219, 0.2);
+      color: #3498db;
+      border: 1px solid rgba(52, 152, 219, 0.3);
+    }
+
+    .status-stopped {
+      background: rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
+      border: 1px solid rgba(231, 76, 60, 0.3);
+    }
+
+    .game-description {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .game-stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .stat {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .stat strong {
+      color: rgba(138, 43, 226, 0.8);
+    }
+
+    .game-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .game-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .game-link {
+      background: rgba(138, 43, 226, 0.2);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(138, 43, 226, 0.4);
+      transition: all 0.3s ease;
+      font-weight: 400;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.3s;
+    }
+
+    .game-link:hover::before {
+      left: 100%;
+    }
+
+    .game-link:hover {
+      background: rgba(138, 43, 226, 0.4);
+      border-color: rgba(138, 43, 226, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-link.primary {
+      background: rgba(138, 43, 226, 0.4);
+      border-color: rgba(138, 43, 226, 0.6);
+    }
+
+    .game-link.primary:hover {
+      background: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(138, 43, 226, 0.5);
+    }
+
+    .development-note {
+      background: rgba(241, 196, 15, 0.1);
+      border: 1px solid rgba(241, 196, 15, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      font-style: italic;
+      position: relative;
+    }
+
+    .development-note::before {
+      content: '⚠️';
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      opacity: 0.6;
+    }
+
+    .development-note {
+      padding-left: 3rem;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Source Sans Pro', sans-serif;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .games-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem;
+      }
+
+      .game-card {
+        padding: 1.5rem;
+      }
+
+      .header {
+        padding: 2rem 1rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="header">
+    <h1>Game Worlds</h1>
+    <p class="subtitle">Interactive experiences from the threshold</p>
+  </div>
+
+  <div class="nav">
+    <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="games.html" class="creative current">Games</a>
+      <a href="music.html" class="creative">Music</a>
+      <a href="stories.html">Stories</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" class="cruxfade-link" title="Enter Cruxfade">⟁ Cruxfade</a>
+    </div>
+  </div>
+
+  <div class="games-grid">
+    <!-- Cruxfade -->
+    <div class="game-card">
+      <h2 class="game-title">Cruxfade</h2>
+      <span class="game-status status-active">Active Development</span>
+      
+      <p class="game-description">
+        A tactical roguelike card battler where mystical companions face otherworldly threats. 
+        Features deep strategic combat with unique character abilities and an evolving storyline 
+        of friendship, betrayal, and ancient powers.
+      </p>
+      
+      <div class="game-tags">
+        <span class="tag">Roguelike</span>
+        <span class="tag">Card Battle</span>
+        <span class="tag">HTML5</span>
+        <span class="tag">Strategy</span>
+      </div>
+      
+      <div class="game-links">
+        <a href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" class="game-link primary">Play Now</a>
+      </div>
+      
+      <div class="development-note">
+        Currently implementing item systems and expanding the roguelike progression mechanics.
+      </div>
+    </div>
+
+    <!-- Nimble Cards -->
+    <div class="game-card">
+      <h2 class="game-title">Nimble Cards</h2>
+      <span class="game-status status-stopped">Stopped Development</span>
+      
+      <p class="game-description">
+        The predecessor to Cruxfade. I stopped development when it got too complex to build in GDevelop.
+      </p>
+      
+      <div class="game-stats">
+        <span class="stat"><strong>75%</strong> positive reactions</span>
+        <span class="stat"><strong>169</strong> plays</span>
+      </div>
+      
+      <div class="game-tags">
+        <span class="tag">Card Game</span>
+        <span class="tag">GDevelop</span>
+        <span class="tag">Arcade</span>
+        <span class="tag">Quick Play</span>
+      </div>
+      
+      <div class="game-links">
+        <a href="https://gd.games/jessop/nimble-cards" class="game-link primary">Play on GD.games</a>
+      </div>
+    </div>
+
+    <!-- Subtle Spirits -->
+    <div class="game-card">
+      <h2 class="game-title">Subtle Spirits</h2>
+      <span class="game-status status-development">In Development</span>
+      
+      <p class="game-description">
+        A tale of friendship and betrayal set in a beautiful landscape of humanity's and earth's future. 
+        This narrative adventure explores deep themes through carefully crafted scenes and character development. 
+        <em>This is a prelude to a larger story.</em>
+      </p>
+      
+      <div class="game-tags">
+        <span class="tag">Adventure</span>
+        <span class="tag">Narrative</span>
+        <span class="tag">GDevelop</span>
+        <span class="tag">Story-Rich</span>
+      </div>
+      
+      <div class="game-links">
+        <a href="https://jessopsbezar.itch.io/subtle-spirits" class="game-link">View on Itch.io</a>
+      </div>
+      
+      <div class="development-note">
+        Currently missing key scenes and animations. Audio implementation and sprite polishing in progress.
+      </div>
+    </div>
+  </div>
+
+  <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
+
+  <footer>
+    &copy; 2025 Sketchy Ponderings — quietly relentless.
+  </footer>
+
+  <script>
+    // Enhanced floating particles system
+    const container = document.getElementById('particles');
+    const colors = ['golden', 'purple', 'silver'];
+    
+    for (let i = 0; i < 60; i++) {
+      const particle = document.createElement('div');
+      particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
+      
+      // Random size between 1px and 6px
+      const size = Math.random() * 5 + 1;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      // Random horizontal position
+      particle.style.left = Math.random() * 100 + '%';
+      
+      // Random animation delay
+      particle.style.animationDelay = Math.random() * 30 + 's';
+      
+      // Random animation duration between 20-40 seconds
+      particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+      
+      // Random horizontal drift
+      particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
+      
+      container.appendChild(particle);
+    }
+
+    // Enhanced parallax effect for mist
+    let ticking = false;
+    function updateParallax() {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick);
+
+    // Back to top functionality
+    const topButton = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        topButton.classList.add('show');
+      } else {
+        topButton.classList.remove('show');
+      }
+    });
+
+    topButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      
+      // Update button text and icon
+      if (navLinks.classList.contains('open')) {
+        mobileMenuButton.textContent = '✕ Close';
+      } else {
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Enhanced card animations with intersection observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.animationDelay = '0s';
+            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+          }, index * 100);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '50px'
+    });
+
+    document.querySelectorAll('.game-card').forEach(card => {
+      observer.observe(card);
+    });
+
+    // Enhanced hover effects for game links
+    document.querySelectorAll('.game-link').forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        link.style.transform = 'translateY(-3px) scale(1.05)';
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        link.style.transform = 'translateY(-2px) scale(1)';
+      });
+    });
+
+    // Status animation trigger on visibility
+    const statusObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    });
+
+    document.querySelectorAll('.game-status').forEach(status => {
+      statusObserver.observe(status);
+    });
+  </script>
+</body>
+</html>
