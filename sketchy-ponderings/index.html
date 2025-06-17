@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sketchy Ponderings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(3, 3, 3, 0.4);
+      opacity: 1;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: url('images/mist-overlay.png') repeat;
+      opacity: 0.9;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    /* Enhanced floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+      opacity: 0;
+    }
+
+    .particle.golden {
+      background: radial-gradient(circle, rgba(222, 184, 135, 0.8) 0%, rgba(222, 184, 135, 0.2) 70%, transparent 100%);
+      box-shadow: 0 0 6px rgba(222, 184, 135, 0.6);
+    }
+
+    .particle.purple {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.7) 0%, rgba(138, 43, 226, 0.2) 70%, transparent 100%);
+      box-shadow: 0 0 6px rgba(138, 43, 226, 0.5);
+    }
+
+    .particle.silver {
+      background: radial-gradient(circle, rgba(192, 192, 192, 0.6) 0%, rgba(192, 192, 192, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 4px rgba(192, 192, 192, 0.4);
+    }
+
+    @keyframes float {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5); 
+        opacity: 0; 
+      }
+      5% { 
+        opacity: 1;
+        transform: translateY(95vh) translateX(10px) rotate(18deg) scale(0.8);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 50px)) rotate(180deg) scale(1);
+        opacity: 0.8;
+      }
+      95% { 
+        opacity: 0.6; 
+      }
+      100% { 
+        transform: translateY(-10vh) translateX(calc(var(--drift, 50px) * 2)) rotate(360deg) scale(0.3); 
+        opacity: 0; 
+      }
+    }
+
+    /* Sigil overlay system */
+    .sigil-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 15;
+      filter: blur(10px);
+      transition: none;
+    }
+
+    .sigil-overlay img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.6)) 
+              drop-shadow(0 0 40px rgba(138, 43, 226, 0.3));
+    }
+
+    .sigil-overlay.animate {
+      animation: sigilEmanation 6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    @keyframes sigilEmanation {
+      0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+        filter: blur(15px);
+      }
+      10% {
+        opacity: 0.1;
+        filter: blur(8px);
+        transform: translate(-48%, -52%) scale(0.4) rotate(5deg);
+      }
+      25% {
+        opacity: 0.3;
+        filter: blur(3px);
+        transform: translate(-52%, -48%) scale(1.6) rotate(30deg);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(3) rotate(180deg);
+        opacity: 0.6;
+        filter: blur(1px);
+      }
+      65% {
+        transform: translate(-48%, -52%) scale(5) rotate(220deg);
+        opacity: 1;
+        filter: blur(0px);
+      }
+      80% {
+        opacity: 0.8;
+        filter: blur(2px);
+        transform: translate(-52%, -48%) scale(8) rotate(290deg);
+      }
+      90% {
+        opacity: 0.4;
+        filter: blur(6px);
+        transform: translate(-50%, -50%) scale(12) rotate(340deg);
+      }
+      100% {
+        transform: translate(-48%, -52%) scale(16) rotate(360deg);
+        opacity: 0;
+        filter: blur(20px);
+      }
+    }
+
+    .content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(2px);
+      text-align: center;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .oracle-link {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      animation: pulse-oracle 4s ease-in-out infinite;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 3;
+    }
+
+    .oracle-link:hover {
+      transform: scale(1.2);
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes pulse-oracle {
+      0%   { opacity: 0.3; transform: scale(1); }
+      50%  { opacity: 0.9; transform: scale(1.05); }
+      100% { opacity: 0.3; transform: scale(1); }
+    }
+
+    /* Hidden mystery religion link */
+    .mystery-link {
+      position: absolute;
+      bottom: 15%;
+      right: 10%;
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      animation: pulse-mystery 6s ease-in-out infinite;
+      transition: all 0.3s ease;
+      z-index: 3;
+    }
+
+    .mystery-link:hover {
+      transform: scale(1.15);
+      color: rgba(255, 255, 255, 0.7);
+      text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    }
+
+    @keyframes pulse-mystery {
+      0%   { opacity: 0.2; transform: scale(1); }
+      33%  { opacity: 0.4; transform: scale(1.02); }
+      66%  { opacity: 0.2; transform: scale(1); }
+      100% { opacity: 0.2; transform: scale(1); }
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: none !important;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 600px;
+      margin-top: 2rem;
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 1rem;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.3);
+      font-family: 'Source Sans Pro', sans-serif;
+      z-index: 10;
+      backdrop-filter: none;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .mystery-link {
+        bottom: 20%;
+        right: 5%;
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+
+      .mystery-link {
+        bottom: 25%;
+        right: 5%;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Sigil overlays -->
+  <div class="sigil-overlay" id="sigil-oracle">
+    <img src="sigils/sigil-1.png" alt="Oracle Sigil">
+  </div>
+  <div class="sigil-overlay" id="sigil-mystery">
+    <img src="sigils/sigil-2.png" alt="Mystery Sigil">
+  </div>
+
+  <div class="content">
+    <!-- ORACLE GLYPH ABOVE TITLE -->
+    <a href="sigil-oracle.html" class="oracle-link" id="oracleGlyph" title="Open the Oracle">✶</a>
+
+    <h1>Sketchy Ponderings</h1>
+    <p class="subtitle">Creative explorations at the threshold of becoming</p>
+
+    <div class="nav">
+      <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="games.html" class="creative">Games</a>
+        <a href="music.html" class="creative">Music</a>
+        <a href="stories.html">Stories</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" class="cruxfade-link" title="Enter Cruxfade">⟁ Cruxfade</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIDDEN MYSTERY RELIGION LINK -->
+  <a href="american-mystery-religion.html" class="mystery-link" id="mysteryGlyph" title="Enter the Mystery">🜁</a>
+
+  <footer>
+    &copy; 2025 Sketchy Ponderings — quietly relentless.
+  </footer>
+
+  <script>
+    // Enhanced floating particles
+    const container = document.getElementById('particles');
+    const colors = ['golden', 'purple', 'silver'];
+    
+    for (let i = 0; i < 80; i++) {
+      const particle = document.createElement('div');
+      particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
+      
+      // Random size between 1px and 8px (slightly smaller than AMR page)
+      const size = Math.random() * 7 + 1;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      // Random horizontal position
+      particle.style.left = Math.random() * 100 + '%';
+      
+      // Random animation delay
+      particle.style.animationDelay = Math.random() * 25 + 's';
+      
+      // Random animation duration between 15-35 seconds (slower than AMR)
+      particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+      
+      // Random horizontal drift
+      particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
+      
+      container.appendChild(particle);
+    }
+
+    // Random glyph selection for oracle
+    const oracleGlyphs = ["✶", "🜁", "🜂", "⟁", "☍", "⟡", "∴", "✧", "🝗"];
+    const chosenOracle = oracleGlyphs[Math.floor(Math.random() * oracleGlyphs.length)];
+    document.getElementById("oracleGlyph").textContent = chosenOracle;
+
+    // Random glyph selection for mystery (different set, more mystical)
+    const mysteryGlyphs = ["🜁", "🜂", "🜃", "🜄", "🜇", "🝗", "🝕", "⧨", "◬"];
+    const chosenMystery = mysteryGlyphs[Math.floor(Math.random() * mysteryGlyphs.length)];
+    document.getElementById("mysteryGlyph").textContent = chosenMystery;
+
+    // Sigil animation triggers
+    function triggerSigilAnimation(sigilId) {
+      const sigil = document.getElementById(sigilId);
+      if (!sigil) return;
+      
+      // Reset any existing animation
+      sigil.classList.remove('animate');
+      
+      // Force reflow to ensure the class removal takes effect
+      void sigil.offsetWidth;
+      
+      // Add animation class
+      sigil.classList.add('animate');
+      
+      // Remove animation class after completion to allow re-triggering
+      setTimeout(() => {
+        sigil.classList.remove('animate');
+      }, 6000);
+    }
+
+    // Add click handlers for hidden links
+    document.getElementById('oracleGlyph').addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerSigilAnimation('sigil-oracle');
+      // 3 second delay before navigation to show the sigil unfold
+      setTimeout(() => {
+        window.location.href = 'sigil-oracle.html';
+      }, 3000);
+    });
+
+    document.getElementById('mysteryGlyph').addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerSigilAnimation('sigil-mystery');
+      // 3 second delay before navigation to show the sigil unfold
+      setTimeout(() => {
+        window.location.href = 'american-mystery-religion.html';
+      }, 3000);
+    });
+
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      
+      // Update button text and icon
+      if (navLinks.classList.contains('open')) {
+        mobileMenuButton.textContent = '✕ Close';
+      } else {
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Randomize sigil images on page load
+    function randomizeSigils() {
+      const sigils = document.querySelectorAll('.sigil-overlay img');
+      sigils.forEach(sigil => {
+        const randomSigil = Math.floor(Math.random() * 9) + 1;
+        sigil.src = `sigils/sigil-${randomSigil}.png`;
+      });
+    }
+
+    // Initialize random sigils
+    randomizeSigils();
+
+    // Enhanced parallax effect for mist (subtle)
+    let ticking = false;
+    function updateParallax() {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.2;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick);
+  </script>
+</body>
+</html>
