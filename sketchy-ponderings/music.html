@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music — Sketchy Ponderings</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(3, 3, 3, 0.4);
+      opacity: 1;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: url('images/mist-overlay.png') repeat;
+      opacity: 0.9;
+      position: fixed;
+      width: 100%;
+      height: 500vh;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    /* Enhanced floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    .particle.golden {
+      background: radial-gradient(circle, rgba(222, 184, 135, 0.8) 0%, rgba(222, 184, 135, 0.2) 70%, transparent 100%);
+      box-shadow: 0 0 8px rgba(222, 184, 135, 0.6), 0 0 16px rgba(222, 184, 135, 0.3);
+      animation: floatGolden 20s infinite linear;
+    }
+
+    .particle.purple {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.7) 0%, rgba(138, 43, 226, 0.2) 70%, transparent 100%);
+      box-shadow: 0 0 8px rgba(138, 43, 226, 0.5), 0 0 16px rgba(138, 43, 226, 0.2);
+      animation: floatPurple 25s infinite linear;
+    }
+
+    .particle.silver {
+      background: radial-gradient(circle, rgba(192, 192, 192, 0.6) 0%, rgba(192, 192, 192, 0.15) 70%, transparent 100%);
+      box-shadow: 0 0 6px rgba(192, 192, 192, 0.4), 0 0 12px rgba(192, 192, 192, 0.2);
+      animation: floatSilver 30s infinite linear;
+    }
+
+    .particle.crystal {
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(200, 200, 255, 0.3) 50%, transparent 100%);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(200, 200, 255, 0.3);
+      animation: floatCrystal 35s infinite linear;
+    }
+
+    .particle.cosmic {
+      background: radial-gradient(circle, rgba(75, 0, 130, 0.6) 0%, rgba(138, 43, 226, 0.3) 50%, transparent 100%);
+      box-shadow: 0 0 12px rgba(75, 0, 130, 0.4), 0 0 24px rgba(138, 43, 226, 0.2);
+      animation: floatCosmic 40s infinite linear;
+    }
+
+    @keyframes floatGolden {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.4); 
+        opacity: 0; 
+      }
+      8% { 
+        opacity: 0.8;
+        transform: translateY(92vh) translateX(15px) rotate(25deg) scale(0.7);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 60px)) rotate(180deg) scale(1);
+        opacity: 0.6;
+      }
+      92% { 
+        opacity: 0.4; 
+      }
+      100% { 
+        transform: translateY(-10vh) translateX(calc(var(--drift, 60px) * 2.2)) rotate(360deg) scale(0.2); 
+        opacity: 0; 
+      }
+    }
+
+    @keyframes floatPurple {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3); 
+        opacity: 0; 
+      }
+      10% { 
+        opacity: 0.9;
+        transform: translateY(90vh) translateX(20px) rotate(30deg) scale(0.6);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 80px)) rotate(200deg) scale(1.1);
+        opacity: 0.7;
+      }
+      90% { 
+        opacity: 0.5; 
+      }
+      100% { 
+        transform: translateY(-15vh) translateX(calc(var(--drift, 80px) * 2.5)) rotate(380deg) scale(0.1); 
+        opacity: 0; 
+      }
+    }
+
+    @keyframes floatSilver {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5); 
+        opacity: 0; 
+      }
+      6% { 
+        opacity: 0.7;
+        transform: translateY(94vh) translateX(10px) rotate(20deg) scale(0.8);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 40px)) rotate(160deg) scale(0.9);
+        opacity: 0.5;
+      }
+      94% { 
+        opacity: 0.3; 
+      }
+      100% { 
+        transform: translateY(-8vh) translateX(calc(var(--drift, 40px) * 1.8)) rotate(340deg) scale(0.3); 
+        opacity: 0; 
+      }
+    }
+
+    @keyframes floatCrystal {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.2); 
+        opacity: 0; 
+      }
+      12% { 
+        opacity: 1;
+        transform: translateY(88vh) translateX(25px) rotate(35deg) scale(0.5);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 100px)) rotate(220deg) scale(0.8);
+        opacity: 0.8;
+      }
+      88% { 
+        opacity: 0.6; 
+      }
+      100% { 
+        transform: translateY(-20vh) translateX(calc(var(--drift, 100px) * 3)) rotate(400deg) scale(0.1); 
+        opacity: 0; 
+      }
+    }
+
+    @keyframes floatCosmic {
+      0% { 
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.6); 
+        opacity: 0; 
+      }
+      5% { 
+        opacity: 0.6;
+        transform: translateY(95vh) translateX(30px) rotate(15deg) scale(0.9);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 120px)) rotate(240deg) scale(1.2);
+        opacity: 0.4;
+      }
+      95% { 
+        opacity: 0.2; 
+      }
+      100% { 
+        transform: translateY(-25vh) translateX(calc(var(--drift, 120px) * 3.5)) rotate(420deg) scale(0.05); 
+        opacity: 0; 
+      }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2);
+      margin-bottom: 0.5rem;
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2); }
+      100% { text-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 50px rgba(138, 43, 226, 0.4); }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.current {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .intro-section {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .intro-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+    }
+
+    .intro-section p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .music-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .playlist-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      flex-wrap: wrap;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 3rem;
+    }
+
+    .dynamic-control {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .dynamic-control:hover {
+      transform: translateY(-3px);
+    }
+
+    .control-orb {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    .orb-core {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.2), rgba(138, 43, 226, 0.05));
+      border: 2px solid rgba(138, 43, 226, 0.3);
+      border-radius: 50%;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .orb-ring {
+      position: absolute;
+      width: 76px;
+      height: 76px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: rgba(138, 43, 226, 0.4);
+      border-right-color: rgba(138, 43, 226, 0.2);
+      transition: all 0.6s ease;
+      opacity: 0;
+    }
+
+    .orb-particles {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      opacity: 0;
+      transition: all 0.4s ease;
+    }
+
+    .orb-particles::before,
+    .orb-particles::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(138, 43, 226, 0.6);
+      border-radius: 50%;
+      transition: all 0.4s ease;
+    }
+
+    .orb-particles::before {
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: particle1 3s ease-in-out infinite;
+    }
+
+    .orb-particles::after {
+      bottom: 10px;
+      right: 20px;
+      animation: particle2 2.5s ease-in-out infinite reverse;
+    }
+
+    /* Starburst particles - only visible when active */
+    .orb-starburst {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .orb-starburst::before,
+    .orb-starburst::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 1), rgba(255, 255, 255, 0.8));
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(138, 43, 226, 0.8);
+    }
+
+    .orb-starburst::before {
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .orb-starburst::after {
+      bottom: 20px;
+      right: 30px;
+    }
+
+    /* Additional starburst particles using pseudo-elements */
+    .orb-starburst-2 {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .orb-starburst-2::before,
+    .orb-starburst-2::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 1), rgba(138, 43, 226, 0.6));
+      border-radius: 50%;
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    }
+
+    .orb-starburst-2::before {
+      top: 30px;
+      right: 25px;
+    }
+
+    .orb-starburst-2::after {
+      bottom: 35px;
+      left: 20px;
+    }
+
+    .orb-starburst-3 {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .orb-starburst-3::before,
+    .orb-starburst-3::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.8), rgba(255, 255, 255, 0.4));
+      border-radius: 50%;
+      box-shadow: 0 0 3px rgba(138, 43, 226, 0.6);
+    }
+
+    .orb-starburst-3::before {
+      top: 40px;
+      left: 40px;
+    }
+
+    .orb-starburst-3::after {
+      bottom: 45px;
+      right: 35px;
+    }
+
+    @keyframes particle1 {
+      0%, 100% { 
+        opacity: 0.4; 
+        transform: translateX(-50%) scale(0.8);
+      }
+      50% { 
+        opacity: 1; 
+        transform: translateX(-50%) scale(1.2);
+      }
+    }
+
+    @keyframes particle2 {
+      0%, 100% { 
+        opacity: 0.3; 
+        transform: scale(0.6);
+      }
+      50% { 
+        opacity: 0.8; 
+        transform: scale(1.4);
+      }
+    }
+
+    .control-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    /* Hover States */
+    .dynamic-control:hover .orb-core {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.3), rgba(138, 43, 226, 0.1));
+      border-color: rgba(138, 43, 226, 0.5);
+      box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+      transform: scale(1.05);
+    }
+
+    .dynamic-control:hover .orb-ring {
+      opacity: 1;
+      transform: rotate(90deg);
+    }
+
+    .dynamic-control:hover .orb-particles {
+      opacity: 1;
+    }
+
+    .dynamic-control:hover .control-icon {
+      filter: grayscale(0) opacity(1);
+      transform: scale(1.1);
+    }
+
+    .dynamic-control:hover .control-label {
+      color: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+
+    /* Active States */
+    .dynamic-control.active .orb-core {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.6), rgba(138, 43, 226, 0.2));
+      border-color: rgba(138, 43, 226, 0.8);
+      box-shadow: 0 0 30px rgba(138, 43, 226, 0.5), inset 0 0 20px rgba(138, 43, 226, 0.2);
+      animation: orbPulse 2s ease-in-out infinite;
+    }
+
+    .dynamic-control.active .orb-ring {
+      opacity: 1;
+      border-color: rgba(138, 43, 226, 0.6);
+      animation: ringRotate 4s linear infinite;
+    }
+
+    .dynamic-control.active .orb-particles {
+      opacity: 1;
+      animation: particleOrbit 6s linear infinite;
+    }
+
+    .dynamic-control.active .control-icon {
+      filter: grayscale(0) opacity(1);
+      color: #fff;
+      text-shadow: 0 0 10px rgba(138, 43, 226, 0.8);
+      animation: iconGlow 3s ease-in-out infinite;
+    }
+
+    .dynamic-control.active .control-label {
+      color: rgba(138, 43, 226, 0.9);
+      font-weight: 500;
+      text-shadow: 0 0 8px rgba(138, 43, 226, 0.5);
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 30px rgba(138, 43, 226, 0.5), inset 0 0 20px rgba(138, 43, 226, 0.2);
+      }
+      50% { 
+        transform: scale(1.02);
+        box-shadow: 0 0 40px rgba(138, 43, 226, 0.7), inset 0 0 25px rgba(138, 43, 226, 0.3);
+      }
+    }
+
+    @keyframes ringRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes particleOrbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Starburst animations */
+    @keyframes starburst1 {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2.5);
+      }
+    }
+
+    @keyframes starburst1Before {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0) scale(0.5);
+      }
+      20% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-80px) scale(0.3);
+      }
+    }
+
+    @keyframes starburst1After {
+      0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0) scale(0.5);
+      }
+      20% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(60px) translateY(60px) scale(0.3);
+      }
+    }
+
+    @keyframes starburst2 {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+      }
+      30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(3);
+      }
+    }
+
+    @keyframes starburst2Before {
+      0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0) scale(0.8);
+      }
+      30% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(70px) translateY(-70px) scale(0.2);
+      }
+    }
+
+    @keyframes starburst2After {
+      0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0) scale(0.6);
+      }
+      30% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-65px) translateY(75px) scale(0.2);
+      }
+    }
+
+    @keyframes starburst3 {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.4);
+      }
+      40% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2.8);
+      }
+    }
+
+    @keyframes starburst3Before {
+      0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0) scale(0.7);
+      }
+      40% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1.1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-80px) translateY(-60px) scale(0.3);
+      }
+    }
+
+    @keyframes starburst3After {
+      0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0) scale(0.9);
+      }
+      40% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1.3);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(85px) translateY(-85px) scale(0.2);
+      }
+    }
+
+    /* Active starburst effects */
+    .dynamic-control.active .orb-starburst {
+      opacity: 1;
+      animation: starburst1 2s ease-out infinite;
+    }
+
+    .dynamic-control.active .orb-starburst::before {
+      animation: starburst1Before 2s ease-out infinite;
+    }
+
+    .dynamic-control.active .orb-starburst::after {
+      animation: starburst1After 2s ease-out infinite;
+    }
+
+    .dynamic-control.active .orb-starburst-2 {
+      opacity: 1;
+      animation: starburst2 2.5s ease-out infinite;
+      animation-delay: 0.3s;
+    }
+
+    .dynamic-control.active .orb-starburst-2::before {
+      animation: starburst2Before 2.5s ease-out infinite;
+      animation-delay: 0.3s;
+    }
+
+    .dynamic-control.active .orb-starburst-2::after {
+      animation: starburst2After 2.5s ease-out infinite;
+      animation-delay: 0.3s;
+    }
+
+    .dynamic-control.active .orb-starburst-3 {
+      opacity: 1;
+      animation: starburst3 3s ease-out infinite;
+      animation-delay: 0.6s;
+    }
+
+    .dynamic-control.active .orb-starburst-3::before {
+      animation: starburst3Before 3s ease-out infinite;
+      animation-delay: 0.6s;
+    }
+
+    .dynamic-control.active .orb-starburst-3::after {
+      animation: starburst3After 3s ease-out infinite;
+      animation-delay: 0.6s;
+    }
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .track-card {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 2rem;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .track-card:nth-child(2n) {
+      animation-delay: 0.1s;
+    }
+
+    .track-card:nth-child(3n) {
+      animation-delay: 0.2s;
+    }
+
+    .track-card:nth-child(4n) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .track-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
+      animation: cardPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes cardPulse {
+      0%, 100% {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
+      }
+      50% {
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.4);
+      }
+    }
+
+    .track-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .track-card:hover::before {
+      opacity: 1;
+    }
+
+    .track-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(138, 43, 226, 0.1) 50%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .track-card:hover::after {
+      opacity: 1;
+    }
+
+    .track-card.playing {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      animation: playingPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes playingPulse {
+      0%, 100% {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.5);
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 35px rgba(138, 43, 226, 0.7);
+      }
+    }
+
+    .track-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #f2f2f2;
+    }
+
+    .track-description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .waveform-visual {
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .waveform-visual:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .waveform-bars {
+      display: flex;
+      align-items: end;
+      height: 100%;
+      gap: 2px;
+      padding: 6px;
+    }
+
+    .waveform-bar {
+      flex: 1;
+      background: rgba(138, 43, 226, 0.4);
+      border-radius: 2px;
+      height: 20%;
+      transition: all 0.3s ease;
+    }
+
+    .track-card:hover .waveform-bar {
+      height: 60%;
+      background: rgba(138, 43, 226, 0.6);
+    }
+
+    .track-card.playing .waveform-bar {
+      animation: waveAnimation 1.5s ease-in-out infinite;
+      background: rgba(138, 43, 226, 0.8);
+    }
+
+    @keyframes waveAnimation {
+      0%, 100% { height: 20%; }
+      50% { height: 80%; }
+    }
+
+    .track-card.playing .waveform-bar:nth-child(2n) {
+      animation-delay: 0.1s;
+    }
+
+    .track-card.playing .waveform-bar:nth-child(3n) {
+      animation-delay: 0.2s;
+    }
+
+    .track-card.playing .waveform-bar:nth-child(4n) {
+      animation-delay: 0.3s;
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .play-button {
+      background: rgba(138, 43, 226, 0.3);
+      border: 2px solid rgba(138, 43, 226, 0.6);
+      color: #fff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .play-button:hover {
+      background: rgba(138, 43, 226, 0.5);
+      border-color: rgba(138, 43, 226, 0.8);
+      transform: scale(1.1);
+    }
+
+    .play-button.playing {
+      background: rgba(138, 43, 226, 0.6);
+      border-color: rgba(138, 43, 226, 1);
+      animation: buttonPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes buttonPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .track-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-name {
+      font-weight: 500;
+      color: #f2f2f2;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .track-time {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-family: monospace;
+    }
+
+    .progress-container {
+      margin-bottom: 1rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .progress-bar:hover {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(138, 43, 226, 0.8), rgba(138, 43, 226, 0.6));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    .volume-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .volume-icon {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1rem;
+      min-width: 20px;
+    }
+
+    .volume-slider {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .volume-slider:hover {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .volume-fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(138, 43, 226, 0.8), rgba(138, 43, 226, 0.6));
+      border-radius: 2px;
+      width: 70%;
+    }
+
+    .volume-text {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      min-width: 35px;
+      text-align: right;
+      font-family: monospace;
+    }
+
+    /* Now Playing Bar */
+    .now-playing-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem 2rem;
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      z-index: 100;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .now-playing-bar.show {
+      display: flex;
+      transform: translateY(0);
+    }
+
+    .global-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-button {
+      background: transparent;
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      color: rgba(138, 43, 226, 0.7);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .nav-button:hover {
+      background: rgba(138, 43, 226, 0.1);
+      border-color: rgba(138, 43, 226, 0.6);
+      color: rgba(138, 43, 226, 1);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .global-play-button {
+      background: rgba(138, 43, 226, 0.3);
+      border: 2px solid rgba(138, 43, 226, 0.6);
+      color: #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      margin: 0 0.5rem;
+    }
+
+    .global-play-button:hover {
+      background: rgba(138, 43, 226, 0.5);
+      border-color: rgba(138, 43, 226, 0.8);
+    }
+
+    .global-play-button.playing {
+      background: rgba(138, 43, 226, 0.6);
+      border-color: rgba(138, 43, 226, 1);
+    }
+
+    .now-playing-info {
+      flex: 1;
+      min-width: 0;
+      margin: 0 1rem;
+    }
+
+    .now-playing-title {
+      font-weight: 500;
+      color: #f2f2f2;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .now-playing-progress {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 1.5px;
+      overflow: hidden;
+    }
+
+    .now-playing-fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(138, 43, 226, 0.8), rgba(138, 43, 226, 0.6));
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    .time-display {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      white-space: nowrap;
+      font-family: monospace;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .track-counter {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.75rem;
+      white-space: nowrap;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    .back-to-top.music-playing {
+      bottom: 110px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Source Sans Pro', sans-serif;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Custom audio element styling */
+    audio {
+      display: none;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .tracks-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .track-card {
+        padding: 1.5rem;
+      }
+
+      .header {
+        padding: 2rem 1rem 1rem;
+      }
+
+      .music-container {
+        padding: 1rem;
+      }
+
+      .playlist-controls {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1.5rem;
+      }
+
+      .dynamic-control {
+        gap: 0.75rem;
+      }
+
+      .control-orb {
+        width: 70px;
+        height: 70px;
+      }
+
+      .orb-core {
+        width: 50px;
+        height: 50px;
+      }
+
+      .orb-ring {
+        width: 66px;
+        height: 66px;
+      }
+
+      .orb-particles {
+        width: 86px;
+        height: 86px;
+      }
+
+      .orb-starburst {
+        width: 100px;
+        height: 100px;
+      }
+
+      .orb-starburst-2 {
+        width: 115px;
+        height: 115px;
+      }
+
+      .orb-starburst-3 {
+        width: 130px;
+        height: 130px;
+      }
+
+      .control-label {
+        font-size: 0.85rem;
+      }
+
+      .now-playing-bar {
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+      }
+      
+      .nav-button {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+      }
+      
+      .global-play-button {
+        width: 36px;
+        height: 36px;
+      }
+      
+      .time-display {
+        font-size: 0.75rem;
+        min-width: 70px;
+      }
+      
+      .track-counter {
+        font-size: 0.7rem;
+        min-width: 35px;
+      }
+
+      .back-to-top {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+        right: 20px;
+        bottom: 25px;
+      }
+      
+      .back-to-top.music-playing {
+        bottom: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+
+      .player-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .track-info {
+        text-align: center;
+      }
+
+      .track-counter {
+        display: none;
+      }
+      
+      .now-playing-bar {
+        gap: 0.5rem;
+      }
+
+      .back-to-top {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        right: 15px;
+        bottom: 20px;
+      }
+      
+      .back-to-top.music-playing {
+        bottom: 95px;
+      }
+
+      .playlist-controls {
+        flex-direction: row;
+        gap: 1.5rem;
+        padding: 1rem;
+      }
+
+      .control-orb {
+        width: 60px;
+        height: 60px;
+      }
+
+      .orb-core {
+        width: 40px;
+        height: 40px;
+      }
+
+      .orb-ring {
+        width: 56px;
+        height: 56px;
+      }
+
+      .orb-particles {
+        width: 76px;
+        height: 76px;
+      }
+
+      .orb-starburst {
+        width: 90px;
+        height: 90px;
+      }
+
+      .orb-starburst-2 {
+        width: 105px;
+        height: 105px;
+      }
+
+      .orb-starburst-3 {
+        width: 120px;
+        height: 120px;
+      }
+
+      .control-label {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="header">
+    <h1>Music</h1>
+    <p class="subtitle">Ambient explorations & sonic sketches</p>
+  </div>
+
+  <div class="nav">
+    <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="games.html" class="creative">Games</a>
+      <a href="music.html" class="creative current">Music</a>
+      <a href="stories.html">Stories</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" class="cruxfade-link" title="Enter Cruxfade">⟁ Cruxfade</a>
+    </div>
+  </div>
+
+  <div class="music-container">
+    <div class="intro-section">
+      <p>Musical fragments that emerge from the spaces between other creative work. These ambient pieces explore texture, atmosphere, and the quiet territories where sound becomes feeling.</p>
+      <p>Let the sounds flow together, or savor each piece in solitude—the choice shapes the journey.</p>
+    </div>
+
+    <div class="playlist-controls">
+      <div class="dynamic-control" id="shuffleControl">
+        <div class="control-orb">
+          <div class="orb-core"></div>
+          <div class="orb-ring"></div>
+          <div class="orb-particles"></div>
+          <div class="orb-starburst"></div>
+          <div class="orb-starburst-2"></div>
+          <div class="orb-starburst-3"></div>
+        </div>
+        <span class="control-label">Shuffle</span>
+      </div>
+      
+      <div class="dynamic-control" id="repeatControl">
+        <div class="control-orb">
+          <div class="orb-core"></div>
+          <div class="orb-ring"></div>
+          <div class="orb-particles"></div>
+          <div class="orb-starburst"></div>
+          <div class="orb-starburst-2"></div>
+          <div class="orb-starburst-3"></div>
+        </div>
+        <span class="control-label">Repeat All</span>
+      </div>
+      
+      <div class="dynamic-control" id="continuousControl">
+        <div class="control-orb">
+          <div class="orb-core"></div>
+          <div class="orb-ring"></div>
+          <div class="orb-particles"></div>
+          <div class="orb-starburst"></div>
+          <div class="orb-starburst-2"></div>
+          <div class="orb-starburst-3"></div>
+        </div>
+        <span class="control-label">Continuous</span>
+      </div>
+    </div>
+
+    <div class="tracks-grid">
+      <div class="track-card" data-track="rogue.mp3">
+        <div class="track-title">Rogue</div>
+        <div class="track-description">A wandering melody that follows its own path, weaving through unexpected territories with rebellious grace.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Rogue</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/rogue.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="AmbientLoop.mp3">
+        <div class="track-title">Ambient Loop</div>
+        <div class="track-description">Endless atmospheric textures that dissolve the boundaries between beginning and end.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Ambient Loop</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/AmbientLoop.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="Arbiter.mp3">
+        <div class="track-title">Arbiter</div>
+        <div class="track-description">A mediating presence that weighs silence against sound, finding balance in the spaces between.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Arbiter</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/Arbiter.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="BattleIncens.mp3">
+        <div class="track-title">Battle Incense</div>
+        <div class="track-description">A meditative piece exploring the tension between conflict and peace, with layers of ambient texture building toward resolution.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Battle Incense</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/BattleIncens.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="BattleSauce.mp3">
+        <div class="track-title">Battle Sauce</div>
+        <div class="track-description">An energetic companion piece with driving rhythms and layered harmonics that build toward euphoric release.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Battle Sauce</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/BattleSauce.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="ChibiTribal.mp3">
+        <div class="track-title">Chibi Tribal</div>
+        <div class="track-description">Ancient rhythms filtered through modern sensibilities, creating a bridge between primal and digital worlds.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Chibi Tribal</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/ChibiTribal.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="ChosenOne.mp3">
+        <div class="track-title">Chosen One</div>
+        <div class="track-description">Epic themes of destiny and purpose, wrapped in atmospheric layers that build toward transcendence.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Chosen One</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/ChosenOne.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="chronoLotus.mp3">
+        <div class="track-title">Chrono Lotus</div>
+        <div class="track-description">Time suspended in ambient washes, where ancient wisdom meets digital dreams in a gentle unfoldment of sound.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Chrono Lotus</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/chronoLotus.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="FairyStrum.mp3">
+        <div class="track-title">Fairy Strum</div>
+        <div class="track-description">Delicate plucked melodies that dance like forest spirits, weaving magic through gentle harmonic progressions.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Fairy Strum</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/FairyStrum.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="FridayLofi.mp3">
+        <div class="track-title">Friday Lift</div>
+        <div class="track-description">The weekly exhale transformed into sonic celebration, where relief becomes euphoria and freedom takes flight.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Friday Lift</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/FridayLofi.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="MondayLooper24.mp3">
+        <div class="track-title">Monday Looper</div>
+        <div class="track-description">Cyclical patterns that mirror the recursive nature of weekly beginnings, finding beauty in repetition and renewal.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Monday Looper</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/MondayLooper24.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="MoreWeirdness.mp3">
+        <div class="track-title">More Weirdness</div>
+        <div class="track-description">Embracing the strange and unexpected, where unconventional sounds create surprisingly harmonious landscapes.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">More Weirdness</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/MoreWeirdness.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="newDeal.mp3">
+        <div class="track-title">New Deal</div>
+        <div class="track-description">A fresh beginning expressed through evolving harmonic structures and unexpected sonic turns.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">New Deal</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/newDeal.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="RoboDrone.mp3">
+        <div class="track-title">Robo Drone</div>
+        <div class="track-description">Mechanical meditation where synthetic textures find organic rhythm, bridging the gap between human and machine.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Robo Drone</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/RoboDrone.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="SaturdayBeats.mp3">
+        <div class="track-title">Saturday Beats</div>
+        <div class="track-description">Weekend energy channeled into rhythmic exploration, where freedom meets structure in playful dialogue.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Saturday Beats</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/SaturdayBeats.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="Soften.mp3">
+        <div class="track-title">Soften</div>
+        <div class="track-description">Gentle dissolution of hard edges, where harsh realities are transformed into soothing sonic embrace.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Soften</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/Soften.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="TimothyTweak.mp3">
+        <div class="track-title">Timothy Tweak</div>
+        <div class="track-description">Robot breakdown, not crash-out, break it down :).</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Timothy Tweak</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/TimothyTweak.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="somethingSmooth.mp3">
+        <div class="track-title">Something Smooth</div>
+        <div class="track-description">Silk-like textures flowing through temporal space, creating an effortless listening experience that soothes the restless mind.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Something Smooth</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/somethingSmooth.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="TheBuilder.mp3">
+        <div class="track-title">The Builder</div>
+        <div class="track-description">Creation brings form.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">The Builder</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/TheBuilder.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="ThursdayStuff.mp3">
+        <div class="track-title">Thursday Stuff</div>
+        <div class="track-description">A Thursday vibe.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Thursday Stuff</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/ThursdayStuff.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="SundayRelift.mp3">
+        <div class="track-title">Sunday Relift</div>
+        <div class="track-description">Sunday and chill</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Sunday Relift</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/SundayRelift.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="Trust.mp3">
+        <div class="track-title">Trust</div>
+        <div class="track-description">Following the unfoldment is the path and the way :)</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Trust</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/Trust.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="TuesdayMeh.mp3">
+        <div class="track-title">Tuesday Meh</div>
+        <div class="track-description">Sometimes it do, sometimes it don't, meh</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Tuesday Meh</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/TuesdayMeh.mp3" preload="metadata"></audio>
+      </div>
+    </div>
+  </div>
+
+  <!-- Now Playing Bar -->
+  <div class="now-playing-bar" id="nowPlayingBar">
+    <div class="global-controls">
+      <button class="nav-button" id="prevButton">⏮</button>
+      <button class="global-play-button" id="globalPlayButton">▶</button>
+      <button class="nav-button" id="nextButton">⏭</button>
+    </div>
+    
+    <div class="now-playing-info">
+      <div class="now-playing-title" id="nowPlayingTitle">No Track Playing</div>
+      <div class="now-playing-progress">
+        <div class="now-playing-fill" id="nowPlayingFill"></div>
+      </div>
+    </div>
+    
+    <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
+    <div class="track-counter" id="trackCounter">0 / 0</div>
+  </div>
+
+  <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+  <footer>
+    &copy; 2025 Sketchy Ponderings — quietly relentless.
+  </footer>
+
+  <script>
+    // Enhanced floating particles
+    const container = document.getElementById('particles');
+    const colors = ['golden', 'purple', 'silver', 'crystal', 'cosmic'];
+    
+    // Create many more particles for immersive effect
+    for (let i = 0; i < 150; i++) {
+      const particle = document.createElement('div');
+      const colorType = colors[Math.floor(Math.random() * colors.length)];
+      particle.className = `particle ${colorType}`;
+      
+      // Varied sizes based on particle type
+      let size;
+      switch(colorType) {
+        case 'golden':
+          size = Math.random() * 6 + 2; // 2-8px
+          break;
+        case 'purple':
+          size = Math.random() * 8 + 3; // 3-11px
+          break;
+        case 'silver':
+          size = Math.random() * 4 + 1; // 1-5px
+          break;
+        case 'crystal':
+          size = Math.random() * 3 + 1; // 1-4px (smaller, more subtle)
+          break;
+        case 'cosmic':
+          size = Math.random() * 10 + 4; // 4-14px (largest)
+          break;
+        default:
+          size = Math.random() * 5 + 2;
+      }
+      
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = Math.random() * 100 + '%';
+      
+      // Staggered animation delays for continuous flow
+      particle.style.animationDelay = Math.random() * 40 + 's';
+      
+      // Varied animation durations based on type
+      let duration;
+      switch(colorType) {
+        case 'golden':
+          duration = Math.random() * 10 + 15; // 15-25s
+          break;
+        case 'purple':
+          duration = Math.random() * 15 + 20; // 20-35s
+          break;
+        case 'silver':
+          duration = Math.random() * 20 + 25; // 25-45s
+          break;
+        case 'crystal':
+          duration = Math.random() * 25 + 30; // 30-55s
+          break;
+        case 'cosmic':
+          duration = Math.random() * 30 + 35; // 35-65s
+          break;
+        default:
+          duration = Math.random() * 20 + 20;
+      }
+      
+      particle.style.animationDuration = duration + 's';
+      
+      // Random horizontal drift - more varied
+      const driftRange = Math.random() * 400 - 200; // -200px to +200px
+      particle.style.setProperty('--drift', driftRange + 'px');
+      
+      container.appendChild(particle);
+    }
+
+    // Enhanced parallax effect
+    let ticking = false;
+    function updateParallax() {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick);
+
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      mobileMenuButton.textContent = navLinks.classList.contains('open') ? '✕ Close' : '☰ Menu';
+    });
+
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Back to top functionality
+    const backToTop = document.getElementById('backToTop');
+    const nowPlayingBar = document.getElementById('nowPlayingBar');
+
+    window.addEventListener('scroll', () => {
+      const shouldShow = window.scrollY > 300;
+      backToTop.classList.toggle('show', shouldShow);
+      
+      if (shouldShow) {
+        const isPlaying = nowPlayingBar.classList.contains('show');
+        backToTop.classList.toggle('music-playing', isPlaying);
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Audio player functionality
+    const trackCards = document.querySelectorAll('.track-card');
+    const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+    const nowPlayingFill = document.getElementById('nowPlayingFill');
+    const globalPlayButton = document.getElementById('globalPlayButton');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const trackCounter = document.getElementById('trackCounter');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    // Control buttons
+    const shuffleControl = document.getElementById('shuffleControl');
+    const repeatControl = document.getElementById('repeatControl');
+    const continuousControl = document.getElementById('continuousControl');
+
+    let currentTrack = null;
+    let currentCard = null;
+    let allTracks = [];
+    let isShuffled = false;
+    let isRepeating = false;
+    let isContinuous = false;
+
+    // Initialize tracks array
+    trackCards.forEach((card, index) => {
+      const audio = card.querySelector('audio');
+      allTracks.push({ card, audio, index });
+    });
+
+    // Control button functionality
+    shuffleControl.addEventListener('click', () => {
+      isShuffled = !isShuffled;
+      shuffleControl.classList.toggle('active', isShuffled);
+      if (isShuffled) {
+        isRepeating = false;
+        repeatControl.classList.remove('active');
+      }
+    });
+
+    repeatControl.addEventListener('click', () => {
+      isRepeating = !isRepeating;
+      repeatControl.classList.toggle('active', isRepeating);
+      if (isRepeating) {
+        isShuffled = false;
+        shuffleControl.classList.remove('active');
+      }
+    });
+
+    continuousControl.addEventListener('click', () => {
+      isContinuous = !isContinuous;
+      continuousControl.classList.toggle('active', isContinuous);
+    });
+
+    // Format time helper
+    function formatTime(seconds) {
+      if (isNaN(seconds)) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Show/hide now playing bar
+    function showNowPlayingBar() {
+      nowPlayingBar.classList.add('show');
+      const shouldShow = window.scrollY > 300;
+      if (shouldShow) {
+        backToTop.classList.add('music-playing');
+      }
+    }
+
+    function hideNowPlayingBar() {
+      nowPlayingBar.classList.remove('show');
+      backToTop.classList.remove('music-playing');
+    }
+
+    // Stop all tracks
+    function stopAllTracks() {
+      trackCards.forEach(card => {
+        const audio = card.querySelector('audio');
+        const button = card.querySelector('.play-button');
+        card.classList.remove('playing');
+        audio.pause();
+        button.textContent = '▶';
+      });
+    }
+
+    // Update track counter
+    function updateTrackCounter() {
+      if (!currentTrack) {
+        trackCounter.textContent = '0 / 0';
+        return;
+      }
+      const index = allTracks.findIndex(t => t.audio === currentTrack);
+      trackCounter.textContent = `${index + 1} / ${allTracks.length}`;
+    }
+
+    // Play specific track
+    function playTrack(trackData) {
+      stopAllTracks();
+      
+      const { card, audio } = trackData;
+      currentTrack = audio;
+      currentCard = card;
+      
+      audio.play();
+      card.classList.add('playing');
+      card.querySelector('.play-button').textContent = '⏸';
+      globalPlayButton.textContent = '⏸';
+      globalPlayButton.classList.add('playing');
+      
+      showNowPlayingBar();
+      nowPlayingTitle.textContent = card.querySelector('.track-name').textContent;
+      updateTrackCounter();
+    }
+
+    // Get next track
+    function getNextTrack() {
+      if (!currentTrack) return allTracks[0];
+      
+      const currentIndex = allTracks.findIndex(t => t.audio === currentTrack);
+      
+      if (isShuffled) {
+        let nextIndex;
+        do {
+          nextIndex = Math.floor(Math.random() * allTracks.length);
+        } while (nextIndex === currentIndex && allTracks.length > 1);
+        return allTracks[nextIndex];
+      } else {
+        const nextIndex = (currentIndex + 1) % allTracks.length;
+        return allTracks[nextIndex];
+      }
+    }
+
+    // Get previous track
+    function getPrevTrack() {
+      if (!currentTrack) return allTracks[allTracks.length - 1];
+      
+      const currentIndex = allTracks.findIndex(t => t.audio === currentTrack);
+      const prevIndex = (currentIndex - 1 + allTracks.length) % allTracks.length;
+      return allTracks[prevIndex];
+    }
+
+    // Individual track setup
+    trackCards.forEach((card, index) => {
+      const audio = card.querySelector('audio');
+      const playButton = card.querySelector('.play-button');
+      const progressBar = card.querySelector('.progress-bar');
+      const progressFill = card.querySelector('.progress-fill');
+      const volumeSlider = card.querySelector('.volume-slider');
+      const volumeFill = card.querySelector('.volume-fill');
+      const volumeText = card.querySelector('.volume-text');
+      const trackTime = card.querySelector('.track-time');
+
+      // Play button click
+      playButton.addEventListener('click', () => {
+        if (audio === currentTrack && !audio.paused) {
+          audio.pause();
+          playButton.textContent = '▶';
+          globalPlayButton.textContent = '▶';
+          globalPlayButton.classList.remove('playing');
+          card.classList.remove('playing');
+          return;
+        }
+        
+        playTrack(allTracks[index]);
+      });
+
+      // Time update
+      audio.addEventListener('timeupdate', () => {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = percent + '%';
+        nowPlayingFill.style.width = percent + '%';
+        
+        trackTime.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+      });
+
+      // Progress bar click
+      progressBar.addEventListener('click', e => {
+        const rect = progressBar.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = percent * audio.duration;
+      });
+
+      // Volume control
+      volumeSlider.addEventListener('click', e => {
+        const rect = volumeSlider.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        audio.volume = percent;
+        volumeFill.style.width = `${percent * 100}%`;
+        volumeText.textContent = `${Math.round(percent * 100)}%`;
+      });
+
+      // Track ended
+      audio.addEventListener('ended', () => {
+        playButton.textContent = '▶';
+        globalPlayButton.textContent = '▶';
+        globalPlayButton.classList.remove('playing');
+        card.classList.remove('playing');
+
+        if (isRepeating && currentTrack === audio) {
+          audio.currentTime = 0;
+          audio.play();
+          playButton.textContent = '⏸';
+          globalPlayButton.textContent = '⏸';
+          globalPlayButton.classList.add('playing');
+          card.classList.add('playing');
+          return;
+        }
+
+        if (isContinuous) {
+          const nextTrack = getNextTrack();
+          playTrack(nextTrack);
+        } else {
+          hideNowPlayingBar();
+        }
+      });
+    });
+
+    // Global play button
+    globalPlayButton.addEventListener('click', () => {
+      if (!currentTrack) {
+        playTrack(allTracks[0]);
+        return;
+      }
+
+      if (currentTrack.paused) {
+        currentTrack.play();
+        globalPlayButton.textContent = '⏸';
+        globalPlayButton.classList.add('playing');
+        if (currentCard) {
+          currentCard.querySelector('.play-button').textContent = '⏸';
+          currentCard.classList.add('playing');
+        }
+      } else {
+        currentTrack.pause();
+        globalPlayButton.textContent = '▶';
+        globalPlayButton.classList.remove('playing');
+        if (currentCard) {
+          currentCard.querySelector('.play-button').textContent = '▶';
+          currentCard.classList.remove('playing');
+        }
+      }
+    });
+
+    // Navigation buttons
+    prevButton.addEventListener('click', () => {
+      if (currentTrack) {
+        const prevTrack = getPrevTrack();
+        playTrack(prevTrack);
+      }
+    });
+
+    nextButton.addEventListener('click', () => {
+      if (currentTrack) {
+        const nextTrack = getNextTrack();
+        playTrack(nextTrack);
+      }
+    });
+
+    // Initialize
+    updateTrackCounter();
+
+    // Enhanced card animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.animationDelay = '0s';
+            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+          }, index * 100);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '50px'
+    });
+
+    document.querySelectorAll('.track-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
