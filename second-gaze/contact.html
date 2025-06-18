@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — The Second Gaze</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body data-mist="mist1.webp">
+  <div class="page-wrapper">
+    <div class="mist-overlay"></div>
+    
+    <header>
+      <nav class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="cards.html">Cards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <h1>The Second Gaze</h1>
+      <p class="subtitle">Paintings by Shannon Hunt — Faces, spirits, and memory in pigment and light</p>
+    </header>
+
+    <main class="light-section">
+      <section class="content" style="max-width: 700px; margin: 4rem auto; padding: 2rem; background: rgba(255,255,255,0.9); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; z-index: 1;">
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1.5rem;">Get in Touch</h2>
+        
+        <p style="line-height: 1.6; font-size: 1.05rem; margin-bottom: 2rem;">
+          Whether you're inquiring about a painting, a commission, a show, or simply want to share kind words, you're warmly invited to reach out.
+        </p>
+
+        <form style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <input type="text" name="name" placeholder="Your Name" required style="padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;">
+          <input type="email" name="email" placeholder="Your Email" required style="padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;">
+          <textarea name="message" rows="5" placeholder="Your Message" required style="padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;"></textarea>
+          <button type="submit" disabled style="padding: 0.8rem 1.2rem; background-color: #111827; color: white; font-size: 1rem; border: none; border-radius: 6px; cursor: not-allowed; opacity: 0.6;">
+            Submit (Coming Soon)
+          </button>
+        </form>
+
+        <p style="margin-top: 2rem; font-size: 0.95rem; color: #777;">
+          Prefer email? You can also reach us directly at <a href="mailto:shannon@example.com">shannon@example.com</a>
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 Shannon Hunt | In collaboration with <a href="https://watcheratthethreshold.github.io/sketchy-ponderings/">Sketchy Ponderings</a> & <a href="https://watcheratthethreshold.github.io/fairweather/index.html">Fairweather</a>
+    </footer>
+  </div>
+  
+  <script>
+    // This targets the single mist layer set at the top of the page
+    const mistOverlay = document.querySelector('.mist-overlay');
+    const mistFile = document.body.dataset.mist || 'mist1.webp';
+    mistOverlay.style.backgroundImage = `url('images/${mistFile}')`;
+
+    // Force reflow to help apply background
+    mistOverlay.style.display = 'none';
+    void mistOverlay.offsetHeight; // void ensures it's evaluated as a statement
+    mistOverlay.style.display = 'block';
+  </script>
+</body>
+</html>
