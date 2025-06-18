@@ -38,9 +38,9 @@ fairweather-productions/
 ## 🚀 Migration Plan (3-5 Days Total)
 
 ### Phase 1: Repository Setup (Day 1)
-- [ ] Create new GitHub repo: `fairweather-productions`
-- [ ] Copy Fairweather Studios files to root level (no changes needed)
-- [ ] Create `/sketchy/` folder and copy all Sketchy Ponderings files
+- [x] Create new GitHub repo: `fairweather-productions`
+- [x] Copy Fairweather Studios files to root level (no changes needed)
+- [x] Create `/sketchy/` folder and copy all Sketchy Ponderings files
 - [ ] Create `/second-gaze/` folder and copy all Second Gaze files
 - [ ] Add `CNAME` file with: `fairweatherproductions.com`
 - [ ] Test basic GitHub Pages deployment
