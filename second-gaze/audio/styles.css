@@ -1,0 +1,220 @@
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #2e2b29;
+  overflow-x: hidden;
+  position: relative;       /* sets stacking context */
+  z-index: 0;               /* allows z-index -1 to appear below */
+}
+
+.page-wrapper {
+  background: #f1ebe6;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1; /* Keep this to ensure content stacks above body */
+}
+
+.mist-overlay {
+  background-color: rgba(255, 0, 0, 0.0); /* Set to 0.0 or remove if you don't want a red tint. Remove entirely once working. */
+  background-size: 600px auto;
+  opacity: 0.9;
+    position: absolute; /* ✅ better than fixed for preventing scroll jump */
+  top: 0;
+  left: 0;
+  width: 100%; /* CORRECTED: Changed from 100vw to 100% to fit parent */
+  height: 100%;  /* CORRECTED: Changed from 100vh to 100% to fit parent */
+  animation: mistScroll 180s linear infinite;
+  pointer-events: none;
+  z-index: 0; /* CORRECTED: Set to 0 so it's behind `header`, `main`, `footer` which will have higher z-indexes or stack context */
+}
+
+@keyframes mistScroll {
+  from { background-position: 0 0; }
+  to { background-position: -500px 500px; }
+}
+
+header {
+  background: #111827;
+  color: #e5ded8;
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+  position: relative;
+  z-index: 10; /* Keep this high to ensure it's on top of mist */
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.nav-menu a {
+  color: #cbbfb6;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  left: 0;
+  bottom: -4px;
+  background: linear-gradient(90deg, #cbbfb6 0%, #d8b26e 50%, #cbbfb6 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.nav-menu a:hover {
+  color: #d8b26e;
+}
+
+.nav-menu a:hover::after {
+  transform: scaleX(1);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.1rem;
+  color: #cbbfb6;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+main.light-section {
+  position: relative; /* Ensure this is set for z-index to work relative to it */
+  min-height: 100vh;
+  z-index: 2; /* CORRECTED: Added z-index to ensure main content is above mist */
+}
+
+
+section.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start; /* prevent stretch! */
+  gap: 2rem;
+  padding: 3rem 2rem;
+  position: relative;
+  z-index: 5; /* Ensure gallery is above mist */
+}
+
+
+.artwork {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.7s ease, box-shadow 0.7s ease;
+}
+
+.artwork:hover {
+  /*transform: scale(1.15);*/
+  transform: translateY(-8px) scale(1.10);
+  /*box-shadow: 0 20px 40px rgba(0,0,0,0.2);*/
+  box-shadow: 0 0 30px rgba(216, 178, 110, 0.6);
+}
+
+.artwork-image {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.artwork-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -25%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 50%, /* You might want to increase the alpha (0.4) here for more visibility if needed */
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%; /* <<<<< ADD THIS BACK! */
+  /*background-position: -100% 0;  <<< THIS IS KEY */
+  transform: skewX(-20deg);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.artwork:hover .artwork-image::after {
+  animation: shimmer 3.5s ease-in-out forwards; /* Keep 'forwards' to ensure it stays at the end state */
+}
+
+.artwork-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+
+
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0; /* Start off-screen to the left (relative to background-size) */
+  }
+  100% {
+    background-position: 200% 0; /* End off-screen to the right (relative to background-size) */
+  }
+}
+
+.caption {
+  padding: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: #5a504a;
+  text-align: center;
+  background: #fdfaf6;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 3rem 1rem 2rem;
+  color: #9a8e87;
+  position: relative; /* Add position */
+  z-index: 3; /* Ensure footer is above mist */
+}
+
+a {
+  color: #a24b4b;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+/* Removed the extra closing brace here */
