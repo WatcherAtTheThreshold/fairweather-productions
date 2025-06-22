@@ -31,7 +31,8 @@
     }
 
     .mist-overlay {
-      background: url('images/mist-overlay.png') repeat;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.02) 1px, transparent 1px);
+      background-size: 20px 20px;
       opacity: 0.4;
       position: fixed;
       width: 100%;
@@ -51,6 +52,8 @@
       backdrop-filter: blur(5px);
       background: rgba(0, 0, 0, 0.2);
       margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -73,9 +76,35 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 1rem;
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto 3rem;
       padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-links {
+      display: contents;
     }
 
     .nav a {
@@ -94,13 +123,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
     }
 
     .nav a:hover {
       background: rgba(255, 255, 255, 0.15);
       border-color: rgba(255, 255, 255, 0.4);
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
     }
 
     .nav a.creative {
@@ -110,6 +156,33 @@
     .nav a.creative:hover {
       border-color: rgba(138, 43, 226, 0.8);
       background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: none !important;
     }
 
     .oracle-container {
@@ -117,6 +190,8 @@
       margin: 0 auto;
       padding: 2rem;
       text-align: center;
+      position: relative;
+      z-index: 2;
     }
 
     .oracle-intro {
@@ -300,6 +375,7 @@
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
+      z-index: 10;
     }
 
     .secret-whisper.show {
@@ -345,6 +421,8 @@
       backdrop-filter: blur(5px);
       background: rgba(0, 0, 0, 0.2);
       margin-top: 3rem;
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width: 768px) {
@@ -352,9 +430,39 @@
         font-size: 2.5rem;
       }
       
+      .mobile-menu-button {
+        display: block;
+      }
+
       .nav {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         gap: 0.8rem;
+        padding: 0 2rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       
       .nav a {
@@ -382,7 +490,11 @@
 
     @media (max-width: 480px) {
       .nav {
-        grid-template-columns: 1fr;
+        padding: 0 1rem;
+      }
+
+      .mobile-menu-button {
+        margin: 0 auto 1rem;
       }
 
       .phrase {
@@ -404,7 +516,7 @@
     <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
     <div class="nav-links" id="navLinks">
       <a href="./index.html">Home</a>
-      <a href="./gallery.html" class="current">Gallery</a>
+      <a href="./gallery.html">Gallery</a>
       <a href="./games.html" class="creative">Games</a>
       <a href="./music.html" class="creative">Music</a>
       <a href="./stories.html">Stories</a>
@@ -426,7 +538,9 @@
       <button id="revealButton" class="reveal-button" onclick="drawSigil()">Consult the Oracle</button>
       
       <div class="sigil-display" id="sigilBox">
-        <img id="sigilImage" class="sigil" src="" alt="Sigil">
+        <svg id="sigilImage" class="sigil" width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Default sigil will be replaced by random ones -->
+        </svg>
         <p id="sigilPhrase" class="phrase"></p>
       </div>
     </div>
@@ -443,14 +557,90 @@
   </footer>
 
 <script>
-  function getRandomSigilPath() {
-    const sigilCount = 17; // adjust this to match the number of sigil images you have
-    const index = Math.floor(Math.random() * sigilCount) + 1;
-    return `images/sigil${index}.png`;
+  // Collection of mystical sigils as SVG data
+  const sigilSVGs = [
+    // Sigil 1: Cosmic Eye
+    `<circle cx="150" cy="150" r="120" stroke="rgba(138, 43, 226, 0.6)" stroke-width="3" fill="none"/>
+     <circle cx="150" cy="150" r="80" stroke="rgba(222, 184, 135, 0.8)" stroke-width="2" fill="rgba(222, 184, 135, 0.1)"/>
+     <circle cx="150" cy="150" r="40" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" fill="rgba(138, 43, 226, 0.2)"/>
+     <circle cx="150" cy="150" r="15" fill="rgba(138, 43, 226, 0.9)"/>
+     <path d="M150 30 L150 70 M150 230 L150 270 M30 150 L70 150 M230 150 L270 150" stroke="rgba(222, 184, 135, 0.8)" stroke-width="3"/>`,
+    
+    // Sigil 2: Sacred Geometry
+    `<polygon points="150,30 210,90 270,150 210,210 150,270 90,210 30,150 90,90" stroke="rgba(138, 43, 226, 0.7)" stroke-width="2" fill="rgba(138, 43, 226, 0.05)"/>
+     <circle cx="150" cy="150" r="60" stroke="rgba(222, 184, 135, 0.8)" stroke-width="2" fill="none"/>
+     <path d="M150 90 L180 120 L210 150 L180 180 L150 210 L120 180 L90 150 L120 120 Z" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" fill="rgba(138, 43, 226, 0.1)"/>
+     <circle cx="150" cy="150" r="20" fill="rgba(222, 184, 135, 0.6)"/>`,
+    
+    // Sigil 3: Spiral Gateway
+    `<path d="M150 20 Q280 20 280 150 Q280 280 150 280 Q20 280 20 150 Q20 70 100 70 Q180 70 180 150 Q180 200 150 200" stroke="rgba(138, 43, 226, 0.6)" stroke-width="3" fill="none"/>
+     <circle cx="150" cy="150" r="80" stroke="rgba(222, 184, 135, 0.4)" stroke-width="1" fill="none"/>
+     <circle cx="150" cy="150" r="25" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" fill="rgba(138, 43, 226, 0.2)"/>
+     <circle cx="150" cy="150" r="8" fill="rgba(222, 184, 135, 0.9)"/>`,
+    
+    // Sigil 4: Crystalline Matrix
+    `<path d="M150 30 L230 80 L270 160 L230 220 L150 270 L70 220 L30 160 L70 80 Z" stroke="rgba(138, 43, 226, 0.6)" stroke-width="2" fill="none"/>
+     <path d="M150 60 L200 90 L230 140 L200 190 L150 220 L100 190 L70 140 L100 90 Z" stroke="rgba(222, 184, 135, 0.7)" stroke-width="2" fill="rgba(222, 184, 135, 0.1)"/>
+     <circle cx="150" cy="150" r="30" stroke="rgba(138, 43, 226, 0.8)" stroke-width="2" fill="rgba(138, 43, 226, 0.15)"/>
+     <path d="M150 30 L150 270 M70 80 L230 220 M230 80 L70 220" stroke="rgba(138, 43, 226, 0.4)" stroke-width="1"/>`,
+    
+    // Sigil 5: Lunar Phases
+    `<circle cx="150" cy="150" r="100" stroke="rgba(138, 43, 226, 0.5)" stroke-width="2" fill="none"/>
+     <circle cx="120" cy="150" r="25" fill="rgba(222, 184, 135, 0.3)"/>
+     <circle cx="150" cy="150" r="25" fill="rgba(222, 184, 135, 0.6)"/>
+     <circle cx="180" cy="150" r="25" fill="rgba(222, 184, 135, 0.9)"/>
+     <path d="M150 50 Q190 90 150 150 Q110 210 150 250 Q190 210 150 150 Q110 90 150 50" stroke="rgba(138, 43, 226, 0.6)" stroke-width="1.5" fill="none"/>`,
+    
+    // Sigil 6: Elemental Cross
+    `<circle cx="150" cy="150" r="120" stroke="rgba(138, 43, 226, 0.4)" stroke-width="1" fill="none"/>
+     <path d="M150 30 L150 270 M30 150 L270 150" stroke="rgba(138, 43, 226, 0.7)" stroke-width="4"/>
+     <circle cx="150" cy="150" r="40" stroke="rgba(222, 184, 135, 0.8)" stroke-width="3" fill="rgba(222, 184, 135, 0.1)"/>
+     <circle cx="150" cy="70" r="15" fill="rgba(138, 43, 226, 0.6)"/>
+     <circle cx="150" cy="230" r="15" fill="rgba(138, 43, 226, 0.6)"/>
+     <circle cx="70" cy="150" r="15" fill="rgba(138, 43, 226, 0.6)"/>
+     <circle cx="230" cy="150" r="15" fill="rgba(138, 43, 226, 0.6)"/>`,
+    
+    // Sigil 7: Infinity Weave
+    `<path d="M50 150 Q100 100 150 150 Q200 200 250 150 Q200 100 150 150 Q100 200 50 150" stroke="rgba(138, 43, 226, 0.6)" stroke-width="3" fill="none"/>
+     <circle cx="100" cy="125" r="20" stroke="rgba(222, 184, 135, 0.7)" stroke-width="2" fill="rgba(222, 184, 135, 0.1)"/>
+     <circle cx="200" cy="175" r="20" stroke="rgba(222, 184, 135, 0.7)" stroke-width="2" fill="rgba(222, 184, 135, 0.1)"/>
+     <circle cx="150" cy="150" r="10" fill="rgba(138, 43, 226, 0.8)"/>`,
+    
+    // Sigil 8: Tree of Life
+    `<circle cx="150" cy="80" r="20" stroke="rgba(138, 43, 226, 0.6)" stroke-width="2" fill="rgba(138, 43, 226, 0.1)"/>
+     <circle cx="120" cy="130" r="15" stroke="rgba(222, 184, 135, 0.7)" stroke-width="2" fill="rgba(222, 184, 135, 0.1)"/>
+     <circle cx="180" cy="130" r="15" stroke="rgba(222, 184, 135, 0.7)" stroke-width="2" fill="rgba(222, 184, 135, 0.1)"/>
+     <circle cx="150" cy="180" r="18" stroke="rgba(138, 43, 226, 0.7)" stroke-width="2" fill="rgba(138, 43, 226, 0.15)"/>
+     <circle cx="150" cy="230" r="22" stroke="rgba(222, 184, 135, 0.8)" stroke-width="2" fill="rgba(222, 184, 135, 0.2)"/>
+     <path d="M150 100 L120 115 M150 100 L180 115 M135 145 L150 165 M165 145 L150 165 M150 198 L150 208" stroke="rgba(138, 43, 226, 0.5)" stroke-width="2"/>`,
+    
+    // Sigil 9: Mandala Star
+    `<circle cx="150" cy="150" r="100" stroke="rgba(138, 43, 226, 0.3)" stroke-width="1" fill="none"/>
+     <path d="M150 50 L170 110 L230 110 L185 150 L205 210 L150 175 L95 210 L115 150 L70 110 L130 110 Z" stroke="rgba(138, 43, 226, 0.6)" stroke-width="2" fill="rgba(138, 43, 226, 0.1)"/>
+     <circle cx="150" cy="150" r="35" stroke="rgba(222, 184, 135, 0.8)" stroke-width="2" fill="rgba(222, 184, 135, 0.15)"/>
+     <circle cx="150" cy="150" r="12" fill="rgba(138, 43, 226, 0.8)"/>`,
+    
+    // Sigil 10: Quantum Field
+    `<circle cx="150" cy="150" r="80" stroke="rgba(138, 43, 226, 0.4)" stroke-width="1" fill="none"/>
+     <circle cx="150" cy="150" r="5" fill="rgba(222, 184, 135, 0.9)"/>
+     <circle cx="130" cy="120" r="3" fill="rgba(138, 43, 226, 0.7)"/>
+     <circle cx="170" cy="180" r="3" fill="rgba(138, 43, 226, 0.7)"/>
+     <circle cx="180" cy="120" r="4" fill="rgba(222, 184, 135, 0.6)"/>
+     <circle cx="120" cy="180" r="4" fill="rgba(222, 184, 135, 0.6)"/>
+     <circle cx="150" cy="100" r="2" fill="rgba(138, 43, 226, 0.5)"/>
+     <circle cx="150" cy="200" r="2" fill="rgba(138, 43, 226, 0.5)"/>
+     <circle cx="100" cy="150" r="2" fill="rgba(138, 43, 226, 0.5)"/>
+     <circle cx="200" cy="150" r="2" fill="rgba(138, 43, 226, 0.5)"/>
+     <path d="M150 150 Q130 120 150 100 Q170 120 180 120 Q180 140 200 150 Q180 160 180 180 Q160 180 150 200 Q140 180 120 180 Q120 160 100 150 Q120 140 120 120 Q140 120 150 150" stroke="rgba(138, 43, 226, 0.3)" stroke-width="1" fill="none"/>`,
+  ];
+
+  function getRandomSigil() {
+    const randomIndex = Math.floor(Math.random() * sigilSVGs.length);
+    return sigilSVGs[randomIndex];
   }
 
   async function drawSigil() {
-    const img = document.getElementById('sigilImage');
+    const sigilElement = document.getElementById('sigilImage');
     const phrase = document.getElementById('sigilPhrase');
     const input = document.getElementById('questionInput');
     const button = document.getElementById('revealButton');
@@ -466,8 +656,8 @@
     }
 
     // Loading state with immediate random sigil
-    img.src = getRandomSigilPath(); // Show random sigil immediately
-    img.classList.add('visible');
+    sigilElement.innerHTML = getRandomSigil(); // Show random sigil immediately
+    sigilElement.classList.add('visible');
     
     // Mystical loading messages that cycle every few seconds
     const loadingMessages = [
@@ -491,6 +681,8 @@
     const messageInterval = setInterval(() => {
       messageIndex = (messageIndex + 1) % loadingMessages.length;
       phrase.textContent = loadingMessages[messageIndex];
+      // Change sigil every message cycle for extra mysticism
+      sigilElement.innerHTML = getRandomSigil();
     }, 4000);
 
     try {
@@ -514,7 +706,8 @@
       phrase.classList.remove('loading');
       phrase.textContent = data.response || 'The veil shimmers but reveals nothing today. Perhaps the question seeks a different moment.';
 
-      // Keep the current random sigil (no need to change)
+      // Show final sigil
+      sigilElement.innerHTML = getRandomSigil();
     } catch (err) {
       clearInterval(messageInterval);
       phrase.classList.remove('loading');
@@ -524,11 +717,14 @@
       } else {
         phrase.textContent = '⚠️ The digital veil has fallen. The oracle retreats to its ethereal realm.';
       }
+      
+      // Show a contemplative sigil for errors
+      sigilElement.innerHTML = getRandomSigil();
     }
 
     // Reset after 16 seconds
     setTimeout(() => {
-      img.classList.remove('visible');
+      sigilElement.classList.remove('visible');
       phrase.classList.remove('visible');
       input.value = '';
       input.placeholder = "What question weighs on your mind?...";
@@ -543,6 +739,37 @@
     if (event.key === 'Enter') {
       event.preventDefault();
       drawSigil();
+    }
+  });
+
+  // Mobile menu functionality
+  const mobileMenuButton = document.getElementById('mobileMenuButton');
+  const navLinks = document.getElementById('navLinks');
+
+  mobileMenuButton.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    
+    // Update button text and icon
+    if (navLinks.classList.contains('open')) {
+      mobileMenuButton.textContent = '✕ Close';
+    } else {
+      mobileMenuButton.textContent = '☰ Menu';
+    }
+  });
+
+  // Close mobile menu when clicking on a link
+  navLinks.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      navLinks.classList.remove('open');
+      mobileMenuButton.textContent = '☰ Menu';
+    }
+  });
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav')) {
+      navLinks.classList.remove('open');
+      mobileMenuButton.textContent = '☰ Menu';
     }
   });
 
