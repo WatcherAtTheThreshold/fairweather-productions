@@ -4,8 +4,323 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — The Second Gaze</title>
-  <link rel="stylesheet" href="css/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #2e2b29;
+      overflow-x: hidden;
+      position: relative;
+      z-index: 0;
+    }
+
+    .page-wrapper {
+      background: #f1ebe6;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mist-overlay {
+      background-size: 600px auto;
+      opacity: 0.9;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      animation: mistScroll 180s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    header {
+      background: #111827;
+      color: #e5ded8;
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .nav-menu {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-menu a {
+      color: #cbbfb6;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      left: 0;
+      bottom: -4px;
+      background: linear-gradient(90deg, #cbbfb6 0%, #d8b26e 50%, #cbbfb6 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+      transform-origin: center;
+    }
+
+    .nav-menu a:hover {
+      color: #d8b26e;
+    }
+
+    .nav-menu a:hover::after {
+      transform: scaleX(1);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 1.1rem;
+      color: #cbbfb6;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    main.light-section {
+      position: relative;
+      min-height: 100vh;
+      z-index: 2;
+      padding: 2rem 1rem;
+    }
+
+    /* Contact Form Styling */
+    .contact-section {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      position: relative;
+      z-index: 5;
+      border: 1px solid rgba(203, 191, 182, 0.3);
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #d8b26e, #cbbfb6, #d8b26e);
+      border-radius: 17px;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      color: #2e2b29;
+      text-align: center;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .form-subtitle {
+      text-align: center;
+      color: #5a504a;
+      font-style: italic;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .form-label {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: #2e2b29;
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #cbbfb6;
+      border-radius: 8px;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: all 0.3s ease;
+      color: #2e2b29;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #d8b26e;
+      box-shadow: 0 0 0 3px rgba(216, 178, 110, 0.15);
+      background: rgba(255, 255, 255, 1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .form-button {
+      width: 100%;
+      padding: 1.2rem 2rem;
+      background: linear-gradient(135deg, #2e2b29 0%, #5a504a 100%);
+      color: #e5ded8;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .form-button:hover {
+      background: linear-gradient(135deg, #d8b26e 0%, #cbbfb6 100%);
+      color: #2e2b29;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(216, 178, 110, 0.3);
+    }
+
+    .form-button:active {
+      transform: translateY(0);
+    }
+
+    .form-button:disabled {
+      background: #9a8e87;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Hide honeypot field */
+    .honeypot {
+      display: none !important;
+      visibility: hidden !important;
+      position: absolute !important;
+      left: -9999px !important;
+    }
+
+    /* Email link styling */
+    .email-link {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #5a504a;
+    }
+
+    .email-link a {
+      color: #d8b26e;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .email-link a:hover {
+      color: #2e2b29;
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 3rem 1rem 2rem;
+      color: #9a8e87;
+      position: relative;
+      z-index: 3;
+    }
+
+    footer a {
+      color: #a24b4b;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .contact-section {
+        margin: 1rem;
+        padding: 2rem;
+      }
+
+      .form-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-menu {
+        gap: 1rem;
+        font-size: 1rem;
+      }
+
+      header {
+        padding: 3rem 1rem 1.5rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .contact-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body data-mist="mist1.webp">
   <div class="page-wrapper">
@@ -24,43 +339,88 @@
     </header>
 
     <main class="light-section">
-      <section class="content" style="max-width: 700px; margin: 4rem auto; padding: 2rem; background: rgba(255,255,255,0.9); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; z-index: 1;">
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 1.5rem;">Get in Touch</h2>
-        
-        <p style="line-height: 1.6; font-size: 1.05rem; margin-bottom: 2rem;">
-          Whether you're inquiring about a painting, a commission, a show, or simply want to share kind words, you're warmly invited to reach out.
+      <section class="contact-section">
+        <h2 class="form-title">Get in Touch</h2>
+        <p class="form-subtitle">
+          Whether you're inquiring about a painting, a commission, or simply want to share kind words, you're warmly invited to reach out.
         </p>
+        
+        <form class="contact-form" action="https://formsubmit.co/monahanhunt@gmail.com" method="POST">
+          <div class="form-group">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" id="name" name="name" class="form-input" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" name="email" class="form-input" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject" class="form-label">Nature of Inquiry</label>
+            <select id="subject" name="subject" class="form-select" required>
+              <option value="">Please choose...</option>
+              <option value="artwork">About an Artwork</option>
+              <option value="commission">Commission Inquiry</option>
+              <option value="exhibition">Exhibition or Show</option>
+              <option value="press">Press & Media</option>
+              <option value="general">General Question</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="message" class="form-label">Your Message</label>
+            <textarea id="message" name="message" class="form-textarea" 
+                    placeholder="Share your thoughts, questions, or inquiry..." required></textarea>
+          </div>
 
-        <form style="display: flex; flex-direction: column; gap: 1.5rem;">
-          <input type="text" name="name" placeholder="Your Name" required style="padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;">
-          <input type="email" name="email" placeholder="Your Email" required style="padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;">
-          <textarea name="message" rows="5" placeholder="Your Message" required style="padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;"></textarea>
-          <button type="submit" disabled style="padding: 0.8rem 1.2rem; background-color: #111827; color: white; font-size: 1rem; border: none; border-radius: 6px; cursor: not-allowed; opacity: 0.6;">
-            Submit (Coming Soon)
-          </button>
+          <!-- FormSubmit.co hidden fields -->
+          <input type="text" name="_honey" class="honeypot" tabindex="-1">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://watcheratthethreshold.github.io/fairweather-productions/second-gaze/thank-you.html">
+          <input type="hidden" name="_subject" value="✨ New Contact from The Second Gaze">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_autoresponse" value="Thank you for reaching out to The Second Gaze! Shannon typically responds within 24-48 hours.">
+          
+          <button type="submit" class="form-button">Send Message</button>
         </form>
 
-        <p style="margin-top: 2rem; font-size: 0.95rem; color: #777;">
-          Prefer email? You can also reach us directly at <a href="mailto:shannon@example.com">shannon@example.com</a>
-        </p>
+        <div class="email-link">
+          <p>Prefer email? You can also reach Shannon directly at <a href="mailto:monahanhunt@gmail.com">monahanhunt@gmail.com</a></p>
+        </div>
       </section>
     </main>
 
-     <footer>
-    © 2025 The Second Gaze | In collaboration with <a href="../sketchy-ponderings/" style="text-decoration: none;">Sketchy Ponderings</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — made of quiet fire.
-</footer>
+    <footer>
+      © 2025 The Second Gaze | In collaboration with <a href="../sketchy/" style="text-decoration: none;">Sketchy Ponderings</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — made of quiet fire.
+    </footer>
   </div>
   
   <script>
-    // This targets the single mist layer set at the top of the page
+    // Mist overlay functionality
     const mistOverlay = document.querySelector('.mist-overlay');
     const mistFile = document.body.dataset.mist || 'mist1.webp';
     mistOverlay.style.backgroundImage = `url('images/${mistFile}')`;
 
     // Force reflow to help apply background
     mistOverlay.style.display = 'none';
-    void mistOverlay.offsetHeight; // void ensures it's evaluated as a statement
+    void mistOverlay.offsetHeight;
     mistOverlay.style.display = 'block';
+
+    // Form submission feedback
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+      const button = this.querySelector('.form-button');
+      const originalText = button.textContent;
+      button.textContent = 'Sending Message...';
+      button.disabled = true;
+      
+      // Re-enable after a delay if submission fails
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+      }, 5000);
+    });
   </script>
 </body>
 </html>
