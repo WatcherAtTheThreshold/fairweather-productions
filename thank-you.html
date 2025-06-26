@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Received | Fairweather Studios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(
+                to bottom,
+                rgba(25, 35, 70, 1) 0%,
+                rgba(15, 25, 60, 1) 25%,
+                rgba(10, 20, 50, 1) 50%,
+                rgba(15, 25, 60, 1) 75%,
+                rgba(25, 35, 70, 1) 100%
+            );
+            background-attachment: fixed;
+            color: #e8e8e8;
+            overflow-x: hidden;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Floating particles animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: radial-gradient(circle, rgba(222, 184, 135, 0.9) 0%, rgba(222, 184, 135, 0.4) 50%, transparent 100%);
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+            box-shadow: 0 0 3px rgba(222, 184, 135, 0.6);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0.3);
+            }
+            25% { 
+                opacity: 0.8; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.2);
+            }
+            75% { 
+                opacity: 0.6; 
+                transform: scale(0.8);
+            }
+        }
+
+        /* Navigation - matching other pages exactly */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(25, 35, 70, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(222, 184, 135, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #deb887;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(222, 184, 135, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Main content - centered */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Thank you card */
+        .thank-you-card {
+            background: rgba(248, 240, 227, 0.95);
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(222, 184, 135, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            transform: translateY(0);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .thank-you-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .thank-you-title {
+            font-size: 2.5rem;
+            color: #8b4513;
+            margin-bottom: 1rem;
+            font-weight: normal;
+        }
+
+        .thank-you-message {
+            font-size: 1.2rem;
+            color: #5d4037;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .response-info {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #deb887;
+        }
+
+        .response-info p {
+            color: #5d4037;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .response-info p:last-child {
+            margin-bottom: 0;
+            font-style: italic;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Georgia', serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b4513, #deb887);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(222, 184, 135, 0.2);
+            color: #8b4513;
+            border: 2px solid #deb887;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Sparkle decorations */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #deb887 0%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkle 2s infinite ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(0.8);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.2);
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            position: relative;
+            z-index: 3;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #deb887;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .thank-you-card {
+                padding: 3rem 2rem;
+                margin: 0 1rem;
+            }
+
+            .thank-you-title {
+                font-size: 2rem;
+            }
+
+            .thank-you-message {
+                font-size: 1.1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .thank-you-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .thank-you-title {
+                font-size: 1.8rem;
+            }
+
+            .thank-you-icon {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            nav {
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="thank-you-card">
+            <div class="thank-you-icon">✨</div>
+            
+            <h1 class="thank-you-title">Sacred Message Received</h1>
+            
+            <p class="thank-you-message">
+                Your words have been carried across the digital threshold and into our sacred space. 
+                We feel honored by your connection and the trust you've placed in us by reaching out.
+            </p>
+
+            <div class="response-info">
+                <p><strong>What happens next:</strong></p>
+                <p>We typically respond within 24-48 hours during our creative hours.</p>
+                <p>Your message will be personally read and thoughtfully considered.</p>
+                <p>If your inquiry requires immediate attention, we sense the urgency and will respond accordingly.</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="index.html" class="btn btn-primary">Return to Fairweather</a>
+                <a href="gallery.html" class="btn btn-secondary">Explore the Gallery</a>
+            </div>
+
+            <!-- Decorative sparkles -->
+            <div class="sparkle" style="top: 20px; right: 30px; animation-delay: 0.5s;"></div>
+            <div class="sparkle" style="bottom: 30px; left: 20px; animation-delay: 1s;"></div>
+            <div class="sparkle" style="top: 50%; right: 15px; animation-delay: 0.2s;"></div>
+            <div class="sparkle" style="bottom: 60px; right: 50%; animation-delay: 1.5s;"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/sketchy/">Sketchy Ponderings</a>
+            <a href="/second-gaze/">The Second Gaze</a>
+            <a href="#newsletter">Newsletter</a>
+        </div>
+        <p>
+            © 2025 Fairweather Studios • Jessop & Shannon Hunt • Where Art & Love Converge
+        </p>
+    </footer>
+
+    <script>
+        // Create twinkling star particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 60; // Slightly fewer for thank you page
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Optional: Auto-redirect to home after a long time (commented out by default)
+        // setTimeout(() => {
+        //     window.location.href = 'index.html';
+        // }, 30000); // 30 seconds
+    </script>
+</body>
+</html>
