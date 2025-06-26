@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Message Received — The Second Gaze</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #2e2b29;
+      overflow-x: hidden;
+      position: relative;
+      z-index: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-wrapper {
+      background: #f1ebe6;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mist-overlay {
+      background-size: 600px auto;
+      opacity: 0.9;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      animation: mistScroll 180s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    header {
+      background: #111827;
+      color: #e5ded8;
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .nav-menu {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      flex-wrap: wrap;
+    }
+
+    .nav-menu a {
+      color: #cbbfb6;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      left: 0;
+      bottom: -4px;
+      background: linear-gradient(90deg, #cbbfb6 0%, #d8b26e 50%, #cbbfb6 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+      transform-origin: center;
+    }
+
+    .nav-menu a:hover {
+      color: #d8b26e;
+    }
+
+    .nav-menu a:hover::after {
+      transform: scaleX(1);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 1.1rem;
+      color: #cbbfb6;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* Main content - centered */
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* Thank you card */
+    .thank-you-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 4rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(203, 191, 182, 0.4);
+      max-width: 650px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      transform: translateY(0);
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .thank-you-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #d8b26e, #cbbfb6, #d8b26e);
+      border-radius: 21px;
+      z-index: -1;
+      opacity: 0.2;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .thank-you-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: float 3s ease-in-out infinite;
+      color: #d8b26e;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .thank-you-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      color: #2e2b29;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .thank-you-message {
+      font-size: 1.2rem;
+      color: #5a504a;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .response-info {
+      background: rgba(216, 178, 110, 0.08);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      border-left: 4px solid #d8b26e;
+      text-align: left;
+    }
+
+    .response-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      color: #2e2b29;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .response-info p {
+      color: #5a504a;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .response-info p:last-child {
+      margin-bottom: 0;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    /* Auto-redirect notice */
+    .redirect-notice {
+      background: rgba(203, 191, 182, 0.15);
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(203, 191, 182, 0.3);
+    }
+
+    .redirect-notice p {
+      color: #5a504a;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .countdown {
+      font-weight: bold;
+      color: #d8b26e;
+    }
+
+    /* Action buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2e2b29 0%, #5a504a 100%);
+      color: #e5ded8;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #d8b26e 0%, #cbbfb6 100%);
+      color: #2e2b29;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(216, 178, 110, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(216, 178, 110, 0.1);
+      color: #2e2b29;
+      border: 2px solid #cbbfb6;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(216, 178, 110, 0.2);
+      border-color: #d8b26e;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(203, 191, 182, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Subtle decorative elements */
+    .decorative-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #d8b26e;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        opacity: 0.4; 
+        transform: scale(0.8);
+      }
+      50% { 
+        opacity: 0.8; 
+        transform: scale(1.1);
+      }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 3rem 1rem 2rem;
+      color: #9a8e87;
+      position: relative;
+      z-index: 3;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: #a24b4b;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        gap: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .thank-you-card {
+        padding: 3rem 2rem;
+        margin: 0 1rem;
+      }
+
+      .thank-you-title {
+        font-size: 2.2rem;
+      }
+
+      .thank-you-message {
+        font-size: 1.1rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-menu {
+        gap: 1rem;
+        font-size: 1rem;
+      }
+
+      header {
+        padding: 3rem 1rem 1.5rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .thank-you-card {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .thank-you-title {
+        font-size: 1.8rem;
+      }
+
+      .thank-you-icon {
+        font-size: 3rem;
+      }
+
+      .response-info {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body data-mist="mist1.webp">
+  <div class="page-wrapper">
+    <div class="mist-overlay"></div>
+    
+    <header>
+      <nav class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="cards.html">Cards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <h1>The Second Gaze</h1>
+      <p class="subtitle">Paintings by Shannon Hunt — Faces, spirits, and memory in pigment and light</p>
+    </header>
+
+    <main class="main-content">
+      <div class="thank-you-card">
+        <div class="thank-you-icon">✨</div>
+        
+        <h1 class="thank-you-title">Message Received</h1>
+        
+        <p class="thank-you-message">
+          Thank you for reaching out to The Second Gaze. Your message has been received and Shannon will respond personally. 
+          We appreciate your interest in the work and the time you've taken to connect.
+        </p>
+
+        <div class="response-info">
+          <h3>What to expect:</h3>
+          <p>Shannon typically responds to inquiries within 24-48 hours during studio hours.</p>
+          <p>For commission inquiries, she'll discuss availability, pricing, and creative direction.</p>
+          <p>All messages are read personally and thoughtfully considered.</p>
+          <p>If your inquiry is time-sensitive, this will be noted and prioritized accordingly.</p>
+        </div>
+
+        <div class="redirect-notice">
+          <p>You'll be automatically returned to the gallery in <span class="countdown" id="countdown">12</span> seconds, or explore now using the links below.</p>
+        </div>
+
+        <div class="action-buttons">
+          <a href="index.html" class="btn btn-primary">Return to Gallery</a>
+          <a href="about.html" class="btn btn-secondary">About Shannon</a>
+        </div>
+
+        <!-- Subtle decorative elements -->
+        <div class="decorative-dot" style="top: 25px; right: 35px; animation-delay: 0.5s;"></div>
+        <div class="decorative-dot" style="bottom: 35px; left: 25px; animation-delay: 1.2s;"></div>
+        <div class="decorative-dot" style="top: 60%; right: 20px; animation-delay: 0.8s;"></div>
+        <div class="decorative-dot" style="bottom: 50px; right: 45%; animation-delay: 1.5s;"></div>
+      </div>
+    </main>
+
+    <footer>
+      © 2025 The Second Gaze | In collaboration with <a href="../sketchy/" style="text-decoration: none;">Sketchy Ponderings</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — made of quiet fire.
+    </footer>
+  </div>
+  
+  <script>
+    // Mist overlay functionality
+    const mistOverlay = document.querySelector('.mist-overlay');
+    const mistFile = document.body.dataset.mist || 'mist1.webp';
+    mistOverlay.style.backgroundImage = `url('images/${mistFile}')`;
+
+    // Force reflow to help apply background
+    mistOverlay.style.display = 'none';
+    void mistOverlay.offsetHeight;
+    mistOverlay.style.display = 'block';
+
+    // Auto-redirect countdown
+    let timeLeft = 12; // 12 seconds
+    const countdownElement = document.getElementById('countdown');
+    
+    const countdown = setInterval(() => {
+      timeLeft--;
+      countdownElement.textContent = timeLeft;
+      
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        window.location.href = 'index.html';
+      }
+    }, 1000);
+
+    // Clear countdown if user clicks any navigation link
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        clearInterval(countdown);
+      });
+    });
+  </script>
+</body>
+</html>
