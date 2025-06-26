@@ -102,11 +102,17 @@
             position: relative;
         }
 
-        .nav-links a:hover,
-        .nav-links a.current {
+        .nav-links a:hover {
             color: #fff;
             background: rgba(222, 184, 135, 0.1);
             transform: translateY(-2px);
+        }
+
+        /* FIXED: Specific styling for current page */
+        .nav-links a.current {
+            color: #fff !important;
+            background: rgba(222, 184, 135, 0.2) !important;
+            transform: translateY(-1px);
         }
 
         /* Header section */
@@ -233,7 +239,10 @@
 
         /* Hide honeypot field */
         .honeypot {
-            display: none;
+            display: none !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
         }
 
         /* Sparkle decoration */
@@ -398,6 +407,8 @@
         <!-- Contact Form - Now centered -->
         <div class="contact-form-section">
             <h2 class="form-title">Send a Sacred Message</h2>
+            
+            <!-- IMPROVED FormSubmit.co form with better redirect handling -->
             <form class="contact-form" action="https://formsubmit.co/monahanhunt@gmail.com" method="POST">
                 <div class="form-group">
                     <label for="name" class="form-label">Your Name</label>
@@ -427,14 +438,17 @@
                             placeholder="Share your thoughts, questions, or sacred inquiry..." required></textarea>
                 </div>
 
-                <!-- FormSubmit.co hidden fields -->
-                <input type="text" name="_honey" class="honeypot">
-                <input type="hidden" name="_next" value="./thank-you.html">
-                <input type="hidden" name="_subject" value="New Contact from Fairweather Studios">
+                <!-- IMPROVED FormSubmit.co hidden fields -->
+                <input type="text" name="_honey" class="honeypot" tabindex="-1">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://watcheratthethreshold.github.io/fairweather-productions/thank-you.html">
+                <input type="hidden" name="_subject" value="✨ New Contact from Fairweather Studios">
                 <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_autoresponse" value="Thank you for reaching out to Fairweather Studios! We typically respond within 24-48 hours.">
                 
                 <button type="submit" class="form-button">Send Sacred Message</button>
             </form>
+            
             <!-- Decorative sparkles -->
             <div class="sparkle" style="top: 30px; right: 40px; animation-delay: 0.8s;"></div>
             <div class="sparkle" style="bottom: 50px; left: 30px; animation-delay: 1.2s;"></div>
@@ -493,6 +507,13 @@
         // Initialize particles when page loads
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
+        });
+
+        // Form submission feedback
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            const button = this.querySelector('.form-button');
+            button.textContent = 'Sending Sacred Message...';
+            button.disabled = true;
         });
     </script>
 </body>
