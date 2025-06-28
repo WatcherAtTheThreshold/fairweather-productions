@@ -5,16 +5,16 @@
 - [x] Set up basic folder structure 
 - [x] Migrate Fairweather Studios to root level
 - [x] Copy Sketchy Ponderings to `/sketchy-ponderings/` folder ✅ WORKING
-- [ ] Copy The Second Gaze to `/second-gaze/` folder (IN PROGRESS)
-- [ ] Test basic GitHub Pages deployment at `watcheratthethreshold.github.io/fairweather-productions`
+- [x] Copy The Second Gaze to `/second-gaze/` folder (IN PROGRESS)
+- [x] Test basic GitHub Pages deployment at `watcheratthethreshold.github.io/fairweather-productions`
 - [ ] Add CNAME file (after testing)
 - [ ] SquareSpace DNS setup (after testing)
 
 ## Phase 2: Testing & Cross-Site Links
-- [ ] Test all three sites work at GitHub URL
-- [ ] Update cross-site links in Fairweather Studios
-- [ ] Update cross-site links in The Second Gaze  
-- [ ] Test cross-site navigation
+- [x] Test all three sites work at GitHub URL
+- [x] Update cross-site links in Fairweather Studios
+- [x] Update cross-site links in The Second Gaze  
+- [x] Test cross-site navigation
 
 ## Phase 3: Domain Migration
 - [ ] Set up SquareSpace DNS records
