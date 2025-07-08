@@ -149,6 +149,7 @@
             animation: revealCard 0.8s ease forwards;
             color: #333;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .offering-card:nth-child(1) { animation-delay: 0.1s; }
@@ -176,37 +177,9 @@
         .offering-title {
             font-size: 1.4rem;
             color: #8b4513;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             font-weight: 600;
             line-height: 1.3;
-        }
-
-        .offering-subtitle {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-
-        .offering-image {
-            width: 100%;
-            border-radius: 8px;
-            margin: 1rem 0;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .offering-card:hover .offering-image {
-            transform: scale(1.02);
-        }
-
-        .offering-details {
-            margin: 1rem 0;
-            line-height: 1.6;
-        }
-
-        .offering-details strong {
-            color: #8b4513;
         }
 
         .offering-description {
@@ -215,134 +188,67 @@
             color: #555;
         }
 
-        .offering-actions {
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .offering-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            color: #8b4513;
-            cursor: pointer;
-        }
-
-        .offering-checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .price-display {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #8b4513;
-            margin-left: auto;
-        }
-
-        /* Cart Summary */
-        .cart-summary {
-            position: sticky;
-            bottom: 2rem;
-            background: rgba(253, 252, 249, 0.98);
-            border: 2px solid rgba(139, 69, 19, 0.4);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 2rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(10px);
-            display: none;
-            z-index: 50;
-        }
-
-        .cart-summary.show {
-            display: block;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .cart-title {
-            font-size: 1.3rem;
-            color: #8b4513;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .cart-items {
-            margin-bottom: 1rem;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(139, 69, 19, 0.1);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #8b4513;
-            padding-top: 1rem;
-            border-top: 2px solid rgba(139, 69, 19, 0.2);
-        }
-
-        .cart-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .cart-btn {
-            flex: 1;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        /* Etsy Shop Embed */
+        .etsy-shop-section {
+            position: relative;
+            z-index: 5;
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 2rem;
             text-align: center;
-            display: inline-block;
         }
 
-        .cart-btn.primary {
+        .etsy-shop-title {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #deb887, #f4e4bc, #cd853f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .etsy-shop-subtitle {
+            font-size: 1.2rem;
+            color: #c0c0c0;
+            margin-bottom: 2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .etsy-embed-container {
+            background: rgba(253, 252, 249, 0.95);
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .etsy-mini {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .shop-link {
+            display: inline-block;
+            padding: 1rem 2rem;
             background: linear-gradient(45deg, #8B4513, #A0522D);
             color: #f4e4bc;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
         }
 
-        .cart-btn.primary:hover {
+        .shop-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
             background: linear-gradient(45deg, #A0522D, #CD853F);
-        }
-
-        .cart-btn.secondary {
-            background: #13C3FF;
-            color: white;
-        }
-
-        .cart-btn.secondary:hover {
-            background: #00B2E6;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(19, 195, 255, 0.3);
         }
 
         /* Sparkles */
@@ -434,29 +340,13 @@
                 padding: 1.5rem;
             }
 
-            .offering-actions {
-                gap: 0.8rem;
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .price-display {
-                margin-left: 0;
-                text-align: center;
-            }
-
-            .cart-summary {
+            .etsy-embed-container {
+                padding: 1rem;
                 margin: 1rem;
-                position: fixed;
-                bottom: 1rem;
-                left: 1rem;
-                right: 1rem;
-                max-height: 60vh;
-                overflow-y: auto;
             }
 
-            .cart-actions {
-                flex-direction: column;
+            .etsy-mini {
+                height: 500px;
             }
         }
 
@@ -483,13 +373,17 @@
                 font-size: 1.2rem;
             }
 
-            .offering-checkbox {
-                justify-content: center;
+            .etsy-shop-title {
+                font-size: 2rem;
             }
 
-            .cart-btn {
-                padding: 0.7rem 1.2rem;
-                font-size: 0.9rem;
+            .etsy-embed-container {
+                padding: 0.8rem;
+                margin: 0.5rem;
+            }
+
+            .etsy-mini {
+                height: 400px;
             }
         }
     </style>
@@ -514,118 +408,80 @@
     </header>
 
     <main class="gallery-container">
+        <div class="etsy-shop-section">
+            <h2 class="etsy-shop-title">Sacred Art Shop</h2>
+            <p class="etsy-shop-subtitle">Browse our complete collection of prints, originals, and sacred offerings</p>
+            
+            <div class="etsy-embed-container">
+                <!-- Etsy Mini Shop Embed -->
+                <script type="text/javascript">
+                (function(d, s, id) {
+                    var js, ejs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = "https://widgets.etsy.com/v2/etsy_mini_shop.js";
+                    ejs.parentNode.insertBefore(js, ejs);
+                }(document, 'script', 'etsy-js'));
+                </script>
+                
+                <!-- Replace 'YourShopName' with your actual Etsy shop name -->
+                <div id="etsy-widget" 
+                     data-shop-name="FairweatherStudios" 
+                     data-width="100%" 
+                     data-height="600" 
+                     data-currency="USD"
+                     data-show-price="true"
+                     data-show-shop-name="true"
+                     data-items-per-row="3"
+                     data-background-color="white"
+                     data-text-color="#333"
+                     style="border: none; border-radius: 10px;">
+                </div>
+                
+                <!-- Fallback if Etsy widget doesn't load -->
+                <noscript>
+                    <iframe class="etsy-mini" 
+                            src="https://www.etsy.com/shop/FairweatherStudios" 
+                            title="Fairweather Studios Etsy Shop">
+                    </iframe>
+                </noscript>
+                
+                <a href="https://www.etsy.com/shop/FairweatherStudios" 
+                   target="_blank" 
+                   class="shop-link">
+                    Visit Full Shop on Etsy
+                </a>
+            </div>
+        </div>
+        
+        <!-- Featured Highlights Section -->
         <div class="gallery-grid">
-            <!-- Offering Card 1 -->
             <div class="offering-card">
-                <h2 class="offering-title">Potnia Theron – Guardian of Wild Places</h2>
-                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on Somerset Velvet</p>
-                <img src="images/PotniaTheron.webp" alt="Potnia Theron Print" class="offering-image">
-                <div class="offering-details">
-                    <strong>Price:</strong> $45<br>
-                    <strong>Edition:</strong> Limited – Only 7 available<br>
-                    <strong>Includes:</strong> Signed print, protective sleeve, handwritten blessing note
-                </div>
+                <h2 class="offering-title">Why Shop Our Sacred Offerings?</h2>
                 <div class="offering-description">
-                    <strong>Description:</strong><br>
-                    A wild guardian spirit, protector of untamed places and those who walk between the worlds. This print holds the energy of fierce compassion and rooted grace.
-                </div>
-                <div class="offering-actions">
-                    <label class="offering-checkbox">
-                        <input type="checkbox" data-item="potnia-theron" data-price="45" data-name="Potnia Theron Print">
-                        Add to Selection
-                    </label>
-                    <div class="price-display">$45</div>
-                </div>
-                <div class="sparkle" style="top: 20px; right: 30px; animation-delay: 0.5s;"></div>
-            </div>
-
-            <!-- Offering Card 2 -->
-            <div class="offering-card">
-                <h2 class="offering-title">Under the Aegis of Inanna – Divine Protection</h2>
-                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on archival paper</p>
-                <img src="images/under-the-aegis-of-inanna.webp" alt="Under the Aegis of Inanna Print" class="offering-image">
-                <div class="offering-details">
-                    <strong>Price:</strong> $35<br>
-                    <strong>Edition:</strong> Limited – Only 10 available<br>
-                    <strong>Includes:</strong> Signed print, protective sleeve, sacred story card
-                </div>
-                <div class="offering-description">
-                    <strong>Description:</strong><br>
-                    Protected by the ancient goddess of love and war, this piece explores the duality of feminine power and divine protection. Infused with ancient wisdom and contemporary vision.
-                </div>
-                <div class="offering-actions">
-                    <label class="offering-checkbox">
-                        <input type="checkbox" data-item="inanna" data-price="35" data-name="Under the Aegis of Inanna Print">
-                        Add to Selection
-                    </label>
-                    <div class="price-display">$35</div>
+                    <strong>✨ Each piece includes:</strong><br>
+                    • Museum-quality giclée prints<br>
+                    • Protective archival sleeves<br>
+                    • Artist-signed authenticity<br>
+                    • Sacred blessing or story card<br>
+                    • Carefully packaged with love
                 </div>
             </div>
 
-            <!-- Offering Card 3 -->
             <div class="offering-card">
-                <h2 class="offering-title">Barn Owl & Snow Moon – Night Watcher</h2>
-                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on textured paper</p>
-                <img src="images/BarnOwlandSnowMoon.webp" alt="Barn Owl and Snow Moon Print" class="offering-image">
-                <div class="offering-details">
-                    <strong>Price:</strong> $40<br>
-                    <strong>Edition:</strong> Limited – Only 12 available<br>
-                    <strong>Includes:</strong> Signed print, protective sleeve, artist's note
-                </div>
+                <h2 class="offering-title">Custom Commissions Available</h2>
                 <div class="offering-description">
-                    <strong>Description:</strong><br>
-                    A mystical encounter captured in atmospheric oils. The barn owl, silent guardian of the night, watches over winter's sacred stillness beneath the luminous snow moon.
-                </div>
-                <div class="offering-actions">
-                    <label class="offering-checkbox">
-                        <input type="checkbox" data-item="barn-owl" data-price="40" data-name="Barn Owl & Snow Moon Print">
-                        Add to Selection
-                    </label>
-                    <div class="price-display">$40</div>
-                </div>
-                <div class="sparkle" style="bottom: 25px; left: 25px; animation-delay: 1.2s;"></div>
-            </div>
-
-            <!-- Offering Card 4 -->
-            <div class="offering-card">
-                <h2 class="offering-title">Minerva's Wisdom – Ancient Knowledge</h2>
-                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on museum-quality paper</p>
-                <img src="images/MinervasWisdom.webp" alt="Minerva's Wisdom Print" class="offering-image">
-                <div class="offering-details">
-                    <strong>Price:</strong> $50<br>
-                    <strong>Edition:</strong> Limited – Only 5 available<br>
-                    <strong>Includes:</strong> Signed print, protective sleeve, wisdom blessing card
-                </div>
-                <div class="offering-description">
-                    <strong>Description:</strong><br>
-                    The goddess of wisdom emerges from layers of sacred geometry and ancient knowing, her eyes holding secrets of the ages. A portal to divine intelligence and inner sight.
-                </div>
-                <div class="offering-actions">
-                    <label class="offering-checkbox">
-                        <input type="checkbox" data-item="minerva" data-price="50" data-name="Minerva's Wisdom Print">
-                        Add to Selection
-                    </label>
-                    <div class="price-display">$50</div>
+                    <strong>🎨 Sacred portraiture & visionary art:</strong><br>
+                    • Personal goddess portraits<br>
+                    • Spiritual landscapes<br>
+                    • Mystical pet portraits<br>
+                    • Custom meditation art<br>
+                    <br>
+                    <a href="contact.html" style="color: #8b4513; text-decoration: underline;">Contact us to discuss your vision</a>
                 </div>
             </div>
         </div>
     </main>
-
-    <!-- Cart Summary -->
-    <div class="cart-summary" id="cartSummary">
-        <h3 class="cart-title">Selected Sacred Offerings</h3>
-        <div class="cart-items" id="cartItems">
-            <!-- Dynamic cart items will appear here -->
-        </div>
-        <div class="cart-total">
-            <span>Total:</span>
-            <span id="cartTotal">$0</span>
-        </div>
-        <div class="cart-actions">
-            <a href="#" id="inquireBtn" class="cart-btn primary">Send Inquiry Email</a>
-            <button id="kofiBtn" class="cart-btn secondary">Support & Purchase via Ko-fi</button>
-        </div>
-    </div>
 
     <footer class="footer">
         <div class="footer-links">
