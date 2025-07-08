@@ -218,41 +218,128 @@
         .offering-actions {
             margin-top: 1.5rem;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             gap: 1rem;
         }
 
-        .inquiry-btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background: linear-gradient(45deg, #8B4513, #A0522D);
-            color: #f4e4bc;
-            text-decoration: none;
-            border-radius: 8px;
-            text-align: center;
-            transition: all 0.3s ease;
+        .offering-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #8b4513;
+            cursor: pointer;
+        }
+
+        .offering-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .price-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #8b4513;
+            margin-left: auto;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            position: sticky;
+            bottom: 2rem;
+            background: rgba(253, 252, 249, 0.98);
+            border: 2px solid rgba(139, 69, 19, 0.4);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            display: none;
+            z-index: 50;
+        }
+
+        .cart-summary.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .cart-title {
+            font-size: 1.3rem;
+            color: #8b4513;
+            margin-bottom: 1rem;
             font-weight: 600;
         }
 
-        .inquiry-btn:hover {
+        .cart-items {
+            margin-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #8b4513;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(139, 69, 19, 0.2);
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .cart-btn {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .cart-btn.primary {
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            color: #f4e4bc;
+        }
+
+        .cart-btn.primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
             background: linear-gradient(45deg, #A0522D, #CD853F);
         }
 
-        .paypal-btn {
+        .cart-btn.secondary {
             background: #0070ba;
             color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
         }
 
-        .paypal-btn:hover {
+        .cart-btn.secondary:hover {
             background: #005ea6;
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 112, 186, 0.3);
@@ -349,6 +436,27 @@
 
             .offering-actions {
                 gap: 0.8rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .price-display {
+                margin-left: 0;
+                text-align: center;
+            }
+
+            .cart-summary {
+                margin: 1rem;
+                position: fixed;
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+
+            .cart-actions {
+                flex-direction: column;
             }
         }
 
@@ -375,7 +483,11 @@
                 font-size: 1.2rem;
             }
 
-            .inquiry-btn, .paypal-btn {
+            .offering-checkbox {
+                justify-content: center;
+            }
+
+            .cart-btn {
                 padding: 0.7rem 1.2rem;
                 font-size: 0.9rem;
             }
@@ -406,7 +518,7 @@
             <!-- Offering Card 1 -->
             <div class="offering-card">
                 <h2 class="offering-title">Potnia Theron – Guardian of Wild Places</h2>
-                <p class="offering-subtitle">11×14" fine art giclée print on Somerset Velvet</p>
+                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on Somerset Velvet</p>
                 <img src="images/PotniaTheron.webp" alt="Potnia Theron Print" class="offering-image">
                 <div class="offering-details">
                     <strong>Price:</strong> $45<br>
@@ -418,18 +530,11 @@
                     A wild guardian spirit, protector of untamed places and those who walk between the worlds. This print holds the energy of fierce compassion and rooted grace.
                 </div>
                 <div class="offering-actions">
-                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Potnia%20Theron%20Print" class="inquiry-btn">
-                        Inquire to Purchase
-                    </a>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                        <input type="hidden" name="cmd" value="_xclick">
-                        <input type="hidden" name="business" value="your-paypal-email@example.com">
-                        <input type="hidden" name="item_name" value="Potnia Theron Print (11x14)">
-                        <input type="hidden" name="amount" value="45.00">
-                        <input type="hidden" name="currency_code" value="USD">
-                        <input type="hidden" name="quantity" value="1">
-                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
-                    </form>
+                    <label class="offering-checkbox">
+                        <input type="checkbox" data-item="potnia-theron" data-price="45" data-name="Potnia Theron Print">
+                        Add to Selection
+                    </label>
+                    <div class="price-display">$45</div>
                 </div>
                 <div class="sparkle" style="top: 20px; right: 30px; animation-delay: 0.5s;"></div>
             </div>
@@ -437,7 +542,7 @@
             <!-- Offering Card 2 -->
             <div class="offering-card">
                 <h2 class="offering-title">Under the Aegis of Inanna – Divine Protection</h2>
-                <p class="offering-subtitle">8×10" fine art giclée print on archival paper</p>
+                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on archival paper</p>
                 <img src="images/under-the-aegis-of-inanna.webp" alt="Under the Aegis of Inanna Print" class="offering-image">
                 <div class="offering-details">
                     <strong>Price:</strong> $35<br>
@@ -449,25 +554,18 @@
                     Protected by the ancient goddess of love and war, this piece explores the duality of feminine power and divine protection. Infused with ancient wisdom and contemporary vision.
                 </div>
                 <div class="offering-actions">
-                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Under%20the%20Aegis%20of%20Inanna%20Print" class="inquiry-btn">
-                        Inquire to Purchase
-                    </a>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                        <input type="hidden" name="cmd" value="_xclick">
-                        <input type="hidden" name="business" value="your-paypal-email@example.com">
-                        <input type="hidden" name="item_name" value="Under the Aegis of Inanna Print (8x10)">
-                        <input type="hidden" name="amount" value="35.00">
-                        <input type="hidden" name="currency_code" value="USD">
-                        <input type="hidden" name="quantity" value="1">
-                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
-                    </form>
+                    <label class="offering-checkbox">
+                        <input type="checkbox" data-item="inanna" data-price="35" data-name="Under the Aegis of Inanna Print">
+                        Add to Selection
+                    </label>
+                    <div class="price-display">$35</div>
                 </div>
             </div>
 
             <!-- Offering Card 3 -->
             <div class="offering-card">
                 <h2 class="offering-title">Barn Owl & Snow Moon – Night Watcher</h2>
-                <p class="offering-subtitle">11×14" fine art giclée print on textured paper</p>
+                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on textured paper</p>
                 <img src="images/BarnOwlandSnowMoon.webp" alt="Barn Owl and Snow Moon Print" class="offering-image">
                 <div class="offering-details">
                     <strong>Price:</strong> $40<br>
@@ -479,18 +577,11 @@
                     A mystical encounter captured in atmospheric oils. The barn owl, silent guardian of the night, watches over winter's sacred stillness beneath the luminous snow moon.
                 </div>
                 <div class="offering-actions">
-                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Barn%20Owl%20Snow%20Moon%20Print" class="inquiry-btn">
-                        Inquire to Purchase
-                    </a>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                        <input type="hidden" name="cmd" value="_xclick">
-                        <input type="hidden" name="business" value="your-paypal-email@example.com">
-                        <input type="hidden" name="item_name" value="Barn Owl & Snow Moon Print (11x14)">
-                        <input type="hidden" name="amount" value="40.00">
-                        <input type="hidden" name="currency_code" value="USD">
-                        <input type="hidden" name="quantity" value="1">
-                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
-                    </form>
+                    <label class="offering-checkbox">
+                        <input type="checkbox" data-item="barn-owl" data-price="40" data-name="Barn Owl & Snow Moon Print">
+                        Add to Selection
+                    </label>
+                    <div class="price-display">$40</div>
                 </div>
                 <div class="sparkle" style="bottom: 25px; left: 25px; animation-delay: 1.2s;"></div>
             </div>
@@ -498,7 +589,7 @@
             <!-- Offering Card 4 -->
             <div class="offering-card">
                 <h2 class="offering-title">Minerva's Wisdom – Ancient Knowledge</h2>
-                <p class="offering-subtitle">11×14" fine art giclée print on museum-quality paper</p>
+                <p class="offering-subtitle">8×10" fine art giclée print matted to 11×14" on museum-quality paper</p>
                 <img src="images/MinervasWisdom.webp" alt="Minerva's Wisdom Print" class="offering-image">
                 <div class="offering-details">
                     <strong>Price:</strong> $50<br>
@@ -510,22 +601,31 @@
                     The goddess of wisdom emerges from layers of sacred geometry and ancient knowing, her eyes holding secrets of the ages. A portal to divine intelligence and inner sight.
                 </div>
                 <div class="offering-actions">
-                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Minerva%20Wisdom%20Print" class="inquiry-btn">
-                        Inquire to Purchase
-                    </a>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                        <input type="hidden" name="cmd" value="_xclick">
-                        <input type="hidden" name="business" value="your-paypal-email@example.com">
-                        <input type="hidden" name="item_name" value="Minerva's Wisdom Print (11x14)">
-                        <input type="hidden" name="amount" value="50.00">
-                        <input type="hidden" name="currency_code" value="USD">
-                        <input type="hidden" name="quantity" value="1">
-                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
-                    </form>
+                    <label class="offering-checkbox">
+                        <input type="checkbox" data-item="minerva" data-price="50" data-name="Minerva's Wisdom Print">
+                        Add to Selection
+                    </label>
+                    <div class="price-display">$50</div>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary" id="cartSummary">
+        <h3 class="cart-title">Selected Sacred Offerings</h3>
+        <div class="cart-items" id="cartItems">
+            <!-- Dynamic cart items will appear here -->
+        </div>
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">$0</span>
+        </div>
+        <div class="cart-actions">
+            <a href="#" id="inquireBtn" class="cart-btn primary">Send Inquiry Email</a>
+            <button id="paypalBtn" class="cart-btn secondary">Checkout with PayPal</button>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="footer-links">
@@ -553,6 +653,60 @@
                 particlesContainer.appendChild(particle);
             }
         }
+
+        // Cart functionality
+        let cart = [];
+
+        function updateCart() {
+            const cartSummary = document.getElementById('cartSummary');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const inquireBtn = document.getElementById('inquireBtn');
+            
+            if (cart.length === 0) {
+                cartSummary.classList.remove('show');
+                return;
+            }
+            
+            cartSummary.classList.add('show');
+            
+            // Update cart items display
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>${item.price}</span>
+                </div>
+            `).join('');
+            
+            // Update total
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotal.textContent = `${total}`;
+            
+            // Update inquiry email link
+            const itemList = cart.map(item => `${item.name} - ${item.price}`).join('\n');
+            const emailSubject = encodeURIComponent('Sacred Art Inquiry - Selected Offerings');
+            const emailBody = encodeURIComponent(`Hello,\n\nI'm interested in purchasing the following sacred offerings:\n\n${itemList}\n\nTotal: ${total}\n\nPlease let me know about availability and next steps.\n\nThank you,`);
+            inquireBtn.href = `mailto:monahanhunt@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+        }
+
+        // Handle checkbox changes
+        document.querySelectorAll('.offering-checkbox input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const itemData = {
+                    id: this.dataset.item,
+                    name: this.dataset.name,
+                    price: parseInt(this.dataset.price)
+                };
+                
+                if (this.checked) {
+                    cart.push(itemData);
+                } else {
+                    cart = cart.filter(item => item.id !== itemData.id);
+                }
+                
+                updateCart();
+            });
+        });
 
         // Add hover sparkles to offering cards
         document.querySelectorAll('.offering-card').forEach(card => {
