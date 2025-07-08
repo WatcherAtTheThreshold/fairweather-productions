@@ -134,31 +134,31 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
         }
 
-        .artwork-card {
-            background: rgba(20, 20, 20, 0.9);
-            backdrop-filter: blur(10px);
+        .offering-card {
+            background: rgba(253, 252, 249, 0.95);
             border: 1px solid rgba(139, 69, 19, 0.3);
             border-radius: 15px;
-            overflow: hidden;
+            padding: 2rem;
             transition: all 0.4s ease;
-            cursor: pointer;
             opacity: 0;
             transform: translateY(30px);
             animation: revealCard 0.8s ease forwards;
+            color: #333;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
-        .artwork-card:nth-child(1) { animation-delay: 0.1s; }
-        .artwork-card:nth-child(2) { animation-delay: 0.2s; }
-        .artwork-card:nth-child(3) { animation-delay: 0.3s; }
-        .artwork-card:nth-child(4) { animation-delay: 0.4s; }
-        .artwork-card:nth-child(5) { animation-delay: 0.5s; }
-        .artwork-card:nth-child(6) { animation-delay: 0.6s; }
-        .artwork-card:nth-child(7) { animation-delay: 0.7s; }
-        .artwork-card:nth-child(8) { animation-delay: 0.8s; }
+        .offering-card:nth-child(1) { animation-delay: 0.1s; }
+        .offering-card:nth-child(2) { animation-delay: 0.2s; }
+        .offering-card:nth-child(3) { animation-delay: 0.3s; }
+        .offering-card:nth-child(4) { animation-delay: 0.4s; }
+        .offering-card:nth-child(5) { animation-delay: 0.5s; }
+        .offering-card:nth-child(6) { animation-delay: 0.6s; }
+        .offering-card:nth-child(7) { animation-delay: 0.7s; }
+        .offering-card:nth-child(8) { animation-delay: 0.8s; }
 
         @keyframes revealCard {
             to {
@@ -167,41 +167,95 @@
             }
         }
 
-        .artwork-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(222, 184, 135, 0.6);
-            background: rgba(30, 25, 20, 0.95);
-            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+        .offering-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 69, 19, 0.6);
+            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.2);
         }
 
-        .artwork-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .artwork-card:hover .artwork-image {
-            transform: scale(1.05);
-        }
-
-        .artwork-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .artwork-title {
-            font-size: 1.3rem;
-            color: #deb887;
+        .offering-title {
+            font-size: 1.4rem;
+            color: #8b4513;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            line-height: 1.3;
         }
 
-        .artwork-artist {
-            font-size: 1rem;
-            color: #c0c0c0;
+        .offering-subtitle {
             font-style: italic;
-            opacity: 0.8;
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .offering-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .offering-card:hover .offering-image {
+            transform: scale(1.02);
+        }
+
+        .offering-details {
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .offering-details strong {
+            color: #8b4513;
+        }
+
+        .offering-description {
+            margin: 1rem 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .offering-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .inquiry-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            color: #f4e4bc;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .inquiry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
+            background: linear-gradient(45deg, #A0522D, #CD853F);
+        }
+
+        .paypal-btn {
+            background: #0070ba;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .paypal-btn:hover {
+            background: #005ea6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 112, 186, 0.3);
         }
 
         /* Sparkles */
@@ -264,8 +318,8 @@
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 2rem;
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 2.5rem;
             }
         }
 
@@ -288,6 +342,14 @@
             .header {
                 padding: 6rem 1rem 2rem 1rem;
             }
+
+            .offering-card {
+                padding: 1.5rem;
+            }
+
+            .offering-actions {
+                gap: 0.8rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -304,8 +366,18 @@
                 padding: 0.8rem 1rem;
             }
 
-            .artwork-card {
+            .offering-card {
                 margin: 0 0.5rem;
+                padding: 1.2rem;
+            }
+
+            .offering-title {
+                font-size: 1.2rem;
+            }
+
+            .inquiry-btn, .paypal-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -331,80 +403,126 @@
 
     <main class="gallery-container">
         <div class="gallery-grid">
-            <!-- Artwork Card 1 -->
-            <div class="artwork-card">
-                <img src="images/under-the-aegis-of-inanna.webp" alt="Under the Aegis of Inanna" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Under the Aegis of Inanna</h3>
-                    <p class="artwork-artist">Shannon Hunt</p>
+            <!-- Offering Card 1 -->
+            <div class="offering-card">
+                <h2 class="offering-title">Potnia Theron – Guardian of Wild Places</h2>
+                <p class="offering-subtitle">11×14" fine art giclée print on Somerset Velvet</p>
+                <img src="images/PotniaTheron.webp" alt="Potnia Theron Print" class="offering-image">
+                <div class="offering-details">
+                    <strong>Price:</strong> $45<br>
+                    <strong>Edition:</strong> Limited – Only 7 available<br>
+                    <strong>Includes:</strong> Signed print, protective sleeve, handwritten blessing note
+                </div>
+                <div class="offering-description">
+                    <strong>Description:</strong><br>
+                    A wild guardian spirit, protector of untamed places and those who walk between the worlds. This print holds the energy of fierce compassion and rooted grace.
+                </div>
+                <div class="offering-actions">
+                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Potnia%20Theron%20Print" class="inquiry-btn">
+                        Inquire to Purchase
+                    </a>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="your-paypal-email@example.com">
+                        <input type="hidden" name="item_name" value="Potnia Theron Print (11x14)">
+                        <input type="hidden" name="amount" value="45.00">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
+                    </form>
                 </div>
                 <div class="sparkle" style="top: 20px; right: 30px; animation-delay: 0.5s;"></div>
             </div>
 
-            <!-- Artwork Card 2 -->
-            <div class="artwork-card">
-                <img src="images/MinervasWisdom.webp" alt="Minerva's Wisdom" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Minerva's Wisdom</h3>
-                    <p class="artwork-artist">Shannon Hunt</p>
+            <!-- Offering Card 2 -->
+            <div class="offering-card">
+                <h2 class="offering-title">Under the Aegis of Inanna – Divine Protection</h2>
+                <p class="offering-subtitle">8×10" fine art giclée print on archival paper</p>
+                <img src="images/under-the-aegis-of-inanna.webp" alt="Under the Aegis of Inanna Print" class="offering-image">
+                <div class="offering-details">
+                    <strong>Price:</strong> $35<br>
+                    <strong>Edition:</strong> Limited – Only 10 available<br>
+                    <strong>Includes:</strong> Signed print, protective sleeve, sacred story card
+                </div>
+                <div class="offering-description">
+                    <strong>Description:</strong><br>
+                    Protected by the ancient goddess of love and war, this piece explores the duality of feminine power and divine protection. Infused with ancient wisdom and contemporary vision.
+                </div>
+                <div class="offering-actions">
+                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Under%20the%20Aegis%20of%20Inanna%20Print" class="inquiry-btn">
+                        Inquire to Purchase
+                    </a>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="your-paypal-email@example.com">
+                        <input type="hidden" name="item_name" value="Under the Aegis of Inanna Print (8x10)">
+                        <input type="hidden" name="amount" value="35.00">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
+                    </form>
                 </div>
             </div>
 
-            <!-- Artwork Card 3 -->
-            <div class="artwork-card">
-                <img src="images/PotniaTheron.webp" alt="Potnia Theron" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Potnia Theron</h3>
-                    <p class="artwork-artist">Shannon Hunt</p>
+            <!-- Offering Card 3 -->
+            <div class="offering-card">
+                <h2 class="offering-title">Barn Owl & Snow Moon – Night Watcher</h2>
+                <p class="offering-subtitle">11×14" fine art giclée print on textured paper</p>
+                <img src="images/BarnOwlandSnowMoon.webp" alt="Barn Owl and Snow Moon Print" class="offering-image">
+                <div class="offering-details">
+                    <strong>Price:</strong> $40<br>
+                    <strong>Edition:</strong> Limited – Only 12 available<br>
+                    <strong>Includes:</strong> Signed print, protective sleeve, artist's note
+                </div>
+                <div class="offering-description">
+                    <strong>Description:</strong><br>
+                    A mystical encounter captured in atmospheric oils. The barn owl, silent guardian of the night, watches over winter's sacred stillness beneath the luminous snow moon.
+                </div>
+                <div class="offering-actions">
+                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Barn%20Owl%20Snow%20Moon%20Print" class="inquiry-btn">
+                        Inquire to Purchase
+                    </a>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="your-paypal-email@example.com">
+                        <input type="hidden" name="item_name" value="Barn Owl & Snow Moon Print (11x14)">
+                        <input type="hidden" name="amount" value="40.00">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
+                    </form>
                 </div>
                 <div class="sparkle" style="bottom: 25px; left: 25px; animation-delay: 1.2s;"></div>
             </div>
 
-            <!-- Artwork Card 4 -->
-            <div class="artwork-card">
-                <img src="images/BarnOwlandSnowMoon.webp" alt="Barn Owl and Snow Moon" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Barn Owl & Snow Moon</h3>
-                    <p class="artwork-artist">Jessop Hunt</p>
+            <!-- Offering Card 4 -->
+            <div class="offering-card">
+                <h2 class="offering-title">Minerva's Wisdom – Ancient Knowledge</h2>
+                <p class="offering-subtitle">11×14" fine art giclée print on museum-quality paper</p>
+                <img src="images/MinervasWisdom.webp" alt="Minerva's Wisdom Print" class="offering-image">
+                <div class="offering-details">
+                    <strong>Price:</strong> $50<br>
+                    <strong>Edition:</strong> Limited – Only 5 available<br>
+                    <strong>Includes:</strong> Signed print, protective sleeve, wisdom blessing card
                 </div>
-            </div>
-
-            <!-- Artwork Card 5 -->
-            <div class="artwork-card">
-                <img src="images/Birch.png" alt="Birch Grove" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Birch Grove</h3>
-                    <p class="artwork-artist">Jessop Hunt</p>
+                <div class="offering-description">
+                    <strong>Description:</strong><br>
+                    The goddess of wisdom emerges from layers of sacred geometry and ancient knowing, her eyes holding secrets of the ages. A portal to divine intelligence and inner sight.
                 </div>
-                <div class="sparkle" style="top: 60%; right: 20px; animation-delay: 0.8s;"></div>
-            </div>
-
-            <!-- Artwork Card 6 -->
-            <div class="artwork-card">
-                <img src="images/AlexandraPortrait.png" alt="Alexandra Portrait" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Alexandra Portrait</h3>
-                    <p class="artwork-artist">Shannon Hunt</p>
+                <div class="offering-actions">
+                    <a href="mailto:monahanhunt@gmail.com?subject=Order%20Inquiry%20-%20Minerva%20Wisdom%20Print" class="inquiry-btn">
+                        Inquire to Purchase
+                    </a>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_xclick">
+                        <input type="hidden" name="business" value="your-paypal-email@example.com">
+                        <input type="hidden" name="item_name" value="Minerva's Wisdom Print (11x14)">
+                        <input type="hidden" name="amount" value="50.00">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="submit" value="Buy Now via PayPal" class="paypal-btn">
+                    </form>
                 </div>
-            </div>
-
-            <!-- Artwork Card 7 -->
-            <div class="artwork-card">
-                <img src="images/BlueLandscape.png" alt="Blue Landscape" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Blue Landscape</h3>
-                    <p class="artwork-artist">Jessop Hunt</p>
-                </div>
-            </div>
-
-            <!-- Artwork Card 8 -->
-            <div class="artwork-card">
-                <img src="images/Chickadee.png" alt="Chickadee" class="artwork-image">
-                <div class="artwork-info">
-                    <h3 class="artwork-title">Chickadee</h3>
-                    <p class="artwork-artist">Jessop Hunt</p>
-                </div>
-                <div class="sparkle" style="top: 30px; left: 30px; animation-delay: 1.5s;"></div>
             </div>
         </div>
     </main>
@@ -436,8 +554,8 @@
             }
         }
 
-        // Add hover sparkles to artwork cards
-        document.querySelectorAll('.artwork-card').forEach(card => {
+        // Add hover sparkles to offering cards
+        document.querySelectorAll('.offering-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
