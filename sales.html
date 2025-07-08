@@ -413,40 +413,14 @@
             <p class="etsy-shop-subtitle">Browse our complete collection of prints, originals, and sacred offerings</p>
             
             <div class="etsy-embed-container">
-                <!-- Etsy Mini Shop Embed -->
-                <script type="text/javascript">
-                (function(d, s, id) {
-                    var js, ejs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) return;
-                    js = d.createElement(s); js.id = id;
-                    js.src = "https://widgets.etsy.com/v2/etsy_mini_shop.js";
-                    ejs.parentNode.insertBefore(js, ejs);
-                }(document, 'script', 'etsy-js'));
-                </script>
+                <!-- Simple Etsy Shop Embed -->
+                <iframe class="etsy-mini" 
+                        src="https://fairweatherstudios.etsy.com" 
+                        title="Fairweather Studios Etsy Shop"
+                        style="width: 100%; height: 600px; border: none; border-radius: 10px;">
+                </iframe>
                 
-                <!-- Replace 'YourShopName' with your actual Etsy shop name -->
-                <div id="etsy-widget" 
-                     data-shop-name="FairweatherStudios" 
-                     data-width="100%" 
-                     data-height="600" 
-                     data-currency="USD"
-                     data-show-price="true"
-                     data-show-shop-name="true"
-                     data-items-per-row="3"
-                     data-background-color="white"
-                     data-text-color="#333"
-                     style="border: none; border-radius: 10px;">
-                </div>
-                
-                <!-- Fallback if Etsy widget doesn't load -->
-                <noscript>
-                    <iframe class="etsy-mini" 
-                            src="https://www.etsy.com/shop/FairweatherStudios" 
-                            title="Fairweather Studios Etsy Shop">
-                    </iframe>
-                </noscript>
-                
-                <a href="https://www.etsy.com/shop/FairweatherStudios" 
+                <a href="https://fairweatherstudios.etsy.com" 
                    target="_blank" 
                    class="shop-link">
                     Visit Full Shop on Etsy
