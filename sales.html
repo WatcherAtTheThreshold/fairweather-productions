@@ -55,7 +55,56 @@
             75% { opacity: 0.6; transform: scale(0.8); }
         }
 
-        /* Navigation */
+        /* Art Preview Thumbnails */
+        .art-preview {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .preview-thumbnail {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(222, 184, 135, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealThumbnail 0.8s ease forwards;
+        }
+
+        .preview-thumbnail:nth-child(1) { animation-delay: 0.2s; }
+        .preview-thumbnail:nth-child(2) { animation-delay: 0.4s; }
+        .preview-thumbnail:nth-child(3) { animation-delay: 0.6s; }
+        .preview-thumbnail:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes revealThumbnail {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .preview-thumbnail:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(222, 184, 135, 0.5);
+        }
+
+        .preview-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .preview-thumbnail:hover img {
+            transform: scale(1.05);
+        }
         nav {
             position: fixed;
             top: 0;
@@ -348,6 +397,16 @@
             .etsy-mini {
                 height: 500px;
             }
+
+            .art-preview {
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+
+            .preview-thumbnail {
+                width: 100px;
+                height: 100px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -385,6 +444,16 @@
             .etsy-mini {
                 height: 400px;
             }
+
+            .art-preview {
+                gap: 0.8rem;
+                margin-top: 1.5rem;
+            }
+
+            .preview-thumbnail {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>
@@ -405,6 +474,22 @@
     <header class="header">
         <h1 class="main-title">Studio Offerings</h1>
         <p class="subtitle">Sacred art where divine inspiration meets earthly creation</p>
+        
+        <!-- Art Preview Thumbnails -->
+        <div class="art-preview">
+            <div class="preview-thumbnail">
+                <img src="images/under-the-aegis-of-inanna.webp" alt="Under the Aegis of Inanna">
+            </div>
+            <div class="preview-thumbnail">
+                <img src="images/PotniaTheron.webp" alt="Potnia Theron">
+            </div>
+            <div class="preview-thumbnail">
+                <img src="images/MinervasWisdom.webp" alt="Minerva's Wisdom">
+            </div>
+            <div class="preview-thumbnail">
+                <img src="images/BarnOwlandSnowMoon.webp" alt="Barn Owl & Snow Moon">
+            </div>
+        </div>
     </header>
 
     <main class="gallery-container">
@@ -438,6 +523,25 @@
         <!-- Featured Highlights Section -->
         <div class="gallery-grid">
             <div class="offering-card">
+                <h2 class="offering-title">About Our Prints & Materials</h2>
+                <div class="offering-description">
+                    <strong>🖨️ Archival Giclée Printing</strong><br>
+                    All prints are professionally produced using archival-quality giclée printing on museum-grade paper. This method ensures rich, accurate color reproduction and lasting durability.
+                    <br><br>
+                    <strong>🧵 Premium Fine Art Paper</strong><br>
+                    Most offerings are printed on <em>Somerset Velvet</em>—a soft-textured, heavyweight cotton paper known for its exceptional surface feel and image clarity.
+                    <br><br>
+                    <strong>🖼️ Matting & Presentation</strong><br>
+                    Each 8×10" print is matted to a standard 11×14" size using acid-free archival mats, ready for easy framing. Every package includes a protective sleeve and is wrapped with care and intention.
+                    <br><br>
+                    <strong>✍️ Artist Touches</strong><br>
+                    Each piece is hand-signed and may include a sacred story card, blessing, or handwritten note—depending on the item.
+                    <br><br>
+                    These aren't just prints. They're sacred vessels—infused with meaning, prepared with care, and offered with love.
+                </div>
+            </div>
+
+            <div class="offering-card">
                 <h2 class="offering-title">Why Shop Our Sacred Offerings?</h2>
                 <div class="offering-description">
                     <strong>✨ Each piece includes:</strong><br>
@@ -445,20 +549,13 @@
                     • Protective archival sleeves<br>
                     • Artist-signed authenticity<br>
                     • Sacred blessing or story card<br>
-                    • Carefully packaged with love
-                </div>
-            </div>
-
-            <div class="offering-card">
-                <h2 class="offering-title">Custom Commissions Available</h2>
-                <div class="offering-description">
-                    <strong>🎨 Sacred portraiture & visionary art:</strong><br>
-                    • Personal goddess portraits<br>
-                    • Spiritual landscapes<br>
-                    • Mystical pet portraits<br>
-                    • Custom meditation art<br>
-                    <br>
-                    <a href="contact.html" style="color: #8b4513; text-decoration: underline;">Contact us to discuss your vision</a>
+                    • Carefully packaged with love<br><br>
+                    
+                    <strong>🎨 Art that transforms spaces:</strong><br>
+                    • Ready to frame at standard 11×14"<br>
+                    • Acid-free materials ensure longevity<br>
+                    • Rich colors that capture the sacred<br>
+                    • Perfect for meditation spaces & homes
                 </div>
             </div>
         </div>
