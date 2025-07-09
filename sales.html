@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fairweather Studios - Art Collection</title>
+
+    <!-- Standard Favicons -->
+    <link rel="icon" href="images/brush_favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="images/brush_32x32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="images/brush_64x64.png" sizes="64x64" type="image/png" />
+    <link rel="icon" href="images/brush_128x128.png" sizes="128x128" type="image/png" />
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="images/brush_apple_touch_180x180.png" />
+
+    <title>Studio Offerings | Fairweather Studios</title>
     <style>
         * {
             margin: 0;
@@ -25,6 +35,7 @@
             color: #e8e8e8;
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* Floating particles */
@@ -35,7 +46,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
         .particle {
@@ -55,56 +66,7 @@
             75% { opacity: 0.6; transform: scale(0.8); }
         }
 
-        /* Art Preview Thumbnails */
-        .art-preview {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .preview-thumbnail {
-            width: 120px;
-            height: 120px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border: 2px solid rgba(222, 184, 135, 0.3);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: revealThumbnail 0.8s ease forwards;
-        }
-
-        .preview-thumbnail:nth-child(1) { animation-delay: 0.2s; }
-        .preview-thumbnail:nth-child(2) { animation-delay: 0.4s; }
-        .preview-thumbnail:nth-child(3) { animation-delay: 0.6s; }
-        .preview-thumbnail:nth-child(4) { animation-delay: 0.8s; }
-
-        @keyframes revealThumbnail {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .preview-thumbnail:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            border-color: rgba(222, 184, 135, 0.5);
-        }
-
-        .preview-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .preview-thumbnail:hover img {
-            transform: scale(1.05);
-        }
+        /* Navigation - matching other pages */
         nav {
             position: fixed;
             top: 0;
@@ -145,10 +107,12 @@
             z-index: 10;
             text-align: center;
             padding: 8rem 2rem 2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .main-title {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, #deb887, #f4e4bc, #cd853f);
             -webkit-background-clip: text;
@@ -157,6 +121,7 @@
             font-weight: 300;
             letter-spacing: 3px;
             animation: titleGlow 3s ease-in-out infinite alternate;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
         }
 
         @keyframes titleGlow {
@@ -165,90 +130,90 @@
         }
 
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: #c0c0c0;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
             opacity: 0.9;
         }
 
-        /* Gallery Grid */
-        .gallery-container {
-            position: relative;
-            z-index: 5;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
+        .header-description {
+            font-size: 1.2rem;
+            color: #b8b8b8;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
+        /* Art Preview Thumbnails */
+        .art-preview {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
         }
 
-        .offering-card {
-            background: rgba(253, 252, 249, 0.95);
-            border: 1px solid rgba(139, 69, 19, 0.3);
+        .preview-thumbnail {
+            width: 120px;
+            height: 120px;
             border-radius: 15px;
-            padding: 2rem;
-            transition: all 0.4s ease;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(222, 184, 135, 0.3);
+            transition: all 0.3s ease;
             opacity: 0;
-            transform: translateY(30px);
-            animation: revealCard 0.8s ease forwards;
-            color: #333;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            position: relative;
+            transform: translateY(20px);
+            animation: revealThumbnail 0.8s ease forwards;
         }
 
-        .offering-card:nth-child(1) { animation-delay: 0.1s; }
-        .offering-card:nth-child(2) { animation-delay: 0.2s; }
-        .offering-card:nth-child(3) { animation-delay: 0.3s; }
-        .offering-card:nth-child(4) { animation-delay: 0.4s; }
-        .offering-card:nth-child(5) { animation-delay: 0.5s; }
-        .offering-card:nth-child(6) { animation-delay: 0.6s; }
-        .offering-card:nth-child(7) { animation-delay: 0.7s; }
-        .offering-card:nth-child(8) { animation-delay: 0.8s; }
+        .preview-thumbnail:nth-child(1) { animation-delay: 0.2s; }
+        .preview-thumbnail:nth-child(2) { animation-delay: 0.4s; }
+        .preview-thumbnail:nth-child(3) { animation-delay: 0.6s; }
+        .preview-thumbnail:nth-child(4) { animation-delay: 0.8s; }
 
-        @keyframes revealCard {
+        @keyframes revealThumbnail {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .offering-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(139, 69, 19, 0.6);
-            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.2);
+        .preview-thumbnail:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(222, 184, 135, 0.6);
         }
 
-        .offering-title {
-            font-size: 1.4rem;
-            color: #8b4513;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            line-height: 1.3;
+        .preview-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
-        .offering-description {
-            margin: 1rem 0;
-            line-height: 1.6;
-            color: #555;
+        .preview-thumbnail:hover img {
+            transform: scale(1.1);
         }
 
-        /* Etsy Shop Embed */
-        .etsy-shop-section {
+        /* Main Content */
+        .main-content {
             position: relative;
             z-index: 5;
             max-width: 1400px;
-            margin: 3rem auto;
-            padding: 2rem;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Etsy Shop Section */
+        .etsy-shop-section {
             text-align: center;
+            margin-bottom: 4rem;
         }
 
         .etsy-shop-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             background: linear-gradient(45deg, #deb887, #f4e4bc, #cd853f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -256,49 +221,280 @@
             margin-bottom: 1rem;
             font-weight: 300;
             letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .etsy-shop-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #c0c0c0;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             opacity: 0.9;
         }
 
         .etsy-embed-container {
-            background: rgba(253, 252, 249, 0.75);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(139, 69, 19, 0.4);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            margin: 2rem 0;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(139, 69, 19, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            margin: 2rem auto;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .etsy-mini {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 10px;
+        .etsy-embed-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(222, 184, 135, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .etsy-embed-container:hover::before {
+            opacity: 1;
+        }
+
+        .etsy-embed-container:hover {
+            transform: translateY(-5px);
+            border-color: rgba(222, 184, 135, 0.6);
+            box-shadow: 0 20px 50px rgba(139, 69, 19, 0.3);
+        }
+
+        .etsy-content h3 {
+            color: #deb887;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .etsy-content p {
+            color: #c0c0c0;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
         }
 
         .shop-link {
             display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(45deg, #8B4513, #A0522D);
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(45deg, #8B4513, #A0522D, #CD853F);
             color: #f4e4bc;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
-            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+            position: relative;
+            z-index: 2;
         }
 
         .shop-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
-            background: linear-gradient(45deg, #A0522D, #CD853F);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.6);
+            background: linear-gradient(45deg, #A0522D, #CD853F, #DEB887);
+        }
+
+        .shop-features {
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        .shop-features p {
+            margin-bottom: 0.8rem;
+            color: #b8b8b8;
+        }
+
+        .shop-features strong {
+            color: #deb887;
+        }
+
+        /* Info Cards */
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .info-card {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(222, 184, 135, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(222, 184, 135, 0.5);
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+        }
+
+        .info-card h3 {
+            font-size: 1.4rem;
+            color: #deb887;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-card p {
+            color: #c0c0c0;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Unboxing Section */
+        .unboxing-section {
+            margin-top: 4rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .unboxing-card {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(139, 69, 19, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .unboxing-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(222, 184, 135, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .unboxing-card:hover::before {
+            opacity: 1;
+        }
+
+        .unboxing-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(222, 184, 135, 0.6);
+            box-shadow: 0 20px 50px rgba(139, 69, 19, 0.3);
+        }
+
+        .unboxing-card h2 {
+            font-size: 2.2rem;
+            color: #deb887;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .unboxing-intro {
+            font-size: 1.1rem;
+            color: #f4e4bc;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .unboxing-card p {
+            color: #c0c0c0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .unboxing-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            padding-left: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .unboxing-list li {
+            color: #c0c0c0;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .unboxing-highlight {
+            font-size: 1.1rem;
+            color: #f4e4bc;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .mockup-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .mockup-image {
+            width: 220px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid rgba(222, 184, 135, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .mockup-image:hover {
+            transform: translateY(-3px) scale(1.05);
+            border-color: rgba(222, 184, 135, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
 
         /* Sparkles */
@@ -309,7 +505,7 @@
             background: radial-gradient(circle, #ffd700 0%, #ffed4a 30%, #f39c12 70%, transparent 100%);
             border-radius: 50%;
             animation: sparkle 2s infinite;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.9);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.9), 0 0 24px rgba(255, 215, 0, 0.6);
             z-index: 4;
         }
 
@@ -319,16 +515,16 @@
         }
 
         /* Footer */
-        .footer {
+        footer {
             position: relative;
             z-index: 5;
             background: rgba(25, 35, 70, 0.95);
             backdrop-filter: blur(15px);
+            color: #888;
             text-align: center;
             padding: 3rem 2rem;
-            margin-top: 3rem;
-            color: #888;
             border-top: 1px solid rgba(139, 69, 19, 0.3);
+            margin-top: 5rem;
         }
 
         .footer-links {
@@ -349,10 +545,39 @@
             color: #deb887;
         }
 
+        /* Back to Top Button */
+        #backToTopBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 30px;
+            z-index: 999;
+            background: linear-gradient(45deg, #8B4513, #A0522D, #CD853F);
+            color: #f4e4bc;
+            border: none;
+            border-radius: 50px;
+            padding: 0.7rem 1.2rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #backToTopBtn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #backToTopBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.5);
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .main-title {
-                font-size: 3rem;
+                font-size: 3.5rem;
             }
 
             .nav-links {
@@ -360,15 +585,15 @@
                 font-size: 0.95rem;
             }
 
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-                gap: 2.5rem;
+            .info-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
         @media (max-width: 768px) {
             .main-title {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
 
             .nav-links {
@@ -376,27 +601,17 @@
                 font-size: 0.9rem;
             }
 
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                padding: 1rem;
-            }
-
             .header {
                 padding: 6rem 1rem 2rem 1rem;
             }
 
-            .offering-card {
-                padding: 1.5rem;
+            .main-content {
+                padding: 2rem 1rem;
             }
 
             .etsy-embed-container {
-                padding: 1rem;
+                padding: 2rem;
                 margin: 1rem;
-            }
-
-            .etsy-mini {
-                height: 500px;
             }
 
             .art-preview {
@@ -408,11 +623,29 @@
                 width: 100px;
                 height: 100px;
             }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .unboxing-card {
+                padding: 2rem;
+                margin: 0 1rem;
+            }
+
+            .mockup-gallery {
+                gap: 1rem;
+            }
+
+            .mockup-image {
+                width: 180px;
+                height: 130px;
+            }
         }
 
         @media (max-width: 480px) {
             .main-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .nav-links {
@@ -424,26 +657,17 @@
                 padding: 0.8rem 1rem;
             }
 
-            .offering-card {
-                margin: 0 0.5rem;
-                padding: 1.2rem;
+            .etsy-embed-container {
+                padding: 1.5rem;
             }
 
-            .offering-title {
-                font-size: 1.2rem;
+            .shop-link {
+                padding: 1rem 2rem;
+                font-size: 1rem;
             }
 
             .etsy-shop-title {
-                font-size: 2rem;
-            }
-
-            .etsy-embed-container {
-                padding: 0.8rem;
-                margin: 0.5rem;
-            }
-
-            .etsy-mini {
-                height: 400px;
+                font-size: 2.5rem;
             }
 
             .art-preview {
@@ -455,6 +679,24 @@
                 width: 80px;
                 height: 80px;
             }
+
+            .unboxing-card {
+                padding: 1.5rem;
+                margin: 0 0.5rem;
+            }
+
+            .unboxing-card h2 {
+                font-size: 1.8rem;
+            }
+
+            .mockup-gallery {
+                gap: 0.8rem;
+            }
+
+            .mockup-image {
+                width: 150px;
+                height: 110px;
+            }
         }
     </style>
 </head>
@@ -462,12 +704,12 @@
     <!-- Floating particles -->
     <div class="particles" id="particles"></div>
 
-    <nav>
+            <nav>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="gallery.html">Gallery</a>
             <a href="about.html">About</a>
-            <a href="studio.html">Studio</a>
+            <a href="sales.html">Studio</a>
             <a href="contact.html">Contact</a>
         </div>
     </nav>
@@ -475,6 +717,11 @@
     <header class="header">
         <h1 class="main-title">Studio Offerings</h1>
         <p class="subtitle">Sacred art where divine inspiration meets earthly creation</p>
+        <p class="header-description">
+            Each piece in our collection carries the sacred breath of creation, 
+            from mystical goddess portraits to atmospheric landscapes that speak to the soul. 
+            Discover prints, originals, and blessed offerings crafted with intention and love.
+        </p>
         
         <!-- Art Preview Thumbnails -->
         <div class="art-preview">
@@ -493,108 +740,92 @@
         </div>
     </header>
 
-<!-- Updated HTML page with Unboxing Experience section -->
-<!-- This is a revised version of your original sales.html with an added "What You'll Receive" section + image mockups -->
-
-<!-- Content removed for brevity... only showing the inserted section -->
-
-<!-- Unboxing Experience Section -->
-<div class="gallery-container" style="display: flex; justify-content: center;">
-  <div class="offering-card" style="max-width: 800px; margin: 2rem auto;">
-    <h2 class="offering-title" style="text-align: center;">What You’ll Receive</h2>
-    <div class="offering-description">
-      <p><strong>📦 Thoughtfully Packaged, Ready to Gift or Frame</strong></p>
-      <p>Your sacred print arrives matted to a classic 11×14" size and carefully wrapped in soft tissue. Each package includes:</p>
-      <ul style="margin-left: 1rem; padding-left: 1rem;">
-        <li>🖼️ A museum-grade print matted in archival cotton board</li>
-        <li>✍️ A hand-signed signature, sacred story card, or blessing</li>
-        <li>🧵 Protective sleeve and acid-free backing</li>
-        <li>✨ Optionally sealed with a wax stamp or custom Fairweather sticker</li>
-      </ul>
-      <br>
-      <p><strong>💫 Opening it feels like receiving a gift—from us to you.</strong></p>
-    </div>
-    <!-- Mockup Image Layout -->
-    <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-      <img src="images/mockup-matted-unwrap.jpg" alt="Matted print being unwrapped" style="width: 220px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-      <img src="images/mockup-paper-texture.jpg" alt="Close-up of fine paper" style="width: 220px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-      <img src="images/mockup-stacked-wrap.jpg" alt="Stack of wrapped prints" style="width: 220px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-    </div>
-  </div>
-</div>
-
-<!-- End of Insert -->
-
-<!-- Suggest placing this after the "About Our Sacred Prints" section and before the Etsy embed -->
-<!-- Be sure to place placeholder images in /images/ folder with the above filenames -->
-
-
-    <main class="gallery-container">
-        <!-- Ready to Bring One Home Section -->
-        <div class="etsy-shop-section">
-            <div class="etsy-embed-container" style="text-align: center; max-width: 600px; margin: 2rem auto; background: rgba(253, 252, 249, 0.65);">
-                <h2 style="color: #8b4513; font-size: 1.4rem; margin-bottom: 1rem; font-weight: 600; line-height: 1.3;">Ready to Bring One Home?</h2>
-                <div style="color: #555; line-height: 1.6;">
-                    You've seen the vision. You've felt the textures, the presence, the sacred breath in each brushstroke.<br><br>
-                    If one of these pieces is calling to you, you can now step into the studio's private collection space.<br><br>
-                    There, you'll find each offering carefully listed, with detailed photos, edition counts, and everything you need to complete your purchase.<br><br>
-                    This is not just checkout—it's the final moment of blessing, before the piece travels from our hands to yours.
-                </div>
-            </div>
-        </div>
-
-        <div class="etsy-shop-section">
-            <h2 class="etsy-shop-title">Sacred Art Shop</h2>
-            <p class="etsy-shop-subtitle">Browse our complete collection of prints, originals, and sacred offerings</p>
+    <main class="main-content">
+        <!-- Etsy Shop Section -->
+        <section class="etsy-shop-section">
+            <h2 class="etsy-shop-title">Sacred Collection</h2>
+            <p class="etsy-shop-subtitle">Browse our complete gallery of mystical art and sacred offerings</p>
             
             <div class="etsy-embed-container">
-                <div style="text-align: center; padding: 3rem; color: #666;">
-                    <h3 style="color: #8b4513; margin-bottom: 1rem; font-size: 1.5rem;">✨ Visit Our Sacred Shop ✨</h3>
-                    <p style="margin-bottom: 2rem; line-height: 1.6;">
-                        Discover our complete collection of mystical prints, original paintings, and sacred offerings. 
-                        Each piece carries divine inspiration and is crafted with love and intention.
+                <div class="etsy-content">
+                    <h3>✨ Visit Our Sacred Shop ✨</h3>
+                    <p>
+                        Step into our digital sanctuary where each piece awaits its destined home. 
+                        From goddess portraits that channel ancient wisdom to atmospheric landscapes 
+                        that capture the sacred in nature—every offering is created with intention 
+                        and blessed with love.
                     </p>
                     
                     <a href="https://fairweatherstudios.etsy.com" 
                        target="_blank" 
-                       class="shop-link"
-                       style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">
-                        🎨 Browse Sacred Collection on Etsy
+                       class="shop-link">
+                        🎨 Enter Sacred Collection
                     </a>
                     
-                    <div style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">
-                        <p><strong>Currently featuring:</strong> Goddess portraits, mystical landscapes, spiritual prints & more</p>
-                        <p><strong>All pieces include:</strong> Museum-quality prints, protective sleeves, signed authenticity</p>
+                    <div class="shop-features">
+                        <p><strong>Currently featuring:</strong> Goddess portraits, mystical landscapes, spiritual prints & original paintings</p>
+                        <p><strong>All pieces include:</strong> Museum-quality printing, archival materials, protective packaging</p>
+                        <p><strong>Sacred extras:</strong> Hand-signed authenticity, blessing cards, wrapped with intention</p>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Featured Highlights Section -->
-        <div class="gallery-container" style="display: flex; justify-content: center;">
-            <div class="offering-card" style="max-width: 800px; margin: 2rem auto;">
-                <h2 class="offering-title" style="text-align: center;">About Our Sacred Prints & What You Receive</h2>
-                <div class="offering-description">
-                    <strong>🖨️ Archival Giclée Printing</strong><br>
-                    All prints are professionally produced using archival-quality giclée printing on museum-grade paper. This method ensures rich, accurate color reproduction and lasting durability.
-                    <br><br>
-                    <strong>🧵 Premium Fine Art Paper</strong><br>
-                    Most offerings are printed on <em>Somerset Velvet</em>—a soft-textured, heavyweight cotton paper known for its exceptional surface feel and image clarity.
-                    <br><br>
-                    <strong>🖼️ Matting & Presentation</strong><br>
-                    Each 8×10" print is matted to a standard 11×14" size using acid-free archival mats, ready for easy framing. Every package includes a protective sleeve and is wrapped with care and intention.
-                    <br><br>
-                    <strong>✍️ Artist Touches & Sacred Extras</strong><br>
-                    Each piece is hand-signed and may include a sacred story card, blessing, or handwritten note—depending on the item. These aren't just prints. They're sacred vessels—infused with meaning, prepared with care, and offered with love.
-                    <br><br>
-                    <strong>✨ What transforms your space:</strong><br>
-                    • Ready to frame at standard 11×14" • Acid-free materials ensure longevity • Rich colors that capture the sacred • Perfect for meditation spaces & homes
+        </section>
+
+        <!-- Info Cards -->
+        <section class="info-section">
+            <div class="info-card">
+                <h3>🖨️ Museum-Quality Printing</h3>
+                <p>
+                    Every print is created using archival giclée printing on premium fine art paper. 
+                    Rich, accurate colors that capture the sacred essence of each original painting, 
+                    designed to last for generations in your sacred space.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>✨ Blessed & Intentional</h3>
+                <p>
+                    Every piece leaves our studio with a blessing and intention. From the moment 
+                    we create to the moment it arrives at your door, your art is treated as the 
+                    sacred vessel it was meant to be.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>🏠 Ready for Your Sacred Space</h3>
+                <p>
+                    All prints come matted to standard 11×14" size, ready for easy framing. 
+                    Whether for your meditation corner, bedroom altar, or living space, 
+                    these pieces transform any room into a sanctuary.
+                </p>
+            </div>
+        </section>
+
+        <!-- What You'll Receive Section -->
+        <section class="unboxing-section">
+            <div class="unboxing-card">
+                <h2>What You'll Receive</h2>
+                <p class="unboxing-intro"><strong>📦 Thoughtfully Packaged, Ready to Gift or Frame</strong></p>
+                <p>Your sacred print arrives matted to a classic 11×14" size and carefully wrapped in soft tissue. Each package includes:</p>
+                <ul class="unboxing-list">
+                    <li>🖼️ A museum-grade print matted in archival cotton board</li>
+                    <li>✍️ A hand-signed signature, sacred story card, or blessing</li>
+                    <li>🧵 Protective sleeve and acid-free backing</li>
+                    <li>✨ Optionally sealed with a wax stamp or custom Fairweather sticker</li>
+                </ul>
+                <p class="unboxing-highlight"><strong>💫 Opening it feels like receiving a gift—from us to you.</strong></p>
+                
+                <!-- Mockup Images -->
+                <div class="mockup-gallery">
+                    <img src="images/mockup-matted-unwrap.jpg" alt="Matted print being unwrapped" class="mockup-image">
+                    <img src="images/mockup-paper-texture.jpg" alt="Close-up of fine paper texture" class="mockup-image">
+                    <img src="images/mockup-stacked-wrap.jpg" alt="Stack of wrapped prints" class="mockup-image">
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
-    <footer class="footer">
+    <footer>
         <div class="footer-links">
             <a href="./sketchy-ponderings/" style="text-decoration: none;">Sketchy Ponderings</a>
             <a href="./second-gaze/" style="text-decoration: none;">The Second Gaze</a>
@@ -603,6 +834,8 @@
             © 2025 Fairweather Studios • Jessop & Shannon Hunt • Where Art & Love Converge
         </p>
     </footer>
+
+    <button id="backToTopBtn" title="Back to Top">↑ Top</button>
 
     <script>
         // Create twinkling star particles
@@ -621,62 +854,41 @@
             }
         }
 
-        // Cart functionality
-        let cart = [];
-
-        function updateCart() {
-            const cartSummary = document.getElementById('cartSummary');
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            const inquireBtn = document.getElementById('inquireBtn');
+        // Add sparkles randomly
+        function addRandomSparkles() {
+            const sparkleCount = 3;
+            const body = document.body;
             
-            if (cart.length === 0) {
-                cartSummary.classList.remove('show');
-                return;
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                sparkle.style.zIndex = '2';
+                body.appendChild(sparkle);
+                
+                // Remove sparkle after animation
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 2000);
             }
-            
-            cartSummary.classList.add('show');
-            
-            // Update cart items display
-            cartItems.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <span>${item.name}</span>
-                    <span>${item.price}</span>
-                </div>
-            `).join('');
-            
-            // Update total
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            cartTotal.textContent = `${total}`;
-            
-            // Update inquiry email link
-            const itemList = cart.map(item => `${item.name} - ${item.price}`).join('\n');
-            const emailSubject = encodeURIComponent('Sacred Art Inquiry - Selected Offerings');
-            const emailBody = encodeURIComponent(`Hello,\n\nI'm interested in purchasing the following sacred offerings:\n\n${itemList}\n\nTotal: ${total}\n\nPlease let me know about availability and next steps.\n\nThank you,`);
-            inquireBtn.href = `mailto:monahanhunt@gmail.com?subject=${emailSubject}&body=${emailBody}`;
         }
 
-        // Handle checkbox changes
-        document.querySelectorAll('.offering-checkbox input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const itemData = {
-                    id: this.dataset.item,
-                    name: this.dataset.name,
-                    price: parseInt(this.dataset.price)
-                };
-                
-                if (this.checked) {
-                    cart.push(itemData);
-                } else {
-                    cart = cart.filter(item => item.id !== itemData.id);
-                }
-                
-                updateCart();
-            });
+        // Back to top logic
+        const backToTopBtn = document.getElementById("backToTopBtn");
+        window.addEventListener("scroll", () => {
+            backToTopBtn.classList.toggle("show", window.scrollY > 300);
+        });
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
         });
 
-        // Add hover sparkles to offering cards
-        document.querySelectorAll('.offering-card').forEach(card => {
+        // Add hover sparkles to info cards
+        document.querySelectorAll('.info-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
@@ -697,6 +909,10 @@
         // Initialize effects
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
+            setInterval(addRandomSparkles, 5000);
+            
+            // Ensure page starts at top on load
+            window.scrollTo(0, 0);
         });
     </script>
 </body>
