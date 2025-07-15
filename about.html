@@ -257,6 +257,59 @@
             z-index: 2;
         }
 
+        /* Sacred Ground Section */
+        .sacred-ground-section {
+            position: relative;
+            z-index: 5;
+            padding: 4rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto 6rem;
+            text-align: center;
+        }
+
+        .sacred-ground-title {
+            font-size: 2.5rem;
+            color: #deb887;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .sacred-ground-content {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(139, 69, 19, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sacred-ground-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(222, 184, 135, 0.05) 0%, transparent 70%);
+            animation: gentle-glow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes gentle-glow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .sacred-ground-text {
+            font-size: 1.2rem;
+            color: #c8c8c8;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+
         /* Interactive Offerings */
         .offerings-section {
             position: relative;
@@ -449,6 +502,10 @@
                 gap: 2rem;
                 font-size: 0.95rem;
             }
+
+            .sacred-ground-content {
+                padding: 2.5rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -474,6 +531,18 @@
             .artists-container {
                 grid-template-columns: 1fr;
             }
+
+            .sacred-ground-title {
+                font-size: 2rem;
+            }
+
+            .sacred-ground-content {
+                padding: 2rem;
+            }
+
+            .sacred-ground-text {
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -495,6 +564,14 @@
             }
 
             .artist-card {
+                padding: 1.5rem;
+            }
+
+            .sacred-ground-section {
+                padding: 3rem 1rem;
+            }
+
+            .sacred-ground-content {
                 padding: 1.5rem;
             }
         }
@@ -554,8 +631,19 @@
         </div>
     </section>
 
+    <section class="sacred-ground-section">
+        <h2 class="sacred-ground-title">Sacred Ground</h2>
+        <div class="sacred-ground-content">
+            <p class="sacred-ground-text">
+                Our studio rests upon enchanted land at 63 Jefferson Road, where creative spirits have danced for decades. For twenty-seven years, this sacred space was home to Mary Fairweather's beloved antique shop, welcoming seekers of beauty and forgotten treasures. When we acquired this mystical property, we felt the ancient creative energy that had blessed these rooms and called us home. Through our years as craftspeople with Littleton Sign Company and now as fine artists, the Fairweather name continues—not through blood, but through the deeper understanding that some places are destined to remain sanctuaries for those who see the world through artist's eyes.
+            </p>
+            <div class="sparkle" style="top: 15px; right: 20px; animation-delay: 1s;"></div>
+            <div class="sparkle" style="bottom: 20px; left: 30px; animation-delay: 2s;"></div>
+        </div>
+    </section>
+
     <section class="offerings-section">
-        <h2 class="offerings-title">Sacred Offerings</h2>
+        <h2 class="offerings-title">Other Offerings</h2>
         <p class="offerings-subtitle">Explore our individual realms and mystical tools</p>
         
         <div class="offerings-grid">
