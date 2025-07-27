@@ -308,14 +308,15 @@
             display: grid;
             grid-template-columns: repeat(8, 60px);
             grid-template-rows: repeat(8, 60px);
-            border: 3px solid rgba(138, 43, 226, 0.6);
+            border: 3px solid rgba(138, 43, 226, 0.8);
             margin: 20px auto;
             background: #f0d9b5;
             box-shadow: 
                 0 10px 30px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(138, 43, 226, 0.4),
-                0 0 60px rgba(138, 43, 226, 0.2);
-            animation: boardGlow 4s ease-in-out infinite alternate;
+                0 0 40px rgba(138, 43, 226, 0.7),
+                0 0 80px rgba(138, 43, 226, 0.5),
+                0 0 120px rgba(138, 43, 226, 0.3);
+            animation: boardGlow 3s ease-in-out infinite alternate;
             position: relative;
             overflow: visible;
         }
@@ -324,14 +325,16 @@
             0% { 
                 box-shadow: 
                     0 10px 30px rgba(0, 0, 0, 0.5),
-                    0 0 30px rgba(138, 43, 226, 0.4),
-                    0 0 60px rgba(138, 43, 226, 0.2);
+                    0 0 40px rgba(138, 43, 226, 0.7),
+                    0 0 80px rgba(138, 43, 226, 0.5),
+                    0 0 120px rgba(138, 43, 226, 0.3);
             }
             100% { 
                 box-shadow: 
-                    0 10px 35px rgba(0, 0, 0, 0.6),
-                    0 0 40px rgba(138, 43, 226, 0.6),
-                    0 0 80px rgba(138, 43, 226, 0.3);
+                    0 10px 40px rgba(0, 0, 0, 0.7),
+                    0 0 60px rgba(138, 43, 226, 1),
+                    0 0 120px rgba(138, 43, 226, 0.8),
+                    0 0 180px rgba(138, 43, 226, 0.5);
             }
         }
 
@@ -356,12 +359,16 @@
                 transform: scale(0) rotate(0deg);
                 opacity: 1;
             }
-            50% {
-                transform: scale(1) rotate(180deg);
+            20% {
+                transform: scale(1.2) rotate(72deg);
+                opacity: 1;
+            }
+            60% {
+                transform: scale(1) rotate(216deg);
                 opacity: 0.8;
             }
             100% {
-                transform: scale(0.2) rotate(360deg) translateY(-40px);
+                transform: scale(0.3) rotate(360deg) translateY(-50px);
                 opacity: 0;
             }
         }
@@ -371,16 +378,20 @@
                 transform: scale(0) rotate(0deg);
                 opacity: 1;
             }
-            30% {
-                transform: scale(1.5) rotate(120deg);
+            25% {
+                transform: scale(2) rotate(90deg);
                 opacity: 1;
             }
-            70% {
-                transform: scale(1) rotate(240deg);
-                opacity: 0.7;
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 1;
+            }
+            75% {
+                transform: scale(1) rotate(270deg);
+                opacity: 0.8;
             }
             100% {
-                transform: scale(0.1) rotate(360deg) translateY(-60px);
+                transform: scale(0.2) rotate(360deg) translateY(-80px);
                 opacity: 0;
             }
         }
@@ -1545,26 +1556,36 @@
                 if (!square) return;
                 
                 const rect = square.getBoundingClientRect();
+                const boardRect = document.getElementById('chessBoard').getBoundingClientRect();
+                
+                // Position relative to the exact center of the square
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
                 
-                // Create 3-5 small sparkle particles
-                const numParticles = Math.random() * 3 + 3;
+                // Create 6-8 sparkle particles (more than before)
+                const numParticles = Math.random() * 3 + 6;
                 for (let i = 0; i < numParticles; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'move-particle';
                     
-                    // Random size and color
-                    const size = Math.random() * 4 + 2;
-                    const colors = ['rgba(138, 43, 226, 0.8)', 'rgba(222, 184, 135, 0.8)', 'rgba(255, 255, 255, 0.8)'];
+                    // Larger size and more vibrant colors
+                    const size = Math.random() * 8 + 6;
+                    const colors = [
+                        'rgba(138, 43, 226, 1)', 
+                        'rgba(222, 184, 135, 1)', 
+                        'rgba(255, 255, 255, 1)',
+                        'rgba(46, 204, 113, 0.9)'
+                    ];
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     
                     particle.style.width = size + 'px';
                     particle.style.height = size + 'px';
-                    particle.style.background = `radial-gradient(circle, ${color}, transparent)`;
-                    particle.style.left = (centerX + (Math.random() - 0.5) * 30) + 'px';
-                    particle.style.top = (centerY + (Math.random() - 0.5) * 30) + 'px';
-                    particle.style.boxShadow = `0 0 6px ${color}`;
+                    particle.style.background = `radial-gradient(circle, ${color}, rgba(255,255,255,0.3))`;
+                    particle.style.position = 'fixed';
+                    particle.style.left = (centerX + (Math.random() - 0.5) * 20) + 'px';
+                    particle.style.top = (centerY + (Math.random() - 0.5) * 20) + 'px';
+                    particle.style.boxShadow = `0 0 15px ${color}, 0 0 30px ${color}`;
+                    particle.style.zIndex = '100';
                     
                     document.body.appendChild(particle);
                     
@@ -1582,26 +1603,37 @@
                 if (!square) return;
                 
                 const rect = square.getBoundingClientRect();
+                const boardRect = document.getElementById('chessBoard').getBoundingClientRect();
+                
+                // Position relative to the exact center of the square
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
                 
-                // Create 8-12 larger burst particles
-                const numParticles = Math.random() * 5 + 8;
+                // Create 12-16 dramatic burst particles (much more!)
+                const numParticles = Math.random() * 5 + 12;
                 for (let i = 0; i < numParticles; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'capture-particle';
                     
-                    // Larger size and more dramatic colors
-                    const size = Math.random() * 6 + 4;
-                    const colors = ['rgba(231, 76, 60, 0.9)', 'rgba(138, 43, 226, 0.9)', 'rgba(241, 196, 15, 0.9)'];
+                    // Much larger size and more dramatic colors
+                    const size = Math.random() * 12 + 8;
+                    const colors = [
+                        'rgba(231, 76, 60, 1)', 
+                        'rgba(138, 43, 226, 1)', 
+                        'rgba(241, 196, 15, 1)',
+                        'rgba(255, 69, 0, 1)',
+                        'rgba(220, 20, 60, 1)'
+                    ];
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     
                     particle.style.width = size + 'px';
                     particle.style.height = size + 'px';
-                    particle.style.background = `radial-gradient(circle, ${color}, transparent)`;
-                    particle.style.left = (centerX + (Math.random() - 0.5) * 50) + 'px';
-                    particle.style.top = (centerY + (Math.random() - 0.5) * 50) + 'px';
-                    particle.style.boxShadow = `0 0 10px ${color}`;
+                    particle.style.background = `radial-gradient(circle, ${color}, rgba(255,255,255,0.4))`;
+                    particle.style.position = 'fixed';
+                    particle.style.left = (centerX + (Math.random() - 0.5) * 30) + 'px';
+                    particle.style.top = (centerY + (Math.random() - 0.5) * 30) + 'px';
+                    particle.style.boxShadow = `0 0 20px ${color}, 0 0 40px ${color}, 0 0 60px ${color}`;
+                    particle.style.zIndex = '100';
                     
                     document.body.appendChild(particle);
                     
