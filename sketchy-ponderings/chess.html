@@ -349,6 +349,32 @@
             box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
         }
 
+        .square.ai-from {
+            background-color: rgba(241, 196, 15, 0.6) !important;
+            box-shadow: inset 0 0 15px rgba(241, 196, 15, 0.8);
+            animation: aiMoveHighlight 2s ease-out;
+        }
+
+        .square.ai-to {
+            background-color: rgba(241, 196, 15, 0.7) !important;
+            box-shadow: inset 0 0 20px rgba(241, 196, 15, 0.9);
+            animation: aiMoveHighlight 2s ease-out;
+        }
+
+        @keyframes aiMoveHighlight {
+            0% {
+                transform: scale(1.1);
+                box-shadow: 0 0 25px rgba(241, 196, 15, 1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: inset 0 0 10px rgba(241, 196, 15, 0.5);
+            }
+        }
+
         .piece {
             user-select: none;
             transition: all 0.2s ease;
@@ -813,6 +839,7 @@
                 
                 this.createBoard();
                 this.updateDisplay();
+                this.updateMoveHistory();
             }
             
             initializeBoard() {
@@ -1081,16 +1108,25 @@
                     this.fullMoveNumber++;
                 }
                 
-                // Record move
+                // Record move with notation
+                const moveNotation = this.getMoveNotation(piece, fromRow, fromCol, toRow, toCol, capturedPiece);
                 this.moveHistory.push({
                     from: { row: fromRow, col: fromCol },
                     to: { row: toRow, col: toCol },
                     piece: piece,
-                    captured: capturedPiece
+                    captured: capturedPiece,
+                    notation: moveNotation,
+                    moveNumber: this.fullMoveNumber,
+                    player: this.currentPlayer
                 });
                 
                 // Switch players
                 this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
+                
+                // Update move history display if it's a player move
+                if (piece.color === 'white') {
+                    this.updateMoveHistory();
+                }
             }
             
             isInCheck(color) {
@@ -1166,43 +1202,123 @@
                     return;
                 }
                 
-                // Simple AI: random move with slight preference for captures
-                let bestMove = moves[0];
-                let bestScore = -1000;
+                // AI "thinking" delay - varies based on move complexity
+                const thinkingTime = Math.random() * 1500 + 800; // 800-2300ms
                 
-                for (const move of moves) {
-                    let score = Math.random() * 10;
+                // Show AI is thinking
+                const statusElement = document.getElementById('gameStatus');
+                statusElement.textContent = "AI is thinking...";
+                
+                setTimeout(() => {
+                    // Simple AI: random move with slight preference for captures
+                    let bestMove = moves[0];
+                    let bestScore = -1000;
                     
-                    // Prefer captures
-                    if (this.board[move.to.row][move.to.col]) {
-                        score += 50;
+                    for (const move of moves) {
+                        let score = Math.random() * 10;
+                        
+                        // Prefer captures
+                        if (this.board[move.to.row][move.to.col]) {
+                            score += 50;
+                        }
+                        
+                        // Prefer center control
+                        if ((move.to.row >= 3 && move.to.row <= 4) && (move.to.col >= 3 && move.to.col <= 4)) {
+                            score += 10;
+                        }
+                        
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMove = move;
+                        }
                     }
                     
-                    // Prefer center control
-                    if ((move.to.row >= 3 && move.to.row <= 4) && (move.to.col >= 3 && move.to.col <= 4)) {
-                        score += 10;
+                    // Clear any existing highlights
+                    document.querySelectorAll('.square').forEach(sq => {
+                        sq.classList.remove('ai-from', 'ai-to');
+                    });
+                    
+                    // Make the move
+                    this.makeMove(bestMove.from.row, bestMove.from.col, bestMove.to.row, bestMove.to.col);
+                    
+                    // Highlight AI's move
+                    const fromSquare = document.querySelector(`[data-row="${bestMove.from.row}"][data-col="${bestMove.from.col}"]`);
+                    const toSquare = document.querySelector(`[data-row="${bestMove.to.row}"][data-col="${bestMove.to.col}"]`);
+                    
+                    if (fromSquare) fromSquare.classList.add('ai-from');
+                    if (toSquare) toSquare.classList.add('ai-to');
+                    
+                    // Remove highlights after animation
+                    setTimeout(() => {
+                        if (fromSquare) fromSquare.classList.remove('ai-from');
+                        if (toSquare) toSquare.classList.remove('ai-to');
+                    }, 2000);
+                    
+                    // Check for game over
+                    if (this.isCheckmate('white')) {
+                        this.gameOver = true;
+                    } else if (this.isStalemate('white')) {
+                        this.gameOver = true;
                     }
                     
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestMove = move;
-                    }
-                }
-                
-                this.makeMove(bestMove.from.row, bestMove.from.col, bestMove.to.row, bestMove.to.col);
-                
-                // Check for game over
-                if (this.isCheckmate('white')) {
-                    this.gameOver = true;
-                } else if (this.isStalemate('white')) {
-                    this.gameOver = true;
-                }
-                
-                this.updateDisplay();
+                    this.updateDisplay();
+                    this.updateMoveHistory();
+                }, thinkingTime);
             }
             
             copyBoard() {
                 return this.board.map(row => row.map(piece => piece ? { ...piece } : null));
+            }
+            
+            coordinateToAlgebraic(row, col) {
+                const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+                const ranks = ['8', '7', '6', '5', '4', '3', '2', '1'];
+                return files[col] + ranks[row];
+            }
+            
+            getMoveNotation(piece, fromRow, fromCol, toRow, toCol, captured) {
+                const from = this.coordinateToAlgebraic(fromRow, fromCol);
+                const to = this.coordinateToAlgebraic(toRow, toCol);
+                const pieceSymbol = piece.type === 'pawn' ? '' : piece.type.charAt(0).toUpperCase();
+                const captureSymbol = captured ? 'x' : '';
+                
+                if (piece.type === 'pawn' && captured) {
+                    return `${from.charAt(0)}x${to}`;
+                }
+                
+                return `${pieceSymbol}${captureSymbol}${to}`;
+            }
+            
+            updateMoveHistory() {
+                const historyElement = document.getElementById('moveHistory');
+                if (this.moveHistory.length === 0) {
+                    historyElement.innerHTML = '<p><em>Move history will appear here...</em></p>';
+                    return;
+                }
+                
+                let historyHTML = '<div style="font-family: monospace; line-height: 1.6;">';
+                
+                for (let i = 0; i < this.moveHistory.length; i += 2) {
+                    const moveNumber = Math.floor(i / 2) + 1;
+                    const whiteMove = this.moveHistory[i];
+                    const blackMove = this.moveHistory[i + 1];
+                    
+                    historyHTML += `<div style="margin-bottom: 0.3rem;">`;
+                    historyHTML += `<span style="color: rgba(255,255,255,0.6); min-width: 2em; display: inline-block;">${moveNumber}.</span>`;
+                    historyHTML += `<span style="color: rgba(255,255,255,0.9); min-width: 4em; display: inline-block;">${whiteMove.notation}</span>`;
+                    
+                    if (blackMove) {
+                        historyHTML += `<span style="color: rgba(138,43,226,0.9); min-width: 4em; display: inline-block;">${blackMove.notation}</span>`;
+                    }
+                    
+                    historyHTML += `</div>`;
+                }
+                
+                historyHTML += '</div>';
+                historyElement.innerHTML = historyHTML;
+                
+                // Auto-scroll to bottom
+                historyElement.scrollTop = historyElement.scrollHeight;
             }
         }
         
@@ -1210,6 +1326,8 @@
         
         function newGame() {
             game = new ChessGame();
+            // Clear move history display
+            document.getElementById('moveHistory').innerHTML = '<p><em>Move history will appear here...</em></p>';
         }
         
         function undoMove() {
@@ -1224,6 +1342,7 @@
                     }
                 }
                 game.updateDisplay();
+                game.updateMoveHistory();
             }
         }
         
