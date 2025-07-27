@@ -311,28 +311,78 @@
             border: 3px solid rgba(138, 43, 226, 0.6);
             margin: 20px auto;
             background: #f0d9b5;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(138, 43, 226, 0.4),
+                0 0 60px rgba(138, 43, 226, 0.2);
+            animation: boardGlow 4s ease-in-out infinite alternate;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
-        .chess-board::before {
-            content: '';
+        @keyframes boardGlow {
+            0% { 
+                box-shadow: 
+                    0 10px 30px rgba(0, 0, 0, 0.5),
+                    0 0 30px rgba(138, 43, 226, 0.4),
+                    0 0 60px rgba(138, 43, 226, 0.2);
+            }
+            100% { 
+                box-shadow: 
+                    0 10px 35px rgba(0, 0, 0, 0.6),
+                    0 0 40px rgba(138, 43, 226, 0.6),
+                    0 0 80px rgba(138, 43, 226, 0.3);
+            }
+        }
+
+        .move-particle {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('images/mist-overlay.png') repeat;
-            opacity: 0.15;
-            animation: boardMist 180s linear infinite;
             pointer-events: none;
-            z-index: 1;
+            z-index: 10;
+            border-radius: 50%;
+            animation: moveParticle 1s ease-out forwards;
         }
 
-        @keyframes boardMist {
-            from { background-position: 0 0; }
-            to { background-position: -300px 300px; }
+        .capture-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            border-radius: 50%;
+            animation: captureParticle 1.5s ease-out forwards;
+        }
+
+        @keyframes moveParticle {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0.2) rotate(360deg) translateY(-40px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes captureParticle {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            30% {
+                transform: scale(1.5) rotate(120deg);
+                opacity: 1;
+            }
+            70% {
+                transform: scale(1) rotate(240deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(0.1) rotate(360deg) translateY(-60px);
+                opacity: 0;
+            }
         }
 
         .square {
@@ -345,7 +395,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 2;
         }
 
         .square.light {
@@ -1226,10 +1275,19 @@
                 const piece = this.board[fromRow][fromCol];
                 const capturedPiece = this.board[toRow][toCol];
                 
+                // Create particle effects
+                if (capturedPiece) {
+                    this.createCaptureParticles(toRow, toCol);
+                } else {
+                    this.createMoveParticles(toRow, toCol);
+                }
+                
                 // Handle en passant capture
                 if (piece.type === 'pawn' && this.enPassantTarget && 
                     toRow === this.enPassantTarget.row && toCol === this.enPassantTarget.col) {
                     this.board[fromRow][toCol] = null;
+                    // En passant is also a capture, create particles
+                    this.createCaptureParticles(fromRow, toCol);
                 }
                 
                 // Move piece
@@ -1239,6 +1297,8 @@
                 // Handle pawn promotion
                 if (piece.type === 'pawn' && (toRow === 0 || toRow === 7)) {
                     this.board[toRow][toCol] = { type: 'queen', color: piece.color };
+                    // Pawn promotion gets extra sparkles!
+                    setTimeout(() => this.createMoveParticles(toRow, toCol), 200);
                 }
                 
                 // Set en passant target
@@ -1478,6 +1538,80 @@
                 
                 // Auto-scroll to bottom
                 historyElement.scrollTop = historyElement.scrollHeight;
+            }
+            
+            createMoveParticles(row, col) {
+                const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (!square) return;
+                
+                const rect = square.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Create 3-5 small sparkle particles
+                const numParticles = Math.random() * 3 + 3;
+                for (let i = 0; i < numParticles; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'move-particle';
+                    
+                    // Random size and color
+                    const size = Math.random() * 4 + 2;
+                    const colors = ['rgba(138, 43, 226, 0.8)', 'rgba(222, 184, 135, 0.8)', 'rgba(255, 255, 255, 0.8)'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    particle.style.width = size + 'px';
+                    particle.style.height = size + 'px';
+                    particle.style.background = `radial-gradient(circle, ${color}, transparent)`;
+                    particle.style.left = (centerX + (Math.random() - 0.5) * 30) + 'px';
+                    particle.style.top = (centerY + (Math.random() - 0.5) * 30) + 'px';
+                    particle.style.boxShadow = `0 0 6px ${color}`;
+                    
+                    document.body.appendChild(particle);
+                    
+                    // Remove particle after animation
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 1000);
+                }
+            }
+            
+            createCaptureParticles(row, col) {
+                const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (!square) return;
+                
+                const rect = square.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Create 8-12 larger burst particles
+                const numParticles = Math.random() * 5 + 8;
+                for (let i = 0; i < numParticles; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'capture-particle';
+                    
+                    // Larger size and more dramatic colors
+                    const size = Math.random() * 6 + 4;
+                    const colors = ['rgba(231, 76, 60, 0.9)', 'rgba(138, 43, 226, 0.9)', 'rgba(241, 196, 15, 0.9)'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    particle.style.width = size + 'px';
+                    particle.style.height = size + 'px';
+                    particle.style.background = `radial-gradient(circle, ${color}, transparent)`;
+                    particle.style.left = (centerX + (Math.random() - 0.5) * 50) + 'px';
+                    particle.style.top = (centerY + (Math.random() - 0.5) * 50) + 'px';
+                    particle.style.boxShadow = `0 0 10px ${color}`;
+                    
+                    document.body.appendChild(particle);
+                    
+                    // Remove particle after animation
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 1500);
+                }
             }
         }
         
