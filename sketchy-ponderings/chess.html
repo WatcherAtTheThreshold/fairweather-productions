@@ -312,6 +312,27 @@
             margin: 20px auto;
             background: #f0d9b5;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chess-board::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('images/mist-overlay.png') repeat;
+            opacity: 0.15;
+            animation: boardMist 180s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes boardMist {
+            from { background-position: 0 0; }
+            to { background-position: -300px 300px; }
         }
 
         .square {
@@ -324,6 +345,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            z-index: 2;
         }
 
         .square.light {
