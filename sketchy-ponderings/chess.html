@@ -631,6 +631,7 @@
             grid-template-rows: 30px repeat(8, 80px) 30px;
             margin: 20px auto;
             width: fit-content;
+            justify-self: center;
         }
 
         .coord-label {
@@ -783,9 +784,20 @@
                 font-size: 28px;
             }
 
+            .game-container {
+                padding: 1.5rem 0.5rem;
+                margin: 0 auto 2rem;
+                max-width: 100vw;
+                overflow-x: hidden;
+                text-align: center;
+            }
+
             .coordinates {
                 grid-template-columns: 20px repeat(8, 45px) 20px;
                 grid-template-rows: 20px repeat(8, 45px) 20px;
+                margin: 20px auto;
+                width: fit-content;
+                display: inline-grid;
             }
 
             .game-instructions {
