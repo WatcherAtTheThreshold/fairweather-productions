@@ -462,6 +462,23 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.4);
         }
 
+        .btn:disabled {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.4);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled:hover {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.4);
+            transform: none;
+            box-shadow: none;
+        }
+
         .move-history {
             margin-top: 2rem;
             max-height: 200px;
@@ -781,6 +798,7 @@
         <div class="controls">
             <button class="btn" onclick="newGame()">New Game</button>
             <button class="btn" onclick="undoMove()">Undo Move</button>
+            <button class="btn" id="showLastMoveBtn" onclick="showLastAIMove()">Show Last Move</button>
         </div>
         
         <div class="move-history" id="moveHistory">
@@ -805,6 +823,10 @@
                 <div class="instruction">
                     <span class="instruction-icon">🤖</span>
                     <span class="instruction-text">AI responds automatically</span>
+                </div>
+                <div class="instruction">
+                    <span class="instruction-icon">🔍</span>
+                    <span class="instruction-text">Use "Show Last Move" if you missed the AI's move</span>
                 </div>
             </div>
         </div>
@@ -915,6 +937,7 @@
                 this.selectedSquare = null;
                 this.gameOver = false;
                 this.moveHistory = [];
+                this.lastAIMove = null; // Track last AI move for highlighting
                 this.enPassantTarget = null;
                 this.castlingRights = {
                     white: { kingside: true, queenside: true },
@@ -937,6 +960,14 @@
                 this.createBoard();
                 this.updateDisplay();
                 this.updateMoveHistory();
+                
+                // Initialize button states
+                setTimeout(() => {
+                    const showLastMoveBtn = document.getElementById('showLastMoveBtn');
+                    if (showLastMoveBtn) {
+                        showLastMoveBtn.disabled = true;
+                    }
+                }, 0);
             }
             
             initializeBoard() {
@@ -1330,6 +1361,12 @@
                         }
                     }
                     
+                    // Store this move as the last AI move
+                    this.lastAIMove = {
+                        from: { row: bestMove.from.row, col: bestMove.from.col },
+                        to: { row: bestMove.to.row, col: bestMove.to.col }
+                    };
+                    
                     // Clear any existing highlights
                     document.querySelectorAll('.square').forEach(sq => {
                         sq.classList.remove('ai-from', 'ai-to');
@@ -1350,6 +1387,9 @@
                         if (fromSquare) fromSquare.classList.remove('ai-from');
                         if (toSquare) toSquare.classList.remove('ai-to');
                     }, 2000);
+                    
+                    // Enable the show last move button
+                    document.getElementById('showLastMoveBtn').disabled = false;
                     
                     // Check for game over
                     if (this.isCheckmate('white')) {
@@ -1425,6 +1465,8 @@
             game = new ChessGame();
             // Clear move history display
             document.getElementById('moveHistory').innerHTML = '<p><em>Move history will appear here...</em></p>';
+            // Disable show last move button for new game
+            document.getElementById('showLastMoveBtn').disabled = true;
         }
         
         function undoMove() {
@@ -1438,9 +1480,36 @@
                         game.currentPlayer = game.currentPlayer === 'white' ? 'black' : 'white';
                     }
                 }
+                
+                // Clear the last AI move since we undid it
+                game.lastAIMove = null;
+                document.getElementById('showLastMoveBtn').disabled = true;
+                
                 game.updateDisplay();
                 game.updateMoveHistory();
             }
+        }
+        
+        function showLastAIMove() {
+            if (!game.lastAIMove) return;
+            
+            // Clear any existing highlights
+            document.querySelectorAll('.square').forEach(sq => {
+                sq.classList.remove('ai-from', 'ai-to', 'selected', 'valid-move');
+            });
+            
+            // Highlight the last AI move
+            const fromSquare = document.querySelector(`[data-row="${game.lastAIMove.from.row}"][data-col="${game.lastAIMove.from.col}"]`);
+            const toSquare = document.querySelector(`[data-row="${game.lastAIMove.to.row}"][data-col="${game.lastAIMove.to.col}"]`);
+            
+            if (fromSquare) fromSquare.classList.add('ai-from');
+            if (toSquare) toSquare.classList.add('ai-to');
+            
+            // Remove highlights after animation
+            setTimeout(() => {
+                if (fromSquare) fromSquare.classList.remove('ai-from');
+                if (toSquare) toSquare.classList.remove('ai-to');
+            }, 2000);
         }
         
         // Initialize game
