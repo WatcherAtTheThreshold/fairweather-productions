@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
     
     <title>Chess - Sketchy Ponderings</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&family=Bangers&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -818,19 +818,21 @@
         }
 
         .overlay-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 8rem;
-            font-weight: 700;
+            font-family: 'Bangers', cursive;
+            font-size: 6rem;
+            font-weight: 400;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             text-shadow: 
                 0 0 20px rgba(138, 43, 226, 1),
                 0 0 40px rgba(138, 43, 226, 0.8),
                 0 0 60px rgba(138, 43, 226, 0.6),
-                0 0 80px rgba(138, 43, 226, 0.4);
+                2px 2px 4px rgba(0,0,0,0.4);
             animation: overlayGlow 2s ease-in-out infinite alternate;
             color: #fff;
+            margin: 0;
+            padding: 0;
         }
 
         .overlay-text.begin {
@@ -839,7 +841,7 @@
                 0 0 20px rgba(76, 175, 80, 1),
                 0 0 40px rgba(76, 175, 80, 0.8),
                 0 0 60px rgba(76, 175, 80, 0.6),
-                0 0 80px rgba(76, 175, 80, 0.4);
+                2px 2px 4px rgba(0,0,0,0.4);
         }
 
         .overlay-text.check {
@@ -848,7 +850,7 @@
                 0 0 20px rgba(255, 87, 34, 1),
                 0 0 40px rgba(255, 87, 34, 0.8),
                 0 0 60px rgba(255, 87, 34, 0.6),
-                0 0 80px rgba(255, 87, 34, 0.4);
+                2px 2px 4px rgba(0,0,0,0.4);
             animation: checkPulse 0.5s ease-in-out 3;
         }
 
@@ -858,7 +860,7 @@
                 0 0 30px rgba(233, 30, 99, 1),
                 0 0 60px rgba(233, 30, 99, 0.8),
                 0 0 90px rgba(233, 30, 99, 0.6),
-                0 0 120px rgba(233, 30, 99, 0.4);
+                2px 2px 4px rgba(0,0,0,0.4);
             animation: checkmateGlow 1s ease-in-out infinite alternate;
         }
 
@@ -1008,7 +1010,7 @@
             }
 
             .overlay-text {
-                font-size: 4rem;
+                font-size: 3rem;
             }
 
             .rank-label {
@@ -1043,7 +1045,7 @@
 
         @media (max-width: 480px) {
             .overlay-text {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .chess-board {
