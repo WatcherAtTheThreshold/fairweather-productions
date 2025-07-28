@@ -304,13 +304,65 @@
             display: inline-block;
         }
 
+        .chess-board-container {
+            position: relative;
+            display: inline-block;
+            margin: 20px auto;
+        }
+
+        .chess-board-mist {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 30%),
+                linear-gradient(45deg, rgba(138, 43, 226, 0.03) 0%, transparent 25%, rgba(138, 43, 226, 0.03) 50%, transparent 75%, rgba(138, 43, 226, 0.03) 100%);
+            background-size: 
+                200px 200px,
+                180px 180px,
+                120px 120px,
+                60px 60px;
+            animation: 
+                mistFlow1 25s linear infinite,
+                mistFlow2 30s linear infinite reverse,
+                mistFlow3 20s linear infinite,
+                mistScroll2 35s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 18px;
+            opacity: 0.8;
+        }
+
+        @keyframes mistFlow1 {
+            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
+            100% { background-position: 200px 200px, 0px 0px, 0px 0px, 0px 0px; }
+        }
+
+        @keyframes mistFlow2 {
+            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
+            100% { background-position: 0px 0px, 180px 180px, 0px 0px, 0px 0px; }
+        }
+
+        @keyframes mistFlow3 {
+            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
+            100% { background-position: 0px 0px, 0px 0px, 120px 120px, 0px 0px; }
+        }
+
+        @keyframes mistScroll2 {
+            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
+            100% { background-position: 0px 0px, 0px 0px, 0px 0px, 60px 60px; }
+        }
+
         .chess-board {
             display: grid;
             grid-template-columns: repeat(8, 80px);
             grid-template-rows: repeat(8, 80px);
             border: 3px solid rgba(138, 43, 226, 0.8);
             border-radius: 15px;
-            margin: 20px auto;
             background: #f0d9b5;
             box-shadow: 
                 0 10px 30px rgba(0, 0, 0, 0.5),
@@ -319,6 +371,7 @@
                 0 0 120px rgba(138, 43, 226, 0.3);
             animation: boardGlow 3s ease-in-out infinite alternate;
             position: relative;
+            z-index: 2;
         }
 
         @keyframes boardGlow {
@@ -406,6 +459,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            z-index: 3;
         }
 
         .square.light {
@@ -462,6 +516,8 @@
             transition: all 0.2s ease;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
             font-weight: bold;
+            position: relative;
+            z-index: 4;
         }
 
         .piece:hover {
@@ -742,6 +798,14 @@
                 border-radius: 12px;
             }
 
+            .chess-board-mist {
+                top: -15px;
+                left: -15px;
+                right: -15px;
+                bottom: -15px;
+                border-radius: 15px;
+            }
+
             .square {
                 width: 60px;
                 height: 60px;
@@ -778,6 +842,14 @@
                 border-radius: 10px;
             }
 
+            .chess-board-mist {
+                top: -12px;
+                left: -12px;
+                right: -12px;
+                bottom: -12px;
+                border-radius: 13px;
+            }
+
             .square {
                 width: 45px;
                 height: 45px;
@@ -810,74 +882,6 @@
                 gap: 0.5rem;
             }
         }
-
-        .chess-board {
-            display: grid;
-            grid-template-columns: repeat(8, 80px);
-            grid-template-rows: repeat(8, 80px);
-            border: 3px solid rgba(138, 43, 226, 0.8);
-            border-radius: 15px;
-            margin: 20px auto;
-            background: #f0d9b5;
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                0 0 40px rgba(138, 43, 226, 0.7),
-                0 0 80px rgba(138, 43, 226, 0.5),
-                0 0 120px rgba(138, 43, 226, 0.3);
-            animation: boardGlow 3s ease-in-out infinite alternate;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chess-board::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 30%),
-                linear-gradient(45deg, rgba(138, 43, 226, 0.03) 0%, transparent 25%, rgba(138, 43, 226, 0.03) 50%, transparent 75%, rgba(138, 43, 226, 0.03) 100%);
-            background-size: 
-                200px 200px,
-                180px 180px,
-                120px 120px,
-                60px 60px;
-            animation: 
-                mistFlow1 25s linear infinite,
-                mistFlow2 30s linear infinite reverse,
-                mistFlow3 20s linear infinite,
-                mistScroll2 35s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: 12px;
-            opacity: 0.8;
-        }
-
-        @keyframes mistFlow1 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 200px 200px, 0px 0px, 0px 0px, 0px 0px; }
-        }
-
-        @keyframes mistFlow2 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 0px 0px, 180px 180px, 0px 0px, 0px 0px; }
-        }
-
-        @keyframes mistFlow3 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 0px 0px, 0px 0px, 120px 120px, 0px 0px; }
-        }
-
-        @keyframes mistScroll2 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 0px 0px, 0px 0px, 0px 0px, 60px 60px; }
-        }
-
-        
     </style>
 </head>
 <body>
@@ -923,7 +927,10 @@
             <div class="coord-label"></div>
             
             <div class="coord-label">8</div>
-            <div class="chess-board" id="chessBoard"></div>
+            <div class="chess-board-container">
+                <div class="chess-board-mist"></div>
+                <div class="chess-board" id="chessBoard"></div>
+            </div>
             <div class="coord-label">8</div>
             
             <div class="coord-label">7</div>
