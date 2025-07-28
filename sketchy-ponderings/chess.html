@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Standard Favicons -->
-    <link rel="icon" href="images/quill_favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="images/quill_32x32.png" sizes="32x32" type="image/png" />
-    <link rel="icon" href="images/quill_64x64.png" sizes="64x64" type="image/png" />
-    <link rel="icon" href="images/quill_128x128.png" sizes="128x128" type="image/png" />
-    
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
-    
-    <title>Chess - Sketchy Ponderings</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&family=Bangers&display=swap" rel="stylesheet">
-    <style>
-        * {
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- Standard Favicons -->
+  <link href="images/quill_favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="images/quill_32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+  <link href="images/quill_64x64.png" rel="icon" sizes="64x64" type="image/png"/>
+  <link href="images/quill_128x128.png" rel="icon" sizes="128x128" type="image/png"/>
+  <!-- Apple Touch Icon -->
+  <link href="images/quill_apple_touch_180x180.png" rel="apple-touch-icon"/>
+  <title>
+   Chess - Sketchy Ponderings
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&amp;family=Source+Sans+Pro:wght@300;400&amp;display=swap" rel="stylesheet"/>
+  <style>
+   * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-        footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-            font-family: 'Source Sans Pro', sans-serif;
-            backdrop-filter: blur(5px);
-            background: rgba(0, 0, 0, 0.2);
-            margin-top: 2rem;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 0 8px rgba(138, 43, 226, 0.3);
         }
 
         body {
@@ -152,22 +139,9 @@
 
         .subtitle {
             font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 300;
             font-style: italic;
-            text-shadow: 0 0 10px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.2);
-            animation: subtitleGlow 6s ease-in-out infinite alternate;
-        }
-
-        @keyframes subtitleGlow {
-            0% { 
-                text-shadow: 0 0 10px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.2);
-                color: rgba(255, 255, 255, 0.9);
-            }
-            100% { 
-                text-shadow: 0 0 15px rgba(138, 43, 226, 0.6), 0 0 30px rgba(138, 43, 226, 0.3);
-                color: rgba(255, 255, 255, 1);
-            }
         }
 
         .mobile-menu-button {
@@ -329,73 +303,13 @@
             display: inline-block;
         }
 
-        .chess-board-container {
-            position: relative;
-            display: inline-block;
-            margin: 20px auto;
-        }
-
-        .chess-board-mist {
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.4) 0%, transparent 60%),
-                radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.3) 0%, transparent 55%),
-                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 60% 70%, rgba(138, 43, 226, 0.25) 0%, transparent 45%),
-                linear-gradient(45deg, rgba(138, 43, 226, 0.1) 0%, transparent 30%, rgba(138, 43, 226, 0.08) 50%, transparent 70%, rgba(138, 43, 226, 0.1) 100%);
-            background-size: 
-                300px 300px,
-                250px 250px,
-                180px 180px,
-                220px 220px,
-                80px 80px;
-            animation: 
-                mistFlow1 25s linear infinite,
-                mistFlow2 30s linear infinite reverse,
-                mistFlow3 20s linear infinite,
-                mistFlow4 40s linear infinite,
-                mistScroll2 35s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: 18px;
-            opacity: 1;
-        }
-
-        @keyframes mistFlow1 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 300px 300px, 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-        }
-
-        @keyframes mistFlow2 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 0px 0px, 250px 250px, 0px 0px, 0px 0px, 0px 0px; }
-        }
-
-        @keyframes mistFlow3 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 0px 0px, 0px 0px, 180px 180px, 0px 0px, 0px 0px; }
-        }
-
-        @keyframes mistFlow4 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 0px 0px, 0px 0px, 0px 0px, 220px 220px, 0px 0px; }
-        }
-
-        @keyframes mistScroll2 {
-            0% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 0px 0px; }
-            100% { background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px, 80px 80px; }
-        }
-
         .chess-board {
             display: grid;
             grid-template-columns: repeat(8, 80px);
             grid-template-rows: repeat(8, 80px);
             border: 3px solid rgba(138, 43, 226, 0.8);
             border-radius: 15px;
+            margin: 20px auto;
             background: #f0d9b5;
             box-shadow: 
                 0 10px 30px rgba(0, 0, 0, 0.5),
@@ -404,7 +318,6 @@
                 0 0 120px rgba(138, 43, 226, 0.3);
             animation: boardGlow 3s ease-in-out infinite alternate;
             position: relative;
-            z-index: 2;
         }
 
         @keyframes boardGlow {
@@ -492,7 +405,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 3;
         }
 
         .square.light {
@@ -549,8 +461,6 @@
             transition: all 0.2s ease;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
             font-weight: bold;
-            position: relative;
-            z-index: 4;
         }
 
         .piece:hover {
@@ -659,8 +569,7 @@
             border-radius: 8px;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 0 5px rgba(138, 43, 226, 0.2);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .game-instructions {
@@ -710,59 +619,27 @@
         }
 
         .instruction-text {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
             line-height: 1.3;
-            text-shadow: 0 0 5px rgba(138, 43, 226, 0.3);
         }
 
-        .chess-board-wrapper {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
+        .coordinates {
+            display: grid;
+            grid-template-columns: 30px repeat(8, 80px) 30px;
+            grid-template-rows: 30px repeat(8, 80px) 30px;
             margin: 20px auto;
             width: fit-content;
+            justify-self: center;
         }
 
-        .rank-labels {
-            display: flex;
-            flex-direction: column;
-            margin-right: 10px;
-        }
-
-        .rank-label {
-            height: 80px;
+        .coord-label {
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 16px;
-            text-shadow: 0 0 8px rgba(138, 43, 226, 0.4);
-            width: 25px;
-        }
-
-        .board-and-files {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .file-labels {
-            display: flex;
-            margin-top: 10px;
-        }
-
-        .file-label {
-            width: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 16px;
-            text-shadow: 0 0 8px rgba(138, 43, 226, 0.4);
-            height: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
         }
 
         .back-to-top {
@@ -796,148 +673,17 @@
             display: flex;
         }
 
-        .game-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        .game-overlay.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .overlay-text {
-            font-family: 'Bangers', cursive;
-            font-size: 6rem;
-            font-weight: 400;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            text-shadow: 
-                0 0 20px rgba(138, 43, 226, 1),
-                0 0 40px rgba(138, 43, 226, 0.8),
-                0 0 60px rgba(138, 43, 226, 0.6),
-                2px 2px 4px rgba(0,0,0,0.4);
-            animation: overlayGlow 2s ease-in-out infinite alternate;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        .overlay-text.begin {
-            color: #4CAF50;
-            text-shadow: 
-                0 0 20px rgba(76, 175, 80, 1),
-                0 0 40px rgba(76, 175, 80, 0.8),
-                0 0 60px rgba(76, 175, 80, 0.6),
-                2px 2px 4px rgba(0,0,0,0.4);
-        }
-
-        .overlay-text.check {
-            color: #FF5722;
-            text-shadow: 
-                0 0 20px rgba(255, 87, 34, 1),
-                0 0 40px rgba(255, 87, 34, 0.8),
-                0 0 60px rgba(255, 87, 34, 0.6),
-                2px 2px 4px rgba(0,0,0,0.4);
-            animation: checkPulse 0.5s ease-in-out 3;
-        }
-
-        .overlay-text.checkmate {
-            color: #E91E63;
-            text-shadow: 
-                0 0 30px rgba(233, 30, 99, 1),
-                0 0 60px rgba(233, 30, 99, 0.8),
-                0 0 90px rgba(233, 30, 99, 0.6),
-                2px 2px 4px rgba(0,0,0,0.4);
-            animation: checkmateGlow 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes overlayGlow {
-            0% { 
-                transform: scale(1);
-                filter: brightness(1);
-            }
-            100% { 
-                transform: scale(1.05);
-                filter: brightness(1.2);
-            }
-        }
-
-        @keyframes checkPulse {
-            0%, 100% { 
-                transform: scale(1);
-                filter: brightness(1);
-            }
-            50% { 
-                transform: scale(1.1);
-                filter: brightness(1.5);
-            }
-        }
-
-        @keyframes checkmateGlow {
-            0% { 
-                transform: scale(1) rotate(-1deg);
-                filter: brightness(1);
-            }
-            100% { 
-                transform: scale(1.08) rotate(1deg);
-                filter: brightness(1.3);
-            }
-        }
-
-        .checkmate-particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 999;
-            border-radius: 50%;
-            animation: checkmateParticle 3s ease-out forwards;
-        }
-
-        @keyframes checkmateParticle {
-            0% {
-                transform: scale(0) rotate(0deg) translate(0, 0);
-                opacity: 1;
-            }
-            20% {
-                transform: scale(3) rotate(90deg) translate(calc(var(--final-x) * 0.3), calc(var(--final-y) * 0.3));
-                opacity: 1;
-            }
-            50% {
-                transform: scale(2) rotate(180deg) translate(calc(var(--final-x) * 0.7), calc(var(--final-y) * 0.7));
-                opacity: 1;
-            }
-            80% {
-                transform: scale(1.5) rotate(270deg) translate(var(--final-x), var(--final-y));
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(0.5) rotate(360deg) translate(calc(var(--final-x) * 1.5), calc(var(--final-y) * 1.5 - 200px));
-                opacity: 0;
-            }
-        }
+        footer {
             text-align: center;
             padding: 3rem 2rem;
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.5);
             font-family: 'Source Sans Pro', sans-serif;
             backdrop-filter: blur(5px);
             background: rgba(0, 0, 0, 0.2);
             margin-top: 2rem;
             position: relative;
             z-index: 1;
-            text-shadow: 0 0 8px rgba(138, 43, 226, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -995,34 +741,15 @@
                 border-radius: 12px;
             }
 
-            .chess-board-mist {
-                top: -15px;
-                left: -15px;
-                right: -15px;
-                bottom: -15px;
-                border-radius: 15px;
-            }
-
             .square {
                 width: 60px;
                 height: 60px;
                 font-size: 38px;
             }
 
-            .overlay-text {
-                font-size: 3rem;
-            }
-
-            .rank-label {
-                height: 60px;
-                font-size: 14px;
-                width: 20px;
-            }
-
-            .file-label {
-                width: 60px;
-                font-size: 14px;
-                height: 20px;
+            .coordinates {
+                grid-template-columns: 25px repeat(8, 60px) 25px;
+                grid-template-rows: 25px repeat(8, 60px) 25px;
             }
 
             .header {
@@ -1044,22 +771,10 @@
         }
 
         @media (max-width: 480px) {
-            .overlay-text {
-                font-size: 2rem;
-            }
-
             .chess-board {
                 grid-template-columns: repeat(8, 45px);
                 grid-template-rows: repeat(8, 45px);
                 border-radius: 10px;
-            }
-
-            .chess-board-mist {
-                top: -12px;
-                left: -12px;
-                right: -12px;
-                bottom: -12px;
-                border-radius: 13px;
             }
 
             .square {
@@ -1076,16 +791,12 @@
                 text-align: center;
             }
 
-            .rank-label {
-                height: 45px;
-                font-size: 12px;
-                width: 18px;
-            }
-
-            .file-label {
-                width: 45px;
-                font-size: 12px;
-                height: 18px;
+            .coordinates {
+                grid-template-columns: 20px repeat(8, 45px) 20px;
+                grid-template-rows: 20px repeat(8, 45px) 20px;
+                margin: 20px auto;
+                width: fit-content;
+                display: inline-grid;
             }
 
             .game-instructions {
@@ -1098,117 +809,299 @@
                 gap: 0.5rem;
             }
         }
-    </style>
-</head>
-<body>
-    <div class="background"></div>
-    <div class="mist-overlay"></div>
-    <div class="particles" id="particles"></div>
-    
-    <!-- Game Overlay for dramatic text -->
-    <div class="game-overlay" id="gameOverlay">
-        <div class="overlay-text" id="overlayText"></div>
+  </style>
+  <style>
+   body {
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow-x: hidden;
+}
+#lore-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8em;
+    text-align: center;
+    color: #f0f0f0;
+    margin: 1.5em auto;
+    max-width: 600px;
+    padding: 0.5em;
+    opacity: 0.85;
+    text-shadow: 0 0 4px #999;
+}
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    top: 0;
+    left: 0;
+}
+.mist-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('mist.png') repeat-x;
+    background-size: cover;
+    opacity: 0.2;
+    z-index: -1;
+    animation: mist-move 60s linear infinite;
+}
+@keyframes mist-move {
+    from { background-position: 0 0; }
+    to { background-position: -1000px 0; }
+}
+  </style>
+ </head>
+ <body>
+  <div id="particles-js">
+  </div>
+  <div class="mist-overlay">
+  </div>
+  <div id="lore-intro">
+   In the Chess Realms, every move echoes through time&hellip;
+  </div>
+  <div class="background">
+  </div>
+  <div class="mist-overlay">
+  </div>
+  <div class="particles" id="particles">
+  </div>
+  <div class="header">
+   <h1>
+    ♔ Chess Realms ♚
+   </h1>
+   <p class="subtitle">
+    Battle across the eternal board
+   </p>
+  </div>
+  <div class="nav">
+   <button class="mobile-menu-button" id="mobileMenuButton">
+    ☰ Menu
+   </button>
+   <div class="nav-links" id="navLinks">
+    <a href="./index.html">
+     Home
+    </a>
+    <a href="./gallery.html">
+     Gallery
+    </a>
+    <a class="creative current" href="./games.html">
+     Games
+    </a>
+    <a class="creative" href="./music.html">
+     Music
+    </a>
+    <a href="./stories.html">
+     Stories
+    </a>
+    <a href="./about.html">
+     About
+    </a>
+    <a href="./contact.html">
+     Contact
+    </a>
+    <a class="cruxfade-link" href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" title="Enter Cruxfade">
+     ⟁ Cruxfade
+    </a>
+   </div>
+  </div>
+  <div class="game-container">
+   <div class="game-header">
+    <h2>
+     Interactive Chess
+    </h2>
+    <div class="game-status" id="gameStatus">
+     White to move
     </div>
-
-    <div class="header">
-        <h1>♔ Chess Realms ♚</h1>
-        <p class="subtitle">Battle across the eternal board</p>
+   </div>
+   <div class="coordinates">
+    <div class="coord-label">
     </div>
-
-    <div class="nav">
-        <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
-        <div class="nav-links" id="navLinks">
-            <a href="./index.html">Home</a>
-            <a href="./gallery.html">Gallery</a>
-            <a href="./games.html" class="creative current">Games</a>
-            <a href="./music.html" class="creative">Music</a>
-            <a href="./stories.html">Stories</a>
-            <a href="./about.html">About</a>
-            <a href="./contact.html">Contact</a>
-            <a href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" class="cruxfade-link" title="Enter Cruxfade">⟁ Cruxfade</a>
-        </div>
+    <div class="coord-label">
+     a
     </div>
-
-    <div class="game-container">
-        <div class="game-header">
-            <h2>Interactive Chess</h2>
-            <div class="game-status" id="gameStatus">White to move</div>
-        </div>
-        
-        <div class="chess-board-wrapper">
-            <div class="rank-labels">
-                <div class="rank-label">8</div>
-                <div class="rank-label">7</div>
-                <div class="rank-label">6</div>
-                <div class="rank-label">5</div>
-                <div class="rank-label">4</div>
-                <div class="rank-label">3</div>
-                <div class="rank-label">2</div>
-                <div class="rank-label">1</div>
-            </div>
-            <div class="board-and-files">
-                <div class="chess-board-container">
-                    <div class="chess-board-mist"></div>
-                    <div class="chess-board" id="chessBoard"></div>
-                </div>
-                <div class="file-labels">
-                    <div class="file-label">a</div>
-                    <div class="file-label">b</div>
-                    <div class="file-label">c</div>
-                    <div class="file-label">d</div>
-                    <div class="file-label">e</div>
-                    <div class="file-label">f</div>
-                    <div class="file-label">g</div>
-                    <div class="file-label">h</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="controls">
-            <button class="btn" onclick="newGame()">New Game</button>
-            <button class="btn" onclick="undoMove()">Undo Move</button>
-            <button class="btn" id="showLastMoveBtn" onclick="showLastAIMove()">Show Last Move</button>
-        </div>
-        
-        <div class="move-history" id="moveHistory">
-            <p><em>Move history will appear here...</em></p>
-        </div>
-        
-        <div class="game-instructions">
-            <h3>How to Play</h3>
-            <div class="instruction-grid">
-                <div class="instruction">
-                    <span class="instruction-icon">👆</span>
-                    <span class="instruction-text">Click your piece to select it</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">✨</span>
-                    <span class="instruction-text">Valid moves glow green</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">🎯</span>
-                    <span class="instruction-text">Click destination to move</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">🤖</span>
-                    <span class="instruction-text">AI responds automatically</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">🔍</span>
-                    <span class="instruction-text">Use "Show Last Move" if you missed the AI's move</span>
-                </div>
-            </div>
-        </div>
+    <div class="coord-label">
+     b
     </div>
-
-    <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
-
-    <footer>
-        © 2025 Sketchy Ponderings | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — quietly relentless.
-    </footer>
-
-    <script>
-        // Enhanced floating particles system
+    <div class="coord-label">
+     c
+    </div>
+    <div class="coord-label">
+     d
+    </div>
+    <div class="coord-label">
+     e
+    </div>
+    <div class="coord-label">
+     f
+    </div>
+    <div class="coord-label">
+     g
+    </div>
+    <div class="coord-label">
+     h
+    </div>
+    <div class="coord-label">
+    </div>
+    <div class="coord-label">
+     8
+    </div>
+    <div class="chess-board" id="chessBoard">
+    </div>
+    <div class="coord-label">
+     8
+    </div>
+    <div class="coord-label">
+     7
+    </div>
+    <div class="coord-label">
+     7
+    </div>
+    <div class="coord-label">
+     6
+    </div>
+    <div class="coord-label">
+     6
+    </div>
+    <div class="coord-label">
+     5
+    </div>
+    <div class="coord-label">
+     5
+    </div>
+    <div class="coord-label">
+     4
+    </div>
+    <div class="coord-label">
+     4
+    </div>
+    <div class="coord-label">
+     3
+    </div>
+    <div class="coord-label">
+     3
+    </div>
+    <div class="coord-label">
+     2
+    </div>
+    <div class="coord-label">
+     2
+    </div>
+    <div class="coord-label">
+     1
+    </div>
+    <div class="coord-label">
+     1
+    </div>
+    <div class="coord-label">
+    </div>
+    <div class="coord-label">
+     a
+    </div>
+    <div class="coord-label">
+     b
+    </div>
+    <div class="coord-label">
+     c
+    </div>
+    <div class="coord-label">
+     d
+    </div>
+    <div class="coord-label">
+     e
+    </div>
+    <div class="coord-label">
+     f
+    </div>
+    <div class="coord-label">
+     g
+    </div>
+    <div class="coord-label">
+     h
+    </div>
+    <div class="coord-label">
+    </div>
+   </div>
+   <div class="controls">
+    <button class="btn" onclick="newGame()">
+     New Game
+    </button>
+    <button class="btn" onclick="undoMove()">
+     Undo Move
+    </button>
+    <button class="btn" id="showLastMoveBtn" onclick="showLastAIMove()">
+     Show Last Move
+    </button>
+   </div>
+   <div class="move-history" id="moveHistory">
+    <p>
+     <em>
+      Move history will appear here...
+     </em>
+    </p>
+   </div>
+   <div class="game-instructions">
+    <h3>
+     How to Play
+    </h3>
+    <div class="instruction-grid">
+     <div class="instruction">
+      <span class="instruction-icon">
+       👆
+      </span>
+      <span class="instruction-text">
+       Click your piece to select it
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       ✨
+      </span>
+      <span class="instruction-text">
+       Valid moves glow green
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       🎯
+      </span>
+      <span class="instruction-text">
+       Click destination to move
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       🤖
+      </span>
+      <span class="instruction-text">
+       AI responds automatically
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       🔍
+      </span>
+      <span class="instruction-text">
+       Use "Show Last Move" if you missed the AI's move
+      </span>
+     </div>
+    </div>
+   </div>
+  </div>
+  <button class="back-to-top" id="scrollTop" title="Back to top">
+   &uarr;
+  </button>
+  <footer>
+   &copy; 2025 Sketchy Ponderings | In collaboration with
+   <a href="../second-gaze/" style="text-decoration: none;">
+    The Second Gaze
+   </a>
+   &amp;
+   <a href="../" style="text-decoration: none;">
+    Fairweather
+   </a>
+   &mdash; quietly relentless.
+  </footer>
+  <script>
+   // Enhanced floating particles system
         const container = document.getElementById('particles');
         const colors = ['golden', 'purple', 'silver'];
         
@@ -1253,78 +1146,6 @@
         }
 
         window.addEventListener('scroll', requestTick);
-
-        // Game overlay functions
-        function showOverlay(text, className = '', duration = 3000) {
-            const overlay = document.getElementById('gameOverlay');
-            const overlayText = document.getElementById('overlayText');
-            
-            overlayText.textContent = text;
-            overlayText.className = `overlay-text ${className}`;
-            overlay.classList.add('show');
-            
-            if (duration > 0) {
-                setTimeout(() => {
-                    overlay.classList.remove('show');
-                }, duration);
-            }
-        }
-
-        function hideOverlay() {
-            const overlay = document.getElementById('gameOverlay');
-            overlay.classList.remove('show');
-        }
-
-        function createCheckmateExplosion() {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            
-            // Create 40-60 massive explosion particles
-            const numParticles = Math.random() * 21 + 40;
-            for (let i = 0; i < numParticles; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'checkmate-particle';
-                
-                // Very large particles
-                const size = Math.random() * 25 + 15;
-                const colors = [
-                    'rgba(233, 30, 99, 1)', 
-                    'rgba(255, 87, 34, 1)', 
-                    'rgba(138, 43, 226, 1)',
-                    'rgba(255, 215, 0, 1)',
-                    'rgba(255, 69, 0, 1)',
-                    'rgba(220, 20, 60, 1)',
-                    'rgba(255, 255, 255, 1)'
-                ];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                
-                // Random direction for explosion
-                const angle = (Math.PI * 2 * i) / numParticles + (Math.random() - 0.5) * 0.5;
-                const distance = Math.random() * 300 + 200;
-                
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.background = `radial-gradient(circle, ${color}, rgba(255,255,255,0.5))`;
-                particle.style.position = 'fixed';
-                particle.style.left = centerX + 'px';
-                particle.style.top = centerY + 'px';
-                particle.style.boxShadow = `0 0 30px ${color}, 0 0 60px ${color}, 0 0 90px ${color}`;
-                particle.style.zIndex = '999';
-                
-                // Add explosion movement
-                particle.style.setProperty('--final-x', Math.cos(angle) * distance + 'px');
-                particle.style.setProperty('--final-y', Math.sin(angle) * distance + 'px');
-                
-                document.body.appendChild(particle);
-                
-                // Remove particle after animation
-                setTimeout(() => {
-                    if (particle.parentNode) {
-                        particle.parentNode.removeChild(particle);
-                    }
-                }, 3000);
-            }
-        }
 
         // Back to top functionality
         const topButton = document.getElementById('scrollTop');
@@ -1386,7 +1207,6 @@
                 };
                 this.halfMoveClock = 0;
                 this.fullMoveNumber = 1;
-                this.gameStarted = false;
                 
                 this.pieces = {
                     white: {
@@ -1409,9 +1229,7 @@
                     if (showLastMoveBtn) {
                         showLastMoveBtn.disabled = true;
                     }
-                    // Show "Begin Game" overlay
-                    showOverlay('Begin Game', 'begin', 2500);
-                }, 500);
+                }, 0);
             }
             
             initializeBoard() {
@@ -1473,20 +1291,12 @@
                 if (this.gameOver) {
                     if (this.isCheckmate(this.currentPlayer)) {
                         statusElement.textContent = `Checkmate! ${this.currentPlayer === 'white' ? 'Black' : 'White'} wins!`;
-                        // Create massive explosion first, then show checkmate text
-                        createCheckmateExplosion();
-                        setTimeout(() => {
-                            showOverlay('Checkmate', 'checkmate', 0); // 0 = permanent until manually hidden
-                        }, 1500);
                     } else if (this.isStalemate(this.currentPlayer)) {
                         statusElement.textContent = 'Stalemate! Draw!';
-                        showOverlay('Stalemate', 'checkmate', 0);
                     }
                 } else if (this.isInCheck(this.currentPlayer)) {
                     statusElement.textContent = `${this.currentPlayer === 'white' ? 'White' : 'Black'} is in check!`;
                     this.highlightKingInCheck();
-                    // Show dramatic "Check" overlay
-                    showOverlay('Check', 'check', 2000);
                 } else {
                     statusElement.textContent = `${this.currentPlayer === 'white' ? 'White' : 'Black'} to move`;
                 }
@@ -1879,7 +1689,14 @@
             getMoveNotation(piece, fromRow, fromCol, toRow, toCol, captured) {
                 const from = this.coordinateToAlgebraic(fromRow, fromCol);
                 const to = this.coordinateToAlgebraic(toRow, toCol);
-                return `${from}-${to}`;
+                const pieceSymbol = piece.type === 'pawn' ? '' : piece.type.charAt(0).toUpperCase();
+                const captureSymbol = captured ? 'x' : '';
+                
+                if (piece.type === 'pawn' && captured) {
+                    return `${from.charAt(0)}x${to}`;
+                }
+                
+                return `${pieceSymbol}${captureSymbol}${to}`;
             }
             
             updateMoveHistory() {
@@ -2013,9 +1830,6 @@
         let game;
         
         function newGame() {
-            // Hide any existing overlays
-            hideOverlay();
-            
             game = new ChessGame();
             // Clear move history display
             document.getElementById('moveHistory').innerHTML = '<p><em>Move history will appear here...</em></p>';
@@ -2068,6 +1882,6 @@
         
         // Initialize game
         newGame();
-    </script>
-</body>
+  </script>
+ </body>
 </html>
