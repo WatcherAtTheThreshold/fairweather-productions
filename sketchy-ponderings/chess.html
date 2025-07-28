@@ -1641,14 +1641,7 @@
             getMoveNotation(piece, fromRow, fromCol, toRow, toCol, captured) {
                 const from = this.coordinateToAlgebraic(fromRow, fromCol);
                 const to = this.coordinateToAlgebraic(toRow, toCol);
-                const pieceSymbol = piece.type === 'pawn' ? '' : piece.type.charAt(0).toUpperCase();
-                const captureSymbol = captured ? 'x' : '';
-                
-                if (piece.type === 'pawn' && captured) {
-                    return `${from.charAt(0)}x${to}`;
-                }
-                
-                return `${pieceSymbol}${captureSymbol}${to}`;
+                return `${from}-${to}`;
             }
             
             updateMoveHistory() {
