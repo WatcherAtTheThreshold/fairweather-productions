@@ -20,6 +20,18 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Source Sans Pro', sans-serif;
+            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.2);
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 8px rgba(138, 43, 226, 0.3);
         }
 
         body {
@@ -784,7 +796,135 @@
             display: flex;
         }
 
-        footer {
+        .game-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .game-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .overlay-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 8rem;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-shadow: 
+                0 0 20px rgba(138, 43, 226, 1),
+                0 0 40px rgba(138, 43, 226, 0.8),
+                0 0 60px rgba(138, 43, 226, 0.6),
+                0 0 80px rgba(138, 43, 226, 0.4);
+            animation: overlayGlow 2s ease-in-out infinite alternate;
+            color: #fff;
+        }
+
+        .overlay-text.begin {
+            color: #4CAF50;
+            text-shadow: 
+                0 0 20px rgba(76, 175, 80, 1),
+                0 0 40px rgba(76, 175, 80, 0.8),
+                0 0 60px rgba(76, 175, 80, 0.6),
+                0 0 80px rgba(76, 175, 80, 0.4);
+        }
+
+        .overlay-text.check {
+            color: #FF5722;
+            text-shadow: 
+                0 0 20px rgba(255, 87, 34, 1),
+                0 0 40px rgba(255, 87, 34, 0.8),
+                0 0 60px rgba(255, 87, 34, 0.6),
+                0 0 80px rgba(255, 87, 34, 0.4);
+            animation: checkPulse 0.5s ease-in-out 3;
+        }
+
+        .overlay-text.checkmate {
+            color: #E91E63;
+            text-shadow: 
+                0 0 30px rgba(233, 30, 99, 1),
+                0 0 60px rgba(233, 30, 99, 0.8),
+                0 0 90px rgba(233, 30, 99, 0.6),
+                0 0 120px rgba(233, 30, 99, 0.4);
+            animation: checkmateGlow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes overlayGlow {
+            0% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            100% { 
+                transform: scale(1.05);
+                filter: brightness(1.2);
+            }
+        }
+
+        @keyframes checkPulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: brightness(1.5);
+            }
+        }
+
+        @keyframes checkmateGlow {
+            0% { 
+                transform: scale(1) rotate(-1deg);
+                filter: brightness(1);
+            }
+            100% { 
+                transform: scale(1.08) rotate(1deg);
+                filter: brightness(1.3);
+            }
+        }
+
+        .checkmate-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            border-radius: 50%;
+            animation: checkmateParticle 3s ease-out forwards;
+        }
+
+        @keyframes checkmateParticle {
+            0% {
+                transform: scale(0) rotate(0deg) translate(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(3) rotate(90deg) translate(calc(var(--final-x) * 0.3), calc(var(--final-y) * 0.3));
+                opacity: 1;
+            }
+            50% {
+                transform: scale(2) rotate(180deg) translate(calc(var(--final-x) * 0.7), calc(var(--final-y) * 0.7));
+                opacity: 1;
+            }
+            80% {
+                transform: scale(1.5) rotate(270deg) translate(var(--final-x), var(--final-y));
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0.5) rotate(360deg) translate(calc(var(--final-x) * 1.5), calc(var(--final-y) * 1.5 - 200px));
+                opacity: 0;
+            }
+        }
             text-align: center;
             padding: 3rem 2rem;
             font-size: 0.9rem;
@@ -867,6 +1007,10 @@
                 font-size: 38px;
             }
 
+            .overlay-text {
+                font-size: 4rem;
+            }
+
             .rank-label {
                 height: 60px;
                 font-size: 14px;
@@ -898,6 +1042,10 @@
         }
 
         @media (max-width: 480px) {
+            .overlay-text {
+                font-size: 2.5rem;
+            }
+
             .chess-board {
                 grid-template-columns: repeat(8, 45px);
                 grid-template-rows: repeat(8, 45px);
@@ -954,6 +1102,11 @@
     <div class="background"></div>
     <div class="mist-overlay"></div>
     <div class="particles" id="particles"></div>
+    
+    <!-- Game Overlay for dramatic text -->
+    <div class="game-overlay" id="gameOverlay">
+        <div class="overlay-text" id="overlayText"></div>
+    </div>
 
     <div class="header">
         <h1>♔ Chess Realms ♚</h1>
@@ -1099,6 +1252,78 @@
 
         window.addEventListener('scroll', requestTick);
 
+        // Game overlay functions
+        function showOverlay(text, className = '', duration = 3000) {
+            const overlay = document.getElementById('gameOverlay');
+            const overlayText = document.getElementById('overlayText');
+            
+            overlayText.textContent = text;
+            overlayText.className = `overlay-text ${className}`;
+            overlay.classList.add('show');
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    overlay.classList.remove('show');
+                }, duration);
+            }
+        }
+
+        function hideOverlay() {
+            const overlay = document.getElementById('gameOverlay');
+            overlay.classList.remove('show');
+        }
+
+        function createCheckmateExplosion() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            // Create 40-60 massive explosion particles
+            const numParticles = Math.random() * 21 + 40;
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'checkmate-particle';
+                
+                // Very large particles
+                const size = Math.random() * 25 + 15;
+                const colors = [
+                    'rgba(233, 30, 99, 1)', 
+                    'rgba(255, 87, 34, 1)', 
+                    'rgba(138, 43, 226, 1)',
+                    'rgba(255, 215, 0, 1)',
+                    'rgba(255, 69, 0, 1)',
+                    'rgba(220, 20, 60, 1)',
+                    'rgba(255, 255, 255, 1)'
+                ];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random direction for explosion
+                const angle = (Math.PI * 2 * i) / numParticles + (Math.random() - 0.5) * 0.5;
+                const distance = Math.random() * 300 + 200;
+                
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.background = `radial-gradient(circle, ${color}, rgba(255,255,255,0.5))`;
+                particle.style.position = 'fixed';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.boxShadow = `0 0 30px ${color}, 0 0 60px ${color}, 0 0 90px ${color}`;
+                particle.style.zIndex = '999';
+                
+                // Add explosion movement
+                particle.style.setProperty('--final-x', Math.cos(angle) * distance + 'px');
+                particle.style.setProperty('--final-y', Math.sin(angle) * distance + 'px');
+                
+                document.body.appendChild(particle);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 3000);
+            }
+        }
+
         // Back to top functionality
         const topButton = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => {
@@ -1159,6 +1384,7 @@
                 };
                 this.halfMoveClock = 0;
                 this.fullMoveNumber = 1;
+                this.gameStarted = false;
                 
                 this.pieces = {
                     white: {
@@ -1181,7 +1407,9 @@
                     if (showLastMoveBtn) {
                         showLastMoveBtn.disabled = true;
                     }
-                }, 0);
+                    // Show "Begin Game" overlay
+                    showOverlay('Begin Game', 'begin', 2500);
+                }, 500);
             }
             
             initializeBoard() {
@@ -1243,12 +1471,20 @@
                 if (this.gameOver) {
                     if (this.isCheckmate(this.currentPlayer)) {
                         statusElement.textContent = `Checkmate! ${this.currentPlayer === 'white' ? 'Black' : 'White'} wins!`;
+                        // Create massive explosion first, then show checkmate text
+                        createCheckmateExplosion();
+                        setTimeout(() => {
+                            showOverlay('Checkmate', 'checkmate', 0); // 0 = permanent until manually hidden
+                        }, 1500);
                     } else if (this.isStalemate(this.currentPlayer)) {
                         statusElement.textContent = 'Stalemate! Draw!';
+                        showOverlay('Stalemate', 'checkmate', 0);
                     }
                 } else if (this.isInCheck(this.currentPlayer)) {
                     statusElement.textContent = `${this.currentPlayer === 'white' ? 'White' : 'Black'} is in check!`;
                     this.highlightKingInCheck();
+                    // Show dramatic "Check" overlay
+                    showOverlay('Check', 'check', 2000);
                 } else {
                     statusElement.textContent = `${this.currentPlayer === 'white' ? 'White' : 'Black'} to move`;
                 }
@@ -1775,6 +2011,9 @@
         let game;
         
         function newGame() {
+            // Hide any existing overlays
+            hideOverlay();
+            
             game = new ChessGame();
             // Clear move history display
             document.getElementById('moveHistory').innerHTML = '<p><em>Move history will appear here...</em></p>';
