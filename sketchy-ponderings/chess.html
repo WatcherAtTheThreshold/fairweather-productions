@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Standard Favicons -->
-    <link rel="icon" href="images/quill_favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="images/quill_32x32.png" sizes="32x32" type="image/png" />
-    <link rel="icon" href="images/quill_64x64.png" sizes="64x64" type="image/png" />
-    <link rel="icon" href="images/quill_128x128.png" sizes="128x128" type="image/png" />
-    
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
-    
-    <title>Chess - Sketchy Ponderings</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        * {
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- Standard Favicons -->
+  <link href="images/quill_favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="images/quill_32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+  <link href="images/quill_64x64.png" rel="icon" sizes="64x64" type="image/png"/>
+  <link href="images/quill_128x128.png" rel="icon" sizes="128x128" type="image/png"/>
+  <!-- Apple Touch Icon -->
+  <link href="images/quill_apple_touch_180x180.png" rel="apple-touch-icon"/>
+  <title>
+   Chess - Sketchy Ponderings
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&amp;family=Source+Sans+Pro:wght@300;400&amp;display=swap" rel="stylesheet"/>
+  <style>
+   * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -810,132 +809,299 @@
                 gap: 0.5rem;
             }
         }
-    </style>
-</head>
-<body>
-    <div class="background"></div>
-    <div class="mist-overlay"></div>
-    <div class="particles" id="particles"></div>
-
-    <div class="header">
-        <h1>♔ Chess Realms ♚</h1>
-        <p class="subtitle">Battle across the eternal board</p>
+  </style>
+  <style>
+   body {
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow-x: hidden;
+}
+#lore-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8em;
+    text-align: center;
+    color: #f0f0f0;
+    margin: 1.5em auto;
+    max-width: 600px;
+    padding: 0.5em;
+    opacity: 0.85;
+    text-shadow: 0 0 4px #999;
+}
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    top: 0;
+    left: 0;
+}
+.mist-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('mist.png') repeat-x;
+    background-size: cover;
+    opacity: 0.2;
+    z-index: -1;
+    animation: mist-move 60s linear infinite;
+}
+@keyframes mist-move {
+    from { background-position: 0 0; }
+    to { background-position: -1000px 0; }
+}
+  </style>
+ </head>
+ <body>
+  <div id="particles-js">
+  </div>
+  <div class="mist-overlay">
+  </div>
+  <div id="lore-intro">
+   In the Chess Realms, every move echoes through time&hellip;
+  </div>
+  <div class="background">
+  </div>
+  <div class="mist-overlay">
+  </div>
+  <div class="particles" id="particles">
+  </div>
+  <div class="header">
+   <h1>
+    ♔ Chess Realms ♚
+   </h1>
+   <p class="subtitle">
+    Battle across the eternal board
+   </p>
+  </div>
+  <div class="nav">
+   <button class="mobile-menu-button" id="mobileMenuButton">
+    ☰ Menu
+   </button>
+   <div class="nav-links" id="navLinks">
+    <a href="./index.html">
+     Home
+    </a>
+    <a href="./gallery.html">
+     Gallery
+    </a>
+    <a class="creative current" href="./games.html">
+     Games
+    </a>
+    <a class="creative" href="./music.html">
+     Music
+    </a>
+    <a href="./stories.html">
+     Stories
+    </a>
+    <a href="./about.html">
+     About
+    </a>
+    <a href="./contact.html">
+     Contact
+    </a>
+    <a class="cruxfade-link" href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" title="Enter Cruxfade">
+     ⟁ Cruxfade
+    </a>
+   </div>
+  </div>
+  <div class="game-container">
+   <div class="game-header">
+    <h2>
+     Interactive Chess
+    </h2>
+    <div class="game-status" id="gameStatus">
+     White to move
     </div>
-
-    <div class="nav">
-        <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
-        <div class="nav-links" id="navLinks">
-            <a href="./index.html">Home</a>
-            <a href="./gallery.html">Gallery</a>
-            <a href="./games.html" class="creative current">Games</a>
-            <a href="./music.html" class="creative">Music</a>
-            <a href="./stories.html">Stories</a>
-            <a href="./about.html">About</a>
-            <a href="./contact.html">Contact</a>
-            <a href="https://watcheratthethreshold.github.io/subtle-sprits-cruxfade/" class="cruxfade-link" title="Enter Cruxfade">⟁ Cruxfade</a>
-        </div>
+   </div>
+   <div class="coordinates">
+    <div class="coord-label">
     </div>
-
-    <div class="game-container">
-        <div class="game-header">
-            <h2>Interactive Chess</h2>
-            <div class="game-status" id="gameStatus">White to move</div>
-        </div>
-        
-        <div class="coordinates">
-            <div class="coord-label"></div>
-            <div class="coord-label">a</div>
-            <div class="coord-label">b</div>
-            <div class="coord-label">c</div>
-            <div class="coord-label">d</div>
-            <div class="coord-label">e</div>
-            <div class="coord-label">f</div>
-            <div class="coord-label">g</div>
-            <div class="coord-label">h</div>
-            <div class="coord-label"></div>
-            
-            <div class="coord-label">8</div>
-            <div class="chess-board" id="chessBoard"></div>
-            <div class="coord-label">8</div>
-            
-            <div class="coord-label">7</div>
-            <div class="coord-label">7</div>
-            
-            <div class="coord-label">6</div>
-            <div class="coord-label">6</div>
-            
-            <div class="coord-label">5</div>
-            <div class="coord-label">5</div>
-            
-            <div class="coord-label">4</div>
-            <div class="coord-label">4</div>
-            
-            <div class="coord-label">3</div>
-            <div class="coord-label">3</div>
-            
-            <div class="coord-label">2</div>
-            <div class="coord-label">2</div>
-            
-            <div class="coord-label">1</div>
-            <div class="coord-label">1</div>
-            
-            <div class="coord-label"></div>
-            <div class="coord-label">a</div>
-            <div class="coord-label">b</div>
-            <div class="coord-label">c</div>
-            <div class="coord-label">d</div>
-            <div class="coord-label">e</div>
-            <div class="coord-label">f</div>
-            <div class="coord-label">g</div>
-            <div class="coord-label">h</div>
-            <div class="coord-label"></div>
-        </div>
-        
-        <div class="controls">
-            <button class="btn" onclick="newGame()">New Game</button>
-            <button class="btn" onclick="undoMove()">Undo Move</button>
-            <button class="btn" id="showLastMoveBtn" onclick="showLastAIMove()">Show Last Move</button>
-        </div>
-        
-        <div class="move-history" id="moveHistory">
-            <p><em>Move history will appear here...</em></p>
-        </div>
-        
-        <div class="game-instructions">
-            <h3>How to Play</h3>
-            <div class="instruction-grid">
-                <div class="instruction">
-                    <span class="instruction-icon">👆</span>
-                    <span class="instruction-text">Click your piece to select it</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">✨</span>
-                    <span class="instruction-text">Valid moves glow green</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">🎯</span>
-                    <span class="instruction-text">Click destination to move</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">🤖</span>
-                    <span class="instruction-text">AI responds automatically</span>
-                </div>
-                <div class="instruction">
-                    <span class="instruction-icon">🔍</span>
-                    <span class="instruction-text">Use "Show Last Move" if you missed the AI's move</span>
-                </div>
-            </div>
-        </div>
+    <div class="coord-label">
+     a
     </div>
-
-    <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
-
-    <footer>
-        © 2025 Sketchy Ponderings | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — quietly relentless.
-    </footer>
-
-    <script>
-        // Enhanced floating particles system
+    <div class="coord-label">
+     b
+    </div>
+    <div class="coord-label">
+     c
+    </div>
+    <div class="coord-label">
+     d
+    </div>
+    <div class="coord-label">
+     e
+    </div>
+    <div class="coord-label">
+     f
+    </div>
+    <div class="coord-label">
+     g
+    </div>
+    <div class="coord-label">
+     h
+    </div>
+    <div class="coord-label">
+    </div>
+    <div class="coord-label">
+     8
+    </div>
+    <div class="chess-board" id="chessBoard">
+    </div>
+    <div class="coord-label">
+     8
+    </div>
+    <div class="coord-label">
+     7
+    </div>
+    <div class="coord-label">
+     7
+    </div>
+    <div class="coord-label">
+     6
+    </div>
+    <div class="coord-label">
+     6
+    </div>
+    <div class="coord-label">
+     5
+    </div>
+    <div class="coord-label">
+     5
+    </div>
+    <div class="coord-label">
+     4
+    </div>
+    <div class="coord-label">
+     4
+    </div>
+    <div class="coord-label">
+     3
+    </div>
+    <div class="coord-label">
+     3
+    </div>
+    <div class="coord-label">
+     2
+    </div>
+    <div class="coord-label">
+     2
+    </div>
+    <div class="coord-label">
+     1
+    </div>
+    <div class="coord-label">
+     1
+    </div>
+    <div class="coord-label">
+    </div>
+    <div class="coord-label">
+     a
+    </div>
+    <div class="coord-label">
+     b
+    </div>
+    <div class="coord-label">
+     c
+    </div>
+    <div class="coord-label">
+     d
+    </div>
+    <div class="coord-label">
+     e
+    </div>
+    <div class="coord-label">
+     f
+    </div>
+    <div class="coord-label">
+     g
+    </div>
+    <div class="coord-label">
+     h
+    </div>
+    <div class="coord-label">
+    </div>
+   </div>
+   <div class="controls">
+    <button class="btn" onclick="newGame()">
+     New Game
+    </button>
+    <button class="btn" onclick="undoMove()">
+     Undo Move
+    </button>
+    <button class="btn" id="showLastMoveBtn" onclick="showLastAIMove()">
+     Show Last Move
+    </button>
+   </div>
+   <div class="move-history" id="moveHistory">
+    <p>
+     <em>
+      Move history will appear here...
+     </em>
+    </p>
+   </div>
+   <div class="game-instructions">
+    <h3>
+     How to Play
+    </h3>
+    <div class="instruction-grid">
+     <div class="instruction">
+      <span class="instruction-icon">
+       👆
+      </span>
+      <span class="instruction-text">
+       Click your piece to select it
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       ✨
+      </span>
+      <span class="instruction-text">
+       Valid moves glow green
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       🎯
+      </span>
+      <span class="instruction-text">
+       Click destination to move
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       🤖
+      </span>
+      <span class="instruction-text">
+       AI responds automatically
+      </span>
+     </div>
+     <div class="instruction">
+      <span class="instruction-icon">
+       🔍
+      </span>
+      <span class="instruction-text">
+       Use "Show Last Move" if you missed the AI's move
+      </span>
+     </div>
+    </div>
+   </div>
+  </div>
+  <button class="back-to-top" id="scrollTop" title="Back to top">
+   &uarr;
+  </button>
+  <footer>
+   &copy; 2025 Sketchy Ponderings | In collaboration with
+   <a href="../second-gaze/" style="text-decoration: none;">
+    The Second Gaze
+   </a>
+   &amp;
+   <a href="../" style="text-decoration: none;">
+    Fairweather
+   </a>
+   &mdash; quietly relentless.
+  </footer>
+  <script>
+   // Enhanced floating particles system
         const container = document.getElementById('particles');
         const colors = ['golden', 'purple', 'silver'];
         
@@ -1716,6 +1882,6 @@
         
         // Initialize game
         newGame();
-    </script>
-</body>
+  </script>
+ </body>
 </html>
