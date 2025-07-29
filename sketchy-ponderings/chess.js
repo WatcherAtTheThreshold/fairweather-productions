@@ -721,19 +721,19 @@ class ChessGame {
         
         // Check for checkmate
         if (this.isCheckmate(opponentColor)) {
-            notation += ' - Checkmate!';
+            notation += ' - <span class="move-checkmate">Checkmate!</span>';
             return notation;
         }
         
         // Check for stalemate
         if (this.isStalemate(opponentColor)) {
-            notation += ' - Stalemate!';
+            notation += ' - <span class="move-stalemate">Stalemate!</span>';
             return notation;
         }
         
         // Check for check
         if (this.isInCheck(opponentColor)) {
-            notation += ' - Check!';
+            notation += ' - <span class="move-check">Check!</span>';
         }
         
         return notation;
@@ -752,13 +752,13 @@ class ChessGame {
             const move = this.moveHistory[i];
             const moveNumber = Math.floor(i / 2) + 1;
             
-            // Show move number for white moves or single moves
-            if (move.player === 'white' || i === this.moveHistory.length - 1) {
-                historyHTML += `<div style="margin-bottom: 0.5rem; padding: 0.3rem; background: rgba(255,255,255,0.05); border-radius: 4px; border-left: 3px solid ${move.player === 'white' ? 'rgba(222,184,135,0.6)' : 'rgba(138,43,226,0.6)'};">`;
-                historyHTML += `<span style="color: rgba(255,255,255,0.5); font-weight: bold; margin-right: 0.5rem;">${moveNumber}.</span>`;
-                historyHTML += `<span style="color: ${move.player === 'white' ? 'rgba(255,255,255,0.9)' : 'rgba(138,43,226,1)'};">${move.notation}</span>`;
-                historyHTML += `</div>`;
-            }
+            // FIX #1: Show ALL moves, not just white moves or the last move
+            // Remove the problematic condition and show every move
+            historyHTML += `<div style="margin-bottom: 0.5rem; padding: 0.3rem; background: rgba(255,255,255,0.05); border-radius: 4px; border-left: 3px solid ${move.player === 'white' ? 'rgba(222,184,135,0.6)' : 'rgba(138,43,226,0.6)'};">`;
+            historyHTML += `<span style="color: rgba(255,255,255,0.5); font-weight: bold; margin-right: 0.5rem;">${moveNumber}.</span>`;
+            // FIX #6: Improve black move text readability - using lighter purple
+            historyHTML += `<span style="color: ${move.player === 'white' ? 'rgba(255,255,255,0.9)' : 'rgba(180,120,255,1)'};">${move.notation}</span>`;
+            historyHTML += `</div>`;
         }
         
         historyHTML += '</div>';
@@ -931,7 +931,8 @@ const musicToggle = document.getElementById('musicToggle');
 function toggleMusic() {
     if (musicPlaying) {
         chessMusic.pause();
-        musicToggle.textContent = '🎵 Play Mystic Chess Music';
+        // FIX #2: Consistent music button text - match the branding
+        musicToggle.textContent = '🎵 Play Echoes of the Board';
         musicToggle.classList.remove('playing');
         musicPlaying = false;
     } else {
