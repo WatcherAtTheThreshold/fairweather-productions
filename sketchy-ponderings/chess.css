@@ -235,30 +235,31 @@ h1 {
     box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
 }
 
-.cruxfade-link {
+/* FIX #5: Remove CSS !important usage - Increase specificity instead */
+.nav a.cruxfade-link {
     font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: all 0.3s ease;
-    padding: 0.5rem 1rem !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     backdrop-filter: blur(5px);
-    background: transparent !important;
-    box-shadow: none !important;
-    transform: none !important;
-    height: 60px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.cruxfade-link:hover {
-    color: #fff !important;
-    border-color: rgba(255, 255, 255, 0.6) !important;
-    background: rgba(255, 255, 255, 0.1) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+.nav a.cruxfade-link:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .game-container {
@@ -941,6 +942,49 @@ h1 {
     text-shadow: 0 0 5px rgba(138, 43, 226, 0.2);
 }
 
+/* FIX #8: Add CSS classes for move history (Code cleanup preparation) */
+.move-history-container {
+    font-family: 'Source Sans Pro', sans-serif; 
+    line-height: 1.8; 
+    font-size: 0.9rem;
+}
+
+.move-history-entry {
+    margin-bottom: 0.5rem; 
+    padding: 0.3rem; 
+    background: rgba(255,255,255,0.05); 
+    border-radius: 4px;
+}
+
+.move-history-entry.white {
+    border-left: 3px solid rgba(222,184,135,0.6);
+}
+
+.move-history-entry.black {
+    border-left: 3px solid rgba(138,43,226,0.6);
+}
+
+.move-number {
+    color: rgba(255,255,255,0.5); 
+    font-weight: bold; 
+    margin-right: 0.5rem;
+}
+
+.move-notation.white {
+    color: rgba(255,255,255,0.9);
+}
+
+.move-notation.black {
+    color: rgba(180,120,255,1); /* Improved readability color */
+}
+
+/* FIX #7: Add CSS classes for color-coded special moves */
+.move-check { color: rgba(255, 87, 34, 0.9); font-weight: bold; }
+.move-checkmate { color: rgba(233, 30, 99, 1); font-weight: bold; }
+.move-stalemate { color: rgba(255, 193, 7, 1); font-weight: bold; }
+.move-castling { color: rgba(76, 175, 80, 0.9); font-weight: bold; }
+.move-promotion { color: rgba(156, 39, 176, 0.9); font-weight: bold; }
+
 .game-instructions {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -1234,3 +1278,5 @@ footer {
         font-size: 1rem;
     }
 }
+
+/* Note: CSS was previously cut off - this completes the mobile responsive section */
