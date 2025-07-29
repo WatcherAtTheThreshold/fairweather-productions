@@ -299,6 +299,120 @@ h1 {
     display: inline-block;
 }
 
+.music-controls {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.music-btn {
+    background: rgba(138, 43, 226, 0.3);
+    color: #fff;
+    border: 1px solid rgba(138, 43, 226, 0.5);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.music-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.3s;
+}
+
+.music-btn:hover::before {
+    left: 100%;
+}
+
+.music-btn:hover {
+    background: rgba(138, 43, 226, 0.5);
+    border-color: rgba(138, 43, 226, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.4);
+}
+
+.music-btn.playing {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: rgba(76, 175, 80, 0.5);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    animation: musicPulse 2s ease-in-out infinite alternate;
+}
+
+.music-btn.playing:hover {
+    background: rgba(76, 175, 80, 0.5);
+    border-color: rgba(76, 175, 80, 0.8);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(76, 175, 80, 0.4);
+}
+
+@keyframes musicPulse {
+    0% { 
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    }
+    100% { 
+        box-shadow: 0 0 25px rgba(76, 175, 80, 0.6);
+    }
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.volume-control span {
+    font-size: 1.1rem;
+}
+
+.volume-control input[type="range"] {
+    width: 100px;
+    height: 5px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgba(138, 43, 226, 0.8);
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
+.volume-control input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgba(138, 43, 226, 0.8);
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
 .chess-board-wrapper {
     display: flex;
     align-items: flex-start;
@@ -1026,6 +1140,20 @@ footer {
     .instruction-text {
         font-size: 0.85rem;
     }
+
+    .music-controls {
+        margin-top: 1rem;
+        padding: 0.75rem;
+    }
+
+    .music-btn {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+
+    .volume-control input[type="range"] {
+        width: 80px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1081,5 +1209,28 @@ footer {
         flex-direction: column;
         text-align: center;
         gap: 0.5rem;
+    }
+
+    .music-controls {
+        margin-top: 0.75rem;
+        padding: 0.5rem;
+        gap: 0.75rem;
+    }
+
+    .music-btn {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+
+    .volume-control {
+        gap: 0.3rem;
+    }
+
+    .volume-control input[type="range"] {
+        width: 60px;
+    }
+
+    .volume-control span {
+        font-size: 1rem;
     }
 }
