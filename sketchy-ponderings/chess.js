@@ -496,7 +496,15 @@ class ChessGame {
         }
         
         // Record move with descriptive notation
-        const moveNotation = this.getDescriptiveNotation(piece, fromRow, fromCol, toRow, toCol, capturedPiece);
+        let moveNotation = this.getDescriptiveNotation(piece, fromRow, fromCol, toRow, toCol, capturedPiece);
+        
+        // Switch players first to check the opponent's status
+        this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
+        
+        // Add chess conditions (check, checkmate, etc.) after player switch
+        moveNotation = this.addMoveConditions(moveNotation, piece);
+        
+        // Store the move in history
         this.moveHistory.push({
             from: { row: fromRow, col: fromCol },
             to: { row: toRow, col: toCol },
@@ -504,11 +512,8 @@ class ChessGame {
             captured: capturedPiece,
             notation: moveNotation,
             moveNumber: this.fullMoveNumber,
-            player: this.currentPlayer
+            player: piece.color
         });
-        
-        // Switch players
-        this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
         
         // Update move history display if it's a player move
         if (piece.color === 'white') {
@@ -672,7 +677,7 @@ class ChessGame {
         return files[col] + ranks[row];
     }
     
-    // Enhanced descriptive notation function
+    // Enhanced descriptive notation function with chess terminology
     getDescriptiveNotation(piece, fromRow, fromCol, toRow, toCol, capturedPiece) {
         const colorName = piece.color === 'white' ? 'White' : 'Black';
         const pieceName = this.pieceNames[piece.type];
@@ -696,6 +701,39 @@ class ChessGame {
         // Handle pawn promotion
         if (piece.type === 'pawn' && (toRow === 0 || toRow === 7)) {
             notation += ' and promotes to Queen';
+        }
+        
+        // Handle castling
+        if (piece.type === 'king' && Math.abs(toCol - fromCol) === 2) {
+            if (toCol > fromCol) {
+                notation = `${colorName} castles kingside`;
+            } else {
+                notation = `${colorName} castles queenside`;
+            }
+        }
+        
+        return notation;
+    }
+    
+    // Check for special move conditions after a move is made
+    addMoveConditions(notation, piece) {
+        const opponentColor = piece.color === 'white' ? 'black' : 'white';
+        
+        // Check for checkmate
+        if (this.isCheckmate(opponentColor)) {
+            notation += ' - Checkmate!';
+            return notation;
+        }
+        
+        // Check for stalemate
+        if (this.isStalemate(opponentColor)) {
+            notation += ' - Stalemate!';
+            return notation;
+        }
+        
+        // Check for check
+        if (this.isInCheck(opponentColor)) {
+            notation += ' - Check!';
         }
         
         return notation;
@@ -884,3 +922,35 @@ function showLastAIMove() {
 
 // Initialize game
 newGame();
+
+// Music control functions
+let musicPlaying = false;
+const chessMusic = document.getElementById('chessMusic');
+const musicToggle = document.getElementById('musicToggle');
+
+function toggleMusic() {
+    if (musicPlaying) {
+        chessMusic.pause();
+        musicToggle.textContent = '🎵 Play Mystic Chess Music';
+        musicToggle.classList.remove('playing');
+        musicPlaying = false;
+    } else {
+        chessMusic.play().then(() => {
+            musicToggle.textContent = '🎵 Pause Music';
+            musicToggle.classList.add('playing');
+            musicPlaying = true;
+        }).catch(error => {
+            console.log('Could not play audio:', error);
+            musicToggle.textContent = '🎵 Music Unavailable';
+        });
+    }
+}
+
+function setVolume(value) {
+    chessMusic.volume = value / 100;
+}
+
+// Set initial volume
+if (chessMusic) {
+    chessMusic.volume = 0.3; // 30% volume by default
+}
