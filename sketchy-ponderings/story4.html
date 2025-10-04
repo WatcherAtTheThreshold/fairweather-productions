@@ -429,6 +429,23 @@
         font-size: 1rem;
       }
     }
+      :root { --max: 70ch; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: #1b1b1b; background: #fff;
+    }
+    main { max-width: var(--max); margin: 3rem auto; padding: 0 1rem; }
+    h1, h2 { line-height: 1.2; margin: 0 0 1rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.4rem; margin-top: 2.5rem; }
+    p { margin: 0 0 1rem; }
+    .byline { color:#666; margin-top:-.5rem; margin-bottom:2rem; }
+    hr { border: none; border-top: 1px solid #e6e6e6; margin: 2rem 0; }
+    .chapters-nav { font-size: .95rem; margin-bottom: 2rem; }
+    .chapters-nav a { color: #0b66c3; text-decoration: none; }
+    .chapters-nav a:hover { text-decoration: underline; }
+    blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid #eee; color: #444; }
   </style>
 </head>
 <body>
@@ -487,101 +504,7 @@
           </radialGradient>
         </defs>
         
-        <!-- Background -->
-        <rect width="500" height="400" fill="url(#skyGrad)"/>
-        
-        <!-- Title text -->
-        <text x="250" y="30" font-family="Georgia, serif" font-size="24" fill="rgba(255, 255, 255, 0.8)" text-anchor="middle" font-style="italic">Blue Landscape</text>
-        
-        <!-- Distant mountains -->
-        <path d="M0 150 Q100 120 200 140 Q300 110 400 130 Q450 135 500 125 L500 400 L0 400 Z" 
-              fill="rgba(100, 149, 237, 0.2)" stroke="none"/>
-        
-        <!-- Forest background -->
-        <circle cx="80" cy="200" r="35" fill="url(#treeGrad)" opacity="0.7"/>
-        <circle cx="120" cy="180" r="40" fill="url(#treeGrad)" opacity="0.6"/>
-        <circle cx="380" cy="190" r="30" fill="url(#treeGrad)" opacity="0.7"/>
-        <circle cx="420" cy="170" r="35" fill="url(#treeGrad)" opacity="0.6"/>
-        <circle cx="450" cy="200" r="25" fill="url(#treeGrad)" opacity="0.8"/>
-        
-        <!-- Snow patches -->
-        <ellipse cx="150" cy="320" rx="40" ry="8" fill="rgba(255, 255, 255, 0.4)" opacity="0.6"/>
-        <ellipse cx="350" cy="330" rx="30" ry="6" fill="rgba(255, 255, 255, 0.4)" opacity="0.5"/>
-        
-        <!-- The split boulder/portal (main feature) -->
-        <!-- Left half of split rock -->
-        <path d="M200 180 Q190 160 200 140 Q220 130 240 140 L235 280 Q220 290 210 285 L200 180" 
-              fill="url(#rockGrad)" stroke="rgba(105, 105, 105, 0.8)" stroke-width="2"/>
-        
-        <!-- Right half of split rock -->
-        <path d="M265 140 Q285 130 305 140 Q315 160 305 180 L295 285 Q280 290 265 280 L265 140" 
-              fill="url(#rockGrad)" stroke="rgba(105, 105, 105, 0.8)" stroke-width="2"/>
-        
-        <!-- The mystical gap/portal between the rocks -->
-        <path d="M240 140 L265 140 L265 280 L235 280 Z" 
-              fill="url(#portalGlow)" stroke="none"/>
-        
-        <!-- Portal energy/mist effect -->
-        <ellipse cx="250" cy="210" rx="12" ry="70" fill="rgba(138, 43, 226, 0.2)" opacity="0.8"/>
-        <ellipse cx="250" cy="210" rx="8" ry="50" fill="rgba(255, 255, 255, 0.1)" opacity="0.6"/>
-        
-        <!-- Crack details in the rock -->
-        <path d="M235 150 Q240 160 235 170 Q240 180 235 190" 
-              stroke="rgba(50, 50, 50, 0.6)" stroke-width="1" fill="none"/>
-        <path d="M265 160 Q270 170 265 180 Q270 190 265 200" 
-              stroke="rgba(50, 50, 50, 0.6)" stroke-width="1" fill="none"/>
-        
-        <!-- First moose (the one blocking the trail) -->
-        <!-- Body -->
-        <ellipse cx="150" cy="250" rx="35" ry="20" fill="url(#mooseGrad)" stroke="rgba(101, 67, 33, 0.6)" stroke-width="1"/>
-        <!-- Head -->
-        <ellipse cx="120" cy="235" rx="20" ry="15" fill="url(#mooseGrad)" stroke="rgba(101, 67, 33, 0.6)" stroke-width="1"/>
-        <!-- Antlers -->
-        <path d="M115 225 Q110 215 108 210 Q112 205 115 208 M125 225 Q130 215 132 210 Q128 205 125 208" 
-              stroke="rgba(101, 67, 33, 0.8)" stroke-width="2" fill="none"/>
-        <!-- Legs -->
-        <rect x="135" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
-        <rect x="145" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
-        <rect x="155" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
-        <rect x="165" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
-        <!-- Blond fur on legs -->
-        <circle cx="137" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
-        <circle cx="147" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
-        <circle cx="157" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
-        <circle cx="167" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
-        
-        <!-- Hidden moose gradually appearing from the forest -->
-        <!-- Moose 2 (partly hidden) -->
-        <ellipse cx="320" cy="240" rx="25" ry="15" fill="url(#mooseGrad)" opacity="0.7"/>
-        <ellipse cx="305" cy="230" rx="15" ry="12" fill="url(#mooseGrad)" opacity="0.7"/>
-        <path d="M300 222 Q295 215 298 210 M310 222 Q315 215 312 210" 
-              stroke="rgba(101, 67, 33, 0.6)" stroke-width="1.5" fill="none" opacity="0.7"/>
-        
-        <!-- Moose 3 (more hidden, just head visible) -->
-        <ellipse cx="90" cy="220" rx="12" ry="10" fill="url(#mooseGrad)" opacity="0.5"/>
-        <path d="M85 215 Q80 210 82 208 M95 215 Q100 210 98 208" 
-              stroke="rgba(101, 67, 33, 0.4)" stroke-width="1" fill="none" opacity="0.5"/>
-        
-        <!-- Moose 4 (very subtle, blending into trees) -->
-        <ellipse cx="400" cy="250" rx="20" ry="12" fill="url(#mooseGrad)" opacity="0.4"/>
-        <ellipse cx="385" cy="240" rx="12" ry="8" fill="url(#mooseGrad)" opacity="0.4"/>
-        
-        <!-- Moose 5 (just antlers visible) -->
-        <path d="M460 200 Q455 195 458 190 M470 200 Q475 195 472 190" 
-              stroke="rgba(101, 67, 33, 0.3)" stroke-width="1" fill="none" opacity="0.6"/>
-        
-        <!-- The hikers (small figures in the portal) -->
-        <!-- Hiker 1 -->
-        <circle cx="245" cy="220" r="3" fill="rgba(255, 255, 255, 0.8)"/>
-        <ellipse cx="245" cy="230" rx="2" ry="8" fill="rgba(200, 200, 200, 0.8)"/>
-        <rect x="243" y="238" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
-        <rect x="246" y="238" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
-        
-        <!-- Hiker 2 -->
-        <circle cx="255" cy="225" r="3" fill="rgba(255, 255, 255, 0.8)"/>
-        <ellipse cx="255" cy="235" rx="2" ry="8" fill="rgba(200, 200, 200, 0.8)"/>
-        <rect x="253" y="243" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
-        <rect x="256" y="243" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
+   
         
         <!-- Mystical elements -->
         <!-- Sparkles and energy around the portal -->
@@ -817,5 +740,10 @@
       document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
     });
   </script>
+
+      </section>
+
+  </article>
+</main>
 </body>
 </html>
