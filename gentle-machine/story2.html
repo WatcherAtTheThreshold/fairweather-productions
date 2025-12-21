@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Standard Favicons -->
+<link rel="icon" href="images/quill_favicon.ico" type="image/x-icon" />
+<link rel="icon" href="images/quill_32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="images/quill_64x64.png" sizes="64x64" type="image/png" />
+<link rel="icon" href="images/quill_128x128.png" sizes="128x128" type="image/png" />
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
+
+  
+  <title>Wing and Foot — Sketchy Ponderings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(20, 20, 30, 0.8);
+      opacity: 1;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.01) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.4;
+      position: fixed;
+      width: 100%;
+      height: 250vh;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.current {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: none !important;
+    }
+
+    .story-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .story-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+    }
+
+    .story-text {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .story-text p.line {
+      margin: 0.3rem 0;
+      display: block;
+    }
+
+    .story-text p.line.spaced {
+      margin-top: 2rem;
+    }
+
+    .story-text p.line:first-child {
+      margin-top: 0;
+    }
+
+    .image-block {
+      text-align: center;
+      margin: 3rem 0 2rem;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .image-block svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.3));
+    }
+
+    .image-block svg:hover {
+      transform: scale(1.02);
+    }
+
+    .caption {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .story-meta {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .story-type {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .back-link {
+      background: rgba(138, 43, 226, 0.2);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(138, 43, 226, 0.4);
+      transition: all 0.3s ease;
+      font-weight: 400;
+    }
+
+    .back-link:hover {
+      background: rgba(138, 43, 226, 0.4);
+      border-color: rgba(138, 43, 226, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Source Sans Pro', sans-serif;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 0 2rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .story-container {
+        margin: 0 1rem;
+        padding: 1.5rem;
+      }
+
+      .header {
+        padding: 2rem 1rem 1rem;
+      }
+
+      .story-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        padding: 0 1rem;
+      }
+
+      .mobile-menu-button {
+        margin: 0 auto 1rem;
+      }
+
+      .story-text {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+
+  <div class="header">
+    <h1>Wing and Foot</h1>
+    <p class="subtitle">A dance between human and butterfly</p>
+  </div>
+
+  <div class="nav">
+    <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="./index.html">Home</a>
+      <a href="./gallery.html">Gallery</a>
+      <a href="./games.html" class="creative">Games</a>
+      <a href="./music.html" class="creative">Music</a>
+      <a href="./stories.html" class="current">Stories</a>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="https://watcheratthethreshold.github.io/shadows-of-the-deck/" class="cruxfade-link" title="Enter Cruxfade">⟁ Shadows</a>
+    </div>
+  </div>
+
+  <div class="story-container">
+    <div class="story-text">
+      <p class="line spaced">I was jogging down to Cherry Pond one day, probably spring or early summer, and I passed this cluster of butterflies all gathered on the ground.</p>
+      <p class="line">As I ran past, they stirred and flew up, just this beautiful little cloud of wings.</p>
+
+      <p class="line spaced">I kept jogging, but I noticed one butterfly sort of kept pace with me.</p>
+      <p class="line">Then it passed me. It stayed right on the trail like it was leading me somewhere.</p>
+
+      <p class="line spaced">So I sped up and passed it again. And then it passed me.</p>
+      <p class="line">We started this little game, me and the butterfly, taking turns being in front.</p>
+      <p class="line">It wasn't fast, it felt like being in play with the universe.</p>
+
+      <p class="line spaced">And then at one point, I'm sprinting at full speed, as fast as I could go, and it's still there... right next to me.</p>
+      <p class="line">We're moving together, same direction, same speed.</p>
+      <p class="line">And I swear, for a second, we were running side by side.</p>
+
+      <p class="line spaced">It was just a few moments that felt really magical.</p>
+    </div>
+
+    <div class="image-block">
+      <svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background gradient -->
+        <defs>
+          <radialGradient id="skyGrad" cx="50%" cy="30%" r="70%">
+            <stop offset="0%" style="stop-color:rgba(135, 206, 250, 0.3)"/>
+            <stop offset="50%" style="stop-color:rgba(138, 43, 226, 0.1)"/>
+            <stop offset="100%" style="stop-color:rgba(0, 0, 0, 0.2)"/>
+          </radialGradient>
+          <linearGradient id="pathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:rgba(222, 184, 135, 0.4)"/>
+            <stop offset="100%" style="stop-color:rgba(222, 184, 135, 0.1)"/>
+          </linearGradient>
+          <radialGradient id="butterflyGrad" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" style="stop-color:rgba(65, 105, 225, 0.9)"/>
+            <stop offset="70%" style="stop-color:rgba(138, 43, 226, 0.7)"/>
+            <stop offset="100%" style="stop-color:rgba(25, 25, 112, 0.5)"/>
+          </radialGradient>
+          <linearGradient id="joggerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(255, 255, 255, 0.8)"/>
+            <stop offset="100%" style="stop-color:rgba(200, 200, 200, 0.6)"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Background -->
+        <rect width="500" height="400" fill="url(#skyGrad)"/>
+        
+        <!-- Title text -->
+        <text x="250" y="40" font-family="Georgia, serif" font-size="24" fill="rgba(255, 255, 255, 0.8)" text-anchor="middle" font-style="italic">The Explorer and BlueWing</text>
+        
+        <!-- Trail/path -->
+        <path d="M0 300 Q150 280 250 290 Q350 300 500 285" stroke="url(#pathGrad)" stroke-width="40" fill="none" opacity="0.6"/>
+        <path d="M0 300 Q150 280 250 290 Q350 300 500 285" stroke="rgba(222, 184, 135, 0.3)" stroke-width="2" fill="none"/>
+        
+        <!-- Motion lines behind jogger -->
+        <path d="M100 250 L130 245 M105 260 L135 255 M95 270 L125 265" stroke="rgba(255, 255, 255, 0.3)" stroke-width="1"/>
+        
+        <!-- Jogger figure (simplified, in motion) -->
+        <!-- Head -->
+        <circle cx="180" cy="230" r="12" fill="url(#joggerGrad)" stroke="rgba(138, 43, 226, 0.4)" stroke-width="1"/>
+        
+        <!-- Body -->
+        <ellipse cx="180" cy="260" rx="8" ry="20" fill="url(#joggerGrad)" stroke="rgba(138, 43, 226, 0.4)" stroke-width="1"/>
+        
+        <!-- Arms in running position -->
+        <path d="M172 250 Q165 255 170 270" stroke="url(#joggerGrad)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M188 250 Q195 245 190 235" stroke="url(#joggerGrad)" stroke-width="4" stroke-linecap="round"/>
+        
+        <!-- Legs in running stride -->
+        <path d="M175 280 Q170 295 175 310" stroke="url(#joggerGrad)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M185 280 Q195 285 200 300" stroke="url(#joggerGrad)" stroke-width="5" stroke-linecap="round"/>
+        
+        <!-- Feet -->
+        <ellipse cx="175" cy="312" rx="6" ry="3" fill="rgba(100, 100, 100, 0.8)"/>
+        <ellipse cx="200" cy="302" rx="6" ry="3" fill="rgba(100, 100, 100, 0.8)"/>
+        
+        <!-- Butterfly (Blue Wing) - main character -->
+        <!-- Upper wings -->
+        <path d="M220 200 Q210 190 200 200 Q210 210 220 200 Q230 190 240 200 Q230 210 220 200" 
+              fill="url(#butterflyGrad)" stroke="rgba(138, 43, 226, 0.6)" stroke-width="1"/>
+        
+        <!-- Lower wings -->
+        <path d="M220 205 Q212 215 205 210 Q212 220 220 205 Q228 215 235 210 Q228 220 220 205" 
+              fill="url(#butterflyGrad)" stroke="rgba(138, 43, 226, 0.6)" stroke-width="1" opacity="0.8"/>
+        
+        <!-- Butterfly body -->
+        <ellipse cx="220" cy="202" rx="1.5" ry="8" fill="rgba(50, 50, 50, 0.8)"/>
+        
+        <!-- Antennae -->
+        <path d="M219 195 Q217 190 218 188 M221 195 Q223 190 222 188" 
+              stroke="rgba(50, 50, 50, 0.8)" stroke-width="0.5"/>
+        
+        <!-- Wing patterns/spots -->
+        <circle cx="215" cy="195" r="2" fill="rgba(255, 255, 255, 0.6)"/>
+        <circle cx="225" cy="195" r="2" fill="rgba(255, 255, 255, 0.6)"/>
+        <circle cx="213" cy="210" r="1.5" fill="rgba(255, 255, 255, 0.4)"/>
+        <circle cx="227" cy="210" r="1.5" fill="rgba(255, 255, 255, 0.4)"/>
+        
+        <!-- Motion trails for butterfly -->
+        <path d="M200 205 Q210 200 220 202 Q230 204 240 200" stroke="rgba(138, 43, 226, 0.4)" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M195 210 Q205 205 215 207 Q225 209 235 205" stroke="rgba(138, 43, 226, 0.3)" stroke-width="1" fill="none" opacity="0.4"/>
+        
+        <!-- Additional butterflies in background cluster -->
+        <circle cx="380" cy="160" r="3" fill="rgba(255, 165, 0, 0.6)"/>
+        <circle cx="385" cy="165" r="2" fill="rgba(255, 20, 147, 0.5)"/>
+        <circle cx="375" cy="170" r="2.5" fill="rgba(50, 205, 50, 0.5)"/>
+        
+        <!-- Speed lines and energy -->
+        <path d="M250 220 L280 215 M255 230 L285 225 M245 240 L275 235" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1"/>
+        
+        <!-- Cherry Pond in distance -->
+        <ellipse cx="450" cy="320" rx="40" ry="15" fill="rgba(100, 149, 237, 0.4)" stroke="rgba(138, 43, 226, 0.3)" stroke-width="1"/>
+        <text x="450" y="350" font-family="Georgia, serif" font-size="10" fill="rgba(255, 255, 255, 0.5)" text-anchor="middle">Cherry Pond</text>
+        
+        <!-- Trees/foliage -->
+        <circle cx="80" cy="180" r="25" fill="rgba(34, 139, 34, 0.4)"/>
+        <circle cx="420" cy="160" r="30" fill="rgba(34, 139, 34, 0.3)"/>
+        <circle cx="460" cy="180" r="20" fill="rgba(34, 139, 34, 0.3)"/>
+        
+        <!-- Magical sparkles -->
+        <circle cx="240" cy="180" r="1" fill="rgba(255, 215, 0, 0.8)"/>
+        <circle cx="260" cy="220" r="1.5" fill="rgba(138, 43, 226, 0.7)"/>
+        <circle cx="190" cy="200" r="1" fill="rgba(255, 255, 255, 0.8)"/>
+        <circle cx="300" cy="190" r="1" fill="rgba(255, 215, 0, 0.6)"/>
+        
+        <!-- Connection line (invisible thread between jogger and butterfly) -->
+        <path d="M180 230 Q200 215 220 200" stroke="rgba(138, 43, 226, 0.2)" stroke-width="1" stroke-dasharray="2,2" fill="none"/>
+        
+        <!-- Bottom subtitle -->
+        <text x="250" y="380" font-family="Georgia, serif" font-size="14" fill="rgba(255, 255, 255, 0.6)" text-anchor="middle" font-style="italic">A moment of perfect synchronicity</text>
+      </svg>
+      <div class="caption">The Explorer and BlueWing</div>
+    </div>
+
+    <div class="story-meta">
+      <span class="story-type">Nature Writing</span>
+      <a href="./stories.html" class="back-link">← Back to Stories</a>
+    </div>
+  </div>
+
+  <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
+
+  <footer>
+    © 2025 Sketchy Ponderings | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — quietly relentless.
+</footer>
+
+  <script>
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      
+      // Update button text and icon
+      if (navLinks.classList.contains('open')) {
+        mobileMenuButton.textContent = '✕ Close';
+      } else {
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Back to top functionality
+    const topButton = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        topButton.classList.add('show');
+      } else {
+        topButton.classList.remove('show');
+      }
+    });
+
+    topButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Parallax effect for mist
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+    });
+  </script>
+</body>
+</html>
