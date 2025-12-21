@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Standard Favicons -->
+<link rel="icon" href="images/quill_favicon.ico" type="image/x-icon" />
+<link rel="icon" href="images/quill_32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="images/quill_64x64.png" sizes="64x64" type="image/png" />
+<link rel="icon" href="images/quill_128x128.png" sizes="128x128" type="image/png" />
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
+
+  
+  <title>Subtle Spirits — Sketchy Ponderings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(20, 20, 30, 0.8);
+      opacity: 1;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.01) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.4;
+      position: fixed;
+      width: 100%;
+      height: 250vh;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.current {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: none !important;
+    }
+
+    .story-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .story-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+    }
+
+    .image-block {
+      text-align: center;
+      margin: 0 0 3rem 0;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .image-block svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.3));
+    }
+
+    .image-block svg:hover {
+      transform: scale(1.02);
+    }
+
+    .caption {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .story-text {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .story-text p.line {
+      margin: 0.3rem 0;
+      display: block;
+    }
+
+    .story-text p.line.spaced {
+      margin-top: 2rem;
+    }
+
+    .story-text p.line:first-child {
+      margin-top: 0;
+    }
+
+    .story-meta {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .story-type {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .back-link {
+      background: rgba(138, 43, 226, 0.2);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(138, 43, 226, 0.4);
+      transition: all 0.3s ease;
+      font-weight: 400;
+    }
+
+    .back-link:hover {
+      background: rgba(138, 43, 226, 0.4);
+      border-color: rgba(138, 43, 226, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Source Sans Pro', sans-serif;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 0 2rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .story-container {
+        margin: 0 1rem;
+        padding: 1.5rem;
+      }
+
+      .header {
+        padding: 2rem 1rem 1rem;
+      }
+
+      .story-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        padding: 0 1rem;
+      }
+
+      .mobile-menu-button {
+        margin: 0 auto 1rem;
+      }
+
+      .story-text {
+        font-size: 1rem;
+      }
+    }
+      :root { --max: 70ch; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: #1b1b1b; background: #fff;
+    }
+    main { max-width: var(--max); margin: 3rem auto; padding: 0 1rem; }
+    h2 { line-height: 1.2; margin: 0 0 1rem; }
+    
+    h2 { font-size: 1.4rem; margin-top: 2.5rem; }
+    p { margin: 0 0 1rem; }
+    .byline { color:#666; margin-top:-.5rem; margin-bottom:2rem; }
+    hr { border: none; border-top: 1px solid #e6e6e6; margin: 2rem 0; }
+    .chapters-nav { font-size: .95rem; margin-bottom: 2rem; }
+    .chapters-nav a { color: #0b66c3; text-decoration: none; }
+    .chapters-nav a:hover { text-decoration: underline; }
+    blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid #eee; color: #444; }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+
+  <div class="header">
+    <h1>Subtle Spirits</h1>
+    <p class="subtitle">A Tale of future Past</p>
+  </div>
+
+  <div class="nav">
+    <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="./index.html">Home</a>
+      <a href="./gallery.html">Gallery</a>
+      <a href="./games.html" class="creative">Games</a>
+      <a href="./music.html" class="creative">Music</a>
+      <a href="./stories.html" class="current">Stories</a>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="https://watcheratthethreshold.github.io/shadows-of-the-deck/" class="cruxfade-link" title="Enter Cruxfade">⟁ Shadows</a>
+    </div>
+  </div>
+
+  <div class="story-container">
+    <div class="image-block">
+      <svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background gradient for blue winter landscape -->
+        <defs>
+          <radialGradient id="skyGrad" cx="50%" cy="20%" r="80%">
+            <stop offset="0%" style="stop-color:rgba(176, 196, 222, 0.4)"/>
+            <stop offset="40%" style="stop-color:rgba(100, 149, 237, 0.3)"/>
+            <stop offset="80%" style="stop-color:rgba(138, 43, 226, 0.2)"/>
+            <stop offset="100%" style="stop-color:rgba(25, 25, 112, 0.3)"/>
+          </radialGradient>
+          <linearGradient id="rockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(105, 105, 105, 0.9)"/>
+            <stop offset="50%" style="stop-color:rgba(169, 169, 169, 0.7)"/>
+            <stop offset="100%" style="stop-color:rgba(128, 128, 128, 0.8)"/>
+          </linearGradient>
+          <radialGradient id="mooseGrad" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" style="stop-color:rgba(139, 69, 19, 0.9)"/>
+            <stop offset="70%" style="stop-color:rgba(160, 82, 45, 0.8)"/>
+            <stop offset="100%" style="stop-color:rgba(101, 67, 33, 0.7)"/>
+          </radialGradient>
+          <linearGradient id="treeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(34, 139, 34, 0.6)"/>
+            <stop offset="70%" style="stop-color:rgba(0, 100, 0, 0.5)"/>
+            <stop offset="100%" style="stop-color:rgba(0, 50, 0, 0.4)"/>
+          </radialGradient>
+          <radialGradient id="portalGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:rgba(138, 43, 226, 0.3)"/>
+            <stop offset="70%" style="stop-color:rgba(138, 43, 226, 0.1)"/>
+            <stop offset="100%" style="stop-color:transparent"/>
+          </radialGradient>
+        </defs>
+        
+   
+        
+        <!-- Mystical elements -->
+        <!-- Sparkles and energy around the portal -->
+        <circle cx="230" cy="160" r="1" fill="rgba(138, 43, 226, 0.8)"/>
+        <circle cx="270" cy="170" r="1.5" fill="rgba(255, 255, 255, 0.9)"/>
+        <circle cx="240" cy="300" r="1" fill="rgba(138, 43, 226, 0.6)"/>
+        <circle cx="260" cy="290" r="1.5" fill="rgba(255, 255, 255, 0.7)"/>
+        
+        <!-- Ancient feeling - floating symbols -->
+        <path d="M220 120 L225 110 L230 120 L225 130 Z" fill="rgba(138, 43, 226, 0.3)" opacity="0.6"/>
+        <path d="M275 120 L280 110 L285 120 L280 130 Z" fill="rgba(138, 43, 226, 0.3)" opacity="0.6"/>
+        
+        <!-- Winter atmosphere - falling snow -->
+        <circle cx="100" cy="100" r="1" fill="rgba(255, 255, 255, 0.6)" opacity="0.8"/>
+        <circle cx="200" cy="80" r="0.5" fill="rgba(255, 255, 255, 0.5)" opacity="0.7"/>
+        <circle cx="300" cy="90" r="1" fill="rgba(255, 255, 255, 0.6)" opacity="0.6"/>
+        <circle cx="400" cy="70" r="0.5" fill="rgba(255, 255, 255, 0.5)" opacity="0.8"/>
+        
+        <!-- Bottom text -->
+        <text x="250" y="380" font-family="Georgia, serif" font-size="12" fill="rgba(255, 255, 255, 0.6)" text-anchor="middle" font-style="italic">Portal to the Ancient Gathering</text>
+      </svg>
+      <div class="caption">Blue Landscape</div>
+    </div>
+
+    <div class="story-text">
+
+      <h1>Subtle Spirits — Chapters 1–3</h1>
+  <p class="byline">Draft read-through</p>
+
+  <nav class="chapters-nav" aria-label="Chapters">
+    <a href="#ch1">Chapter 1</a> ·
+    <a href="#ch2">Chapter 2</a> ·
+    <a href="#ch3">Chapter 3</a>
+  </nav>
+
+  <article>
+
+    <section id="ch1">
+      <h2>Chapter 1 — Visiting a Friend</h2>
+
+      <p>The air smelled of damp earth and trodden grass. Magdaline’s red cape billowed in the cool breeze. Thinking of Timothy, she smiled and picked up her pace. The letter in her pocket felt warm, like a piece of him.</p>
+
+      <p>“Not far to go,” Magdaline said to herself, cresting a rise.</p>
+
+      <p>In the distance, she could see Timothy’s cottage. Her smile widened, and she let out a cheer, resisting the urge to run down the road to the cottage. She settled into a brisk walk.</p>
+
+      <p>Approaching the tiny cottage, she called out, “Timothy, you around?” The house was small, no more than a single room. The earthy red shingled roof matched the tan plaster outer walls. A door sat between two wooden-framed windows.</p>
+
+      <p>She knocked three times. “Hello?” Silence. She twisted the knob. Locked. She felt a stir of unease in her chest. Looking under a flat rock by the door, she found a key. “Yoink.” She paused, went to the door, inserted the key. It turned and the lock clicked. The door opened.</p>
+
+      <p>Inside, the cottage charm faded. The single room felt like a shack with wooden pine-board floors, soft blue pine-board walls, and rough-hewn furniture. On a countertop, a folded note sat beside a red crystal that seemed to pulse with a faint glow when she first noticed it. Examining the note, it was a list of supplies addressed to someone named Vox. She returned the list, glancing again at the crystal.</p>
+
+      <p>Stepping out, she locked the door and returned the key under the rock, pressing the stone into place.</p>
+
+      <p>The town wasn’t far down the road. She started to walk as dusk set in.</p>
+
+      <p>The forest grew darker. A warm breeze was rich with the scent of wildflowers and sweet grass. Leaving the forest and entering a clearing, the day brightened again.</p>
+
+      <p>A figure crouched in the road ahead. He neither looked up nor moved as she approached.</p>
+
+      <p>“Looking for something?” he asked.</p>
+
+      <p>“Someone, actually… a robot… I mean… my friend, Timothy.” Magdaline’s voice faltered, unsure of what to make of him.</p>
+
+      <p>“Robots don’t last long out here,” the traveler said. “The Wild swallows them whole.” He never raised his head, his tone as heavy as the dusk around them.</p>
+
+      <p>A shudder rippled through Magdaline. “I’ll be on my way.” She hurried on, relieved to leave him behind.</p>
+
+      <p>Soon, the town opened up before her. The setting sun turned the sky to gold. She passed a giant oak tree at the edge of town where the air shifted, the fragrant flowers from the shopfronts overtaking the scents of the forest. The town was just a main street with houses and shopfronts lining the road. She walked into the first shop she came upon.</p>
+
+      <p>A strange-looking character sat behind a long countertop. Behind him, on a shelf, a peculiar-looking fluffy cat sat curled up, sleeping.</p>
+
+      <p>“Hello, are you Vox?” said Magdaline, her voice steadier than she felt.</p>
+
+      <p>“Ah, there you are. I was starting to wonder what path you’d take,” replied Vox, straightening. Two jet-black horns protruded from the top of his head.</p>
+
+      <p>“You knew I was coming?” Magdaline stepped back, suspicion on her face.</p>
+
+      <p>“I know someone always is. But who will it be? Who knows?”</p>
+
+      <p>Behind him, the cat purred as if amused by his answer.</p>
+
+      <p>“There was a man in the forest wearing a cloak. He was acting strange,” she piped in.</p>
+
+      <p>Vox leaned toward her. “The traveler. Sullen-looking fellow, isn’t he? He wanders through many stories, some of which were never meant to end.”</p>
+
+      <p>“I didn’t trust him,” said Magdaline, shuffling her feet uncomfortably.</p>
+
+      <p>“Good. That means your instincts are still working. Be careful where you follow him. Not all roads want to be walked.”</p>
+
+      <p>“I’m looking for my friend Timothy,” she stated, tiring of the riddles.</p>
+
+      <p>“Ah, yes, the gardener. Quiet soul. Always dreaming of green.”</p>
+
+      <p>“Do you know where he went?” she asked, still looking for a straight answer.</p>
+
+      <p>“He was chasing something… old,” said Vox.</p>
+
+      <p>“Why are you speaking so cryptically?” Magdaline’s tone grew serious.</p>
+
+      <p>“There’s a place where the ground remembers. Where the moss hums and the stone breathes in its sleep,” replied Vox, ignoring her plea.</p>
+
+      <p>“In a cave? Underground?” Agitation stirred through Magdaline in response to another vague, confusing reply from Vox.</p>
+
+      <p>“Perhaps. Or a memory shaped like one.”</p>
+
+      <p>“Do you think he’s in danger?” Magdaline pressed.</p>
+
+      <p>“He went to plant something. Could be in danger, I guess. East over the old bridge should get you where you’re going.”</p>
+
+      <p>The cat purred loudly again.</p>
+    </section>
+
+    <hr />
+
+    <section id="ch2">
+      <h2>Chapter 2 — A Shift in Perspective</h2>
+
+      <p>Timothy burst into the clearing, feeling something was internally wrong, though he didn’t know what.</p>
+
+      <p>Fortune must have been smiling down: there ahead was his friend Fizzwick — local handyman, engineer, and friend. Whatever was wrong with him, Timothy knew he needed a friend, and Fizzwick might know how to diagnose it. They walked toward each other, and Fizzwick wrapped an arm around Timothy.</p>
+
+      <p>“Ay, friend, you look like you’ve fallen on hard times!” said Fizzwick, a smile on his face and a glint in his eye.</p>
+
+      <p>Timothy’s servos jerked as he moved, sparks flying from somewhere. “I think my systems are failing.” Reflecting the warmth of Fizzwick’s greeting, Timothy added with humor, “And you look like you’ve fallen on hard times.”</p>
+
+      <p>“I have fallen on hard times!” Fizzwick wailed dramatically, opening his mouth wide and revealing a missing front tooth. “Seriously though, if something’s wrong, let’s get you back to town, see if we can fix you up!”</p>
+
+      <p>“Please and thank you,” was all Timothy got out before a shower of sparks rained out from under his yellow cloak. He emitted a loud bang, stiffened, and fell limp to the ground.</p>
+
+      <p>“Timothy!” Fizzwick shouted to his unresponsive friend. He looked around, fighting back a hopeless feeling welling in his chest. “Don’t worry, buddy, I’ll get you outta here.”</p>
+    </section>
+
+    <hr />
+
+    <section id="ch3">
+      <h2>Chapter 3 — Sullen Lament</h2>
+
+      <p>The next morning, Magdaline set out again. Leaving town, dark clouds swirled in the sky. The cool breeze made her wrap her cloak tighter.</p>
+
+      <p>She crossed the large bridge that Vox spoke of. Following the road, she rose in elevation, pushing up into the rising foothills as she went.</p>
+
+      <p>She could tell by the way the trees cleared ahead that she was nearing the top of a hill. She climbed until the top plateaued out before her. Ahead lay an outcropping of rock, forming a cave. And there beside the mouth of the cave stood the Sullen Traveler. Magdaline was startled to see him again. How did he get here? Smirking, he was holding a red crystal — just like the one she had seen on Timothy’s counter.</p>
+
+      <p>Magdaline strode up to him defiantly. “Where did you get that?” she demanded, motioning to the crystal he held.</p>
+
+      <p>“Down there.” The traveler stepped toward Magdaline. She flinched but held her ground. He nodded toward the cave and said, “Why don’t you see for yourself!” He shoved Magdaline hard, sending her plunging into the darkness of the cave below.</p>
+
+      <p>Luckily, her landing was softened by thick moss on the cave floor. The nearly vertical cave walls looked impossible to climb to get back out. She yelled “Hey!” toward the light of the cave entrance far above, but she heard no response. Looking around, her eyes began to adjust to the darkness. The only way was further into the cave. She stepped forward, the soft moss compressing under each step.</p>
+
+      <p>A cold wind blew from deeper within, where random drops of water could be heard. It smelled of wet stone and damp moss. She moved forward in the chilly darkness. Ahead, a faint red glow came from the ground. She walked up and found what looked like a natural growth of the same kind of red glowing crystal. Magdaline stopped to examine it.</p>
+
+      <p>“Timothy, what are you up to?” she said aloud, concern in her voice. She looked down at the crystal a moment longer before continuing on.</p>
+
+      <p>As she continued into the cave, she could hear a faint hum. She passed other colored crystals that seemed to be emitting light — one blue and one purple. She also passed some kind of machine or control panel. It had strange writing on it she couldn’t understand. In the dim cave light, it looked tarnished and rusted.</p>
+
+      <p>Then the cave opened up into a huge cavern. As her eyes adjusted, a robot came into view. It was enormous — a titan. She inhaled deeply, trying to center her breath, but she walked toward it. The titan was sitting down, moss-covered and overgrown with roots. It looked like it hadn’t moved in years.</p>
+
+      <p>As she neared its outstretched feet, it whirred to life, its eyes blinking open. Magdaline stood frozen as they stared at each other — a young woman and a robot cave titan.</p>
+
+      <p>“Ah, another wanderer,” said the titan, “or perhaps you’re something more.”</p>
+
+      <p>“What are you?” Magdaline asked through quick, furtive breaths.</p>
+
+      <p>“I am keeper of secrets, roots grown wise,” the titan paused, “but you’re not here for me, are you?”</p>
+
+      <p>“Do you know where my friend Timothy is?” Magdaline blurted out, breathing fast and heavy in the cool, damp air.</p>
+      
+    </div>
+
+    <div class="story-meta">
+      <span class="story-type">A Tale of Future Past</span>
+      <a href="./stories.html" class="back-link">← Back to Stories</a>
+    </div>
+  </div>
+
+  <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
+
+  <footer>
+    © 2025 Sketchy Ponderings | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — quietly relentless.
+</footer>
+
+  <script>
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      
+      // Update button text and icon
+      if (navLinks.classList.contains('open')) {
+        mobileMenuButton.textContent = '✕ Close';
+      } else {
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Back to top functionality
+    const topButton = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        topButton.classList.add('show');
+      } else {
+        topButton.classList.remove('show');
+      }
+    });
+
+    topButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Parallax effect for mist
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+    });
+  </script>
+
+      </section>
+
+  </article>
+</main>
+</body>
+</html>
