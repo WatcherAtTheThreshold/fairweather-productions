@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Standard Favicons -->
+<link rel="icon" href="images/quill_favicon.ico" type="image/x-icon" />
+<link rel="icon" href="images/quill_32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="images/quill_64x64.png" sizes="64x64" type="image/png" />
+<link rel="icon" href="images/quill_128x128.png" sizes="128x128" type="image/png" />
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
+
+  
+  <title>The Hollow Stone — Sketchy Ponderings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(20, 20, 30, 0.8);
+      opacity: 1;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.01) 1px, transparent 1px);
+      background-size: 15px 15px;
+      opacity: 0.4;
+      position: fixed;
+      width: 100%;
+      height: 250vh;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.current {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: none !important;
+    }
+
+    .story-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .story-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+    }
+
+    .image-block {
+      text-align: center;
+      margin: 0 0 3rem 0;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .image-block svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.3));
+    }
+
+    .image-block svg:hover {
+      transform: scale(1.02);
+    }
+
+    .caption {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .story-text {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .story-text p.line {
+      margin: 0.3rem 0;
+      display: block;
+    }
+
+    .story-text p.line.spaced {
+      margin-top: 2rem;
+    }
+
+    .story-text p.line:first-child {
+      margin-top: 0;
+    }
+
+    .story-meta {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .story-type {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .back-link {
+      background: rgba(138, 43, 226, 0.2);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(138, 43, 226, 0.4);
+      transition: all 0.3s ease;
+      font-weight: 400;
+    }
+
+    .back-link:hover {
+      background: rgba(138, 43, 226, 0.4);
+      border-color: rgba(138, 43, 226, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Source Sans Pro', sans-serif;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 0 2rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .story-container {
+        margin: 0 1rem;
+        padding: 1.5rem;
+      }
+
+      .header {
+        padding: 2rem 1rem 1rem;
+      }
+
+      .story-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        padding: 0 1rem;
+      }
+
+      .mobile-menu-button {
+        margin: 0 auto 1rem;
+      }
+
+      .story-text {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+
+  <div class="header">
+    <h1>The Hollow Stone</h1>
+    <p class="subtitle">A portal to the ancient gathering</p>
+  </div>
+
+  <div class="nav">
+    <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="./index.html">Home</a>
+      <a href="./gallery.html">Gallery</a>
+      <a href="./games.html" class="creative">Games</a>
+      <a href="./music.html" class="creative">Music</a>
+      <a href="./stories.html" class="current">Stories</a>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="https://watcheratthethreshold.github.io/shadows-of-the-deck/" class="cruxfade-link" title="Enter Cruxfade">⟁ Shadows</a>
+    </div>
+  </div>
+
+  <div class="story-container">
+    <div class="image-block">
+      <svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background gradient for blue winter landscape -->
+        <defs>
+          <radialGradient id="skyGrad" cx="50%" cy="20%" r="80%">
+            <stop offset="0%" style="stop-color:rgba(176, 196, 222, 0.4)"/>
+            <stop offset="40%" style="stop-color:rgba(100, 149, 237, 0.3)"/>
+            <stop offset="80%" style="stop-color:rgba(138, 43, 226, 0.2)"/>
+            <stop offset="100%" style="stop-color:rgba(25, 25, 112, 0.3)"/>
+          </radialGradient>
+          <linearGradient id="rockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(105, 105, 105, 0.9)"/>
+            <stop offset="50%" style="stop-color:rgba(169, 169, 169, 0.7)"/>
+            <stop offset="100%" style="stop-color:rgba(128, 128, 128, 0.8)"/>
+          </linearGradient>
+          <radialGradient id="mooseGrad" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" style="stop-color:rgba(139, 69, 19, 0.9)"/>
+            <stop offset="70%" style="stop-color:rgba(160, 82, 45, 0.8)"/>
+            <stop offset="100%" style="stop-color:rgba(101, 67, 33, 0.7)"/>
+          </radialGradient>
+          <linearGradient id="treeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(34, 139, 34, 0.6)"/>
+            <stop offset="70%" style="stop-color:rgba(0, 100, 0, 0.5)"/>
+            <stop offset="100%" style="stop-color:rgba(0, 50, 0, 0.4)"/>
+          </radialGradient>
+          <radialGradient id="portalGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:rgba(138, 43, 226, 0.3)"/>
+            <stop offset="70%" style="stop-color:rgba(138, 43, 226, 0.1)"/>
+            <stop offset="100%" style="stop-color:transparent"/>
+          </radialGradient>
+        </defs>
+        
+        <!-- Background -->
+        <rect width="500" height="400" fill="url(#skyGrad)"/>
+        
+        <!-- Title text -->
+        <text x="250" y="30" font-family="Georgia, serif" font-size="24" fill="rgba(255, 255, 255, 0.8)" text-anchor="middle" font-style="italic">Blue Landscape</text>
+        
+        <!-- Distant mountains -->
+        <path d="M0 150 Q100 120 200 140 Q300 110 400 130 Q450 135 500 125 L500 400 L0 400 Z" 
+              fill="rgba(100, 149, 237, 0.2)" stroke="none"/>
+        
+        <!-- Forest background -->
+        <circle cx="80" cy="200" r="35" fill="url(#treeGrad)" opacity="0.7"/>
+        <circle cx="120" cy="180" r="40" fill="url(#treeGrad)" opacity="0.6"/>
+        <circle cx="380" cy="190" r="30" fill="url(#treeGrad)" opacity="0.7"/>
+        <circle cx="420" cy="170" r="35" fill="url(#treeGrad)" opacity="0.6"/>
+        <circle cx="450" cy="200" r="25" fill="url(#treeGrad)" opacity="0.8"/>
+        
+        <!-- Snow patches -->
+        <ellipse cx="150" cy="320" rx="40" ry="8" fill="rgba(255, 255, 255, 0.4)" opacity="0.6"/>
+        <ellipse cx="350" cy="330" rx="30" ry="6" fill="rgba(255, 255, 255, 0.4)" opacity="0.5"/>
+        
+        <!-- The split boulder/portal (main feature) -->
+        <!-- Left half of split rock -->
+        <path d="M200 180 Q190 160 200 140 Q220 130 240 140 L235 280 Q220 290 210 285 L200 180" 
+              fill="url(#rockGrad)" stroke="rgba(105, 105, 105, 0.8)" stroke-width="2"/>
+        
+        <!-- Right half of split rock -->
+        <path d="M265 140 Q285 130 305 140 Q315 160 305 180 L295 285 Q280 290 265 280 L265 140" 
+              fill="url(#rockGrad)" stroke="rgba(105, 105, 105, 0.8)" stroke-width="2"/>
+        
+        <!-- The mystical gap/portal between the rocks -->
+        <path d="M240 140 L265 140 L265 280 L235 280 Z" 
+              fill="url(#portalGlow)" stroke="none"/>
+        
+        <!-- Portal energy/mist effect -->
+        <ellipse cx="250" cy="210" rx="12" ry="70" fill="rgba(138, 43, 226, 0.2)" opacity="0.8"/>
+        <ellipse cx="250" cy="210" rx="8" ry="50" fill="rgba(255, 255, 255, 0.1)" opacity="0.6"/>
+        
+        <!-- Crack details in the rock -->
+        <path d="M235 150 Q240 160 235 170 Q240 180 235 190" 
+              stroke="rgba(50, 50, 50, 0.6)" stroke-width="1" fill="none"/>
+        <path d="M265 160 Q270 170 265 180 Q270 190 265 200" 
+              stroke="rgba(50, 50, 50, 0.6)" stroke-width="1" fill="none"/>
+        
+        <!-- First moose (the one blocking the trail) -->
+        <!-- Body -->
+        <ellipse cx="150" cy="250" rx="35" ry="20" fill="url(#mooseGrad)" stroke="rgba(101, 67, 33, 0.6)" stroke-width="1"/>
+        <!-- Head -->
+        <ellipse cx="120" cy="235" rx="20" ry="15" fill="url(#mooseGrad)" stroke="rgba(101, 67, 33, 0.6)" stroke-width="1"/>
+        <!-- Antlers -->
+        <path d="M115 225 Q110 215 108 210 Q112 205 115 208 M125 225 Q130 215 132 210 Q128 205 125 208" 
+              stroke="rgba(101, 67, 33, 0.8)" stroke-width="2" fill="none"/>
+        <!-- Legs -->
+        <rect x="135" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
+        <rect x="145" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
+        <rect x="155" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
+        <rect x="165" y="270" width="4" height="20" fill="url(#mooseGrad)"/>
+        <!-- Blond fur on legs -->
+        <circle cx="137" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
+        <circle cx="147" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
+        <circle cx="157" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
+        <circle cx="167" cy="285" r="3" fill="rgba(255, 228, 181, 0.8)"/>
+        
+        <!-- Hidden moose gradually appearing from the forest -->
+        <!-- Moose 2 (partly hidden) -->
+        <ellipse cx="320" cy="240" rx="25" ry="15" fill="url(#mooseGrad)" opacity="0.7"/>
+        <ellipse cx="305" cy="230" rx="15" ry="12" fill="url(#mooseGrad)" opacity="0.7"/>
+        <path d="M300 222 Q295 215 298 210 M310 222 Q315 215 312 210" 
+              stroke="rgba(101, 67, 33, 0.6)" stroke-width="1.5" fill="none" opacity="0.7"/>
+        
+        <!-- Moose 3 (more hidden, just head visible) -->
+        <ellipse cx="90" cy="220" rx="12" ry="10" fill="url(#mooseGrad)" opacity="0.5"/>
+        <path d="M85 215 Q80 210 82 208 M95 215 Q100 210 98 208" 
+              stroke="rgba(101, 67, 33, 0.4)" stroke-width="1" fill="none" opacity="0.5"/>
+        
+        <!-- Moose 4 (very subtle, blending into trees) -->
+        <ellipse cx="400" cy="250" rx="20" ry="12" fill="url(#mooseGrad)" opacity="0.4"/>
+        <ellipse cx="385" cy="240" rx="12" ry="8" fill="url(#mooseGrad)" opacity="0.4"/>
+        
+        <!-- Moose 5 (just antlers visible) -->
+        <path d="M460 200 Q455 195 458 190 M470 200 Q475 195 472 190" 
+              stroke="rgba(101, 67, 33, 0.3)" stroke-width="1" fill="none" opacity="0.6"/>
+        
+        <!-- The hikers (small figures in the portal) -->
+        <!-- Hiker 1 -->
+        <circle cx="245" cy="220" r="3" fill="rgba(255, 255, 255, 0.8)"/>
+        <ellipse cx="245" cy="230" rx="2" ry="8" fill="rgba(200, 200, 200, 0.8)"/>
+        <rect x="243" y="238" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
+        <rect x="246" y="238" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
+        
+        <!-- Hiker 2 -->
+        <circle cx="255" cy="225" r="3" fill="rgba(255, 255, 255, 0.8)"/>
+        <ellipse cx="255" cy="235" rx="2" ry="8" fill="rgba(200, 200, 200, 0.8)"/>
+        <rect x="253" y="243" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
+        <rect x="256" y="243" width="1" height="8" fill="rgba(200, 200, 200, 0.8)"/>
+        
+        <!-- Mystical elements -->
+        <!-- Sparkles and energy around the portal -->
+        <circle cx="230" cy="160" r="1" fill="rgba(138, 43, 226, 0.8)"/>
+        <circle cx="270" cy="170" r="1.5" fill="rgba(255, 255, 255, 0.9)"/>
+        <circle cx="240" cy="300" r="1" fill="rgba(138, 43, 226, 0.6)"/>
+        <circle cx="260" cy="290" r="1.5" fill="rgba(255, 255, 255, 0.7)"/>
+        
+        <!-- Ancient feeling - floating symbols -->
+        <path d="M220 120 L225 110 L230 120 L225 130 Z" fill="rgba(138, 43, 226, 0.3)" opacity="0.6"/>
+        <path d="M275 120 L280 110 L285 120 L280 130 Z" fill="rgba(138, 43, 226, 0.3)" opacity="0.6"/>
+        
+        <!-- Winter atmosphere - falling snow -->
+        <circle cx="100" cy="100" r="1" fill="rgba(255, 255, 255, 0.6)" opacity="0.8"/>
+        <circle cx="200" cy="80" r="0.5" fill="rgba(255, 255, 255, 0.5)" opacity="0.7"/>
+        <circle cx="300" cy="90" r="1" fill="rgba(255, 255, 255, 0.6)" opacity="0.6"/>
+        <circle cx="400" cy="70" r="0.5" fill="rgba(255, 255, 255, 0.5)" opacity="0.8"/>
+        
+        <!-- Bottom text -->
+        <text x="250" y="380" font-family="Georgia, serif" font-size="12" fill="rgba(255, 255, 255, 0.6)" text-anchor="middle" font-style="italic">Portal to the Ancient Gathering</text>
+      </svg>
+      <div class="caption">Blue Landscape</div>
+    </div>
+
+    <div class="story-text">
+      <p class="line spaced">My friend and I were winter hiking up Sugarloaf Mountain. It was April, warm and muddy in town, but still full winter up in the woods.</p>
+
+      <p class="line spaced">We were working our way up when we came face to face with a moose in the trail.</p>
+      <p class="line">If you've ever stood near a moose in the wild you know that their heads are basically the size of your whole body.</p>
+      <p class="line">It just stared at us. We stared back.</p>
+      <p class="line">It had big blond puffs of fur from knee to hoof. It had the styling of a clydesdale, but somehow bigger and more majestic. Truly surreal.</p>
+
+      <p class="line spaced">We decided to backtrack and look for a way around.</p>
+      <p class="line">I remembered a big split rock nearby, this massive boulder cracked in half by frost, just enough space to crouch-walk through.</p>
+      <p class="line">So we cut through that, this little cave, and came out the other side...</p>
+
+      <p class="line spaced">And there was another moose.</p>
+
+      <p class="line spaced">But this time, as we stood there, more and more started to move.</p>
+      <p class="line">One by one, they stepped out from the trees or turned their heads,</p>
+      <p class="line">and we realized we'd walked straight into a whole group of moose that had just been standing there, totally blended into the forest.</p>
+
+      <p class="line spaced">Again it felt sureal. Like we'd stepped through a portal or something</p>
+      <p class="line">and found ourselves in some ancient, hidden place.</p>
+
+      <p class="line spaced">Still one of the coolest, most haunting moments I've ever had in the woods.</p>
+    </div>
+
+    <div class="story-meta">
+      <span class="story-type">Wilderness Tale</span>
+      <a href="./stories.html" class="back-link">← Back to Stories</a>
+    </div>
+  </div>
+
+  <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
+
+  <footer>
+    © 2025 Sketchy Ponderings | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — quietly relentless.
+</footer>
+
+  <script>
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      
+      // Update button text and icon
+      if (navLinks.classList.contains('open')) {
+        mobileMenuButton.textContent = '✕ Close';
+      } else {
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking on a link
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '☰ Menu';
+      }
+    });
+
+    // Back to top functionality
+    const topButton = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        topButton.classList.add('show');
+      } else {
+        topButton.classList.remove('show');
+      }
+    });
+
+    topButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Parallax effect for mist
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+    });
+  </script>
+</body>
+</html>
