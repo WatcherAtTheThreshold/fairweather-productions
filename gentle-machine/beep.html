@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beep - Your Desktop Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .background {
+            background: rgba(20, 20, 30, 0.8);
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .mist-overlay {
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.02) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.4;
+            position: fixed;
+            width: 100%;
+            height: 250vh;
+            z-index: -1;
+            animation: mistScroll 120s linear infinite;
+        }
+
+        @keyframes mistScroll {
+            from { background-position: 0 0; }
+            to { background-position: -500px 500px; }
+        }
+
+        .beep-container {
+            max-width: 600px;
+            width: 90%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .beep-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+        }
+
+        .beep-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            color: rgba(222, 184, 135, 0.9);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+        }
+
+        .led-display {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            gap: 3px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .led {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: rgba(20, 20, 30, 0.8);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .led.on {
+            background: var(--led-color, rgba(138, 43, 226, 0.9));
+            box-shadow: 
+                0 0 10px var(--led-color, rgba(138, 43, 226, 0.9)),
+                0 0 20px var(--led-color, rgba(138, 43, 226, 0.7)),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .message-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            min-height: 80px;
+            color: rgba(222, 184, 135, 0.9);
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .input-box {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            color: #f0f0f0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: rgba(138, 43, 226, 0.6);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .input-box::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        button {
+            background: rgba(138, 43, 226, 0.2);
+            border: 2px solid rgba(138, 43, 226, 0.4);
+            color: rgba(222, 184, 135, 0.9);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        button:hover {
+            background: rgba(138, 43, 226, 0.4);
+            border-color: rgba(138, 43, 226, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .mic-button {
+            width: 50px;
+            padding: 12px;
+            font-size: 1.2rem;
+        }
+
+        .mood-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mood-buttons button {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .beep-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .beep-title {
+                font-size: 2rem;
+            }
+
+            .led-display {
+                gap: 2px;
+                padding: 15px;
+            }
+
+            .input-container {
+                flex-direction: column;
+            }
+
+            .mic-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .beep-container {
+                width: 95%;
+                padding: 1.5rem 1rem;
+            }
+
+            .led-display {
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="mist-overlay"></div>
+
+    <div class="beep-container">
+        <h1 class="beep-title">🤖 Beep</h1>
+        
+        <div class="led-display" id="ledDisplay"></div>
+        
+        <div class="message-box" id="messageBox">
+            Hello! I'm Beep, your desktop companion.
+        </div>
+        
+        <div class="input-container">
+            <input type="text" 
+                   id="inputBox" 
+                   class="input-box" 
+                   placeholder="Talk to Beep..." 
+                   onkeypress="if(event.key==='Enter') sendMessage()">
+            <button class="mic-button" id="micButton" onclick="toggleMic()">🎤</button>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <div class="mood-buttons">
+            <button onclick="setMood('happy')">😊 Happy</button>
+            <button onclick="setMood('thinking')">🤔 Thinking</button>
+            <button onclick="setMood('excited')">✨ Excited</button>
+            <button onclick="setMood('sleeping')">💤 Sleep</button>
+        </div>
+    </div>
+
+    <script>
+        // Create LED grid
+        const display = document.getElementById('ledDisplay');
+        const leds = [];
+        for (let i = 0; i < 256; i++) {
+            const led = document.createElement('div');
+            led.className = 'led';
+            display.appendChild(led);
+            leds.push(led);
+        }
+
+        // LED Face patterns
+        const faces = {
+            happy: {
+                pattern: [
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,
+                    0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,
+                    0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,
+                    0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,
+                    0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                ],
+                color: 'rgba(138, 43, 226, 0.9)'
+            },
+            thinking: {
+                pattern: [
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+                    0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                ],
+                color: 'rgba(222, 184, 135, 0.8)'
+            },
+            excited: {
+                pattern: [
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,
+                    0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,
+                    0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,
+                    0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,
+                    0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,0,1,1,1,0,0,1,1,1,0,0,0,0,
+                    0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,
+                    0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                ],
+                color: 'rgba(138, 43, 226, 0.9)'
+            },
+            sleeping: {
+                pattern: [
+                    0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,
+                    0,0,0,1,1,1,1,0,0,0,1,1,0,0,0,0,
+                    0,0,0,1,1,1,1,0,0,1,1,0,0,0,0,0,
+                    0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+                    0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+                    0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                ],
+                color: 'rgba(222, 184, 135, 0.6)'
+            }
+        };
+
+        function setMood(mood) {
+            const face = faces[mood];
+            if (!face) return;
+
+            face.pattern.forEach((state, index) => {
+                if (state === 1) {
+                    leds[index].classList.add('on');
+                    leds[index].style.setProperty('--led-color', face.color);
+                } else {
+                    leds[index].classList.remove('on');
+                }
+            });
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('inputBox');
+            const messageBox = document.getElementById('messageBox');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            setMood('thinking');
+            messageBox.textContent = 'Thinking...';
+            input.disabled = true;
+
+            try {
+                const response = await fetch('https://sigil-oracle-server.onrender.com/grumbot', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                
+                const data = await response.json();
+                messageBox.textContent = data.response || data.error;
+                setMood('happy');
+            } catch (err) {
+                messageBox.textContent = 'Oops! Something went wrong.';
+                setMood('thinking');
+            }
+
+            input.value = '';
+            input.disabled = false;
+            input.focus();
+        }
+
+        // Mic functionality placeholder
+        function toggleMic() {
+            alert('🎤 Voice input coming soon!');
+        }
+
+        // Start with happy face
+        setMood('happy');
+    </script>
+</body>
+</html>
