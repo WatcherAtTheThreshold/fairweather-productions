@@ -253,6 +253,9 @@
             <button class="mic-button" id="micButton" onclick="toggleMic()">🎤</button>
             <button onclick="sendMessage()">Send</button>
         </div>
+        <button id="replayButton" onclick="replayLastMessage()" style="margin-top: 10px; width: 100%; display: none;">
+            🔊 Replay Beep's Response
+        </button>
 
         <!--<div class="mood-buttons">
             <button onclick="setMood('happy')">😊 Happy</button>
@@ -469,12 +472,16 @@
             
             const data = await response.json();
             const beepResponse = data.response || data.error;
-            
-            messageBox.textContent = beepResponse;
-            setMood('happy');
-            
-            // Speak the response!
-            speak(beepResponse);
+
+messageBox.textContent = beepResponse;
+setMood('happy');
+
+// Store for replay and show button
+lastResponse = beepResponse;
+document.getElementById('replayButton').style.display = 'block';
+
+// Speak the response!
+speak(beepResponse);
             
         } catch (err) {
             const errorMsg = 'Oops! Something went wrong.';
@@ -493,8 +500,23 @@
         window.speechSynthesis.getVoices();
     };
 
+    // Store last response for replay
+let lastResponse = '';
+
+// Add this function anywhere in your script
+function replayLastMessage() {
+    if (lastResponse) {
+        speak(lastResponse);
+        setMood('excited');
+        setTimeout(() => setMood('happy'), 1000);
+    }
+}
+
+// Update your sendMessage function to store and show replay button   
+
     // Start with happy face
     setMood('happy');
+       
 </script>
 </body>
 </html>
