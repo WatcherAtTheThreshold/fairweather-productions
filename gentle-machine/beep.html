@@ -260,7 +260,7 @@
         cursor: pointer;
         font-family: 'Source Sans Pro', sans-serif;
     ">
-        ✨ Start
+        Start
     </button>
 </div>
     <div class="background"></div>
@@ -281,18 +281,18 @@
                    class="input-box" 
                    placeholder="Talk to Beep..." 
                    onkeypress="if(event.key==='Enter') sendMessage()">
-            <button class="mic-button" id="micButton" onclick="toggleMic()">🎤</button>
+            <button class="mic-button" id="micButton" onclick="toggleMic()">ðŸŽ¤</button>
             <!--<button onclick="sendMessage()">Send</button>-->
         </div>
         <!--<button id="replayButton" onclick="replayLastMessage()" style="margin-top: 10px; width: 100%; display: none;">
-            🔊 Replay Beep's Response
+            ðŸ”Š Replay Beep's Response
         </button>
 
         <div class="mood-buttons">
-            <button onclick="setMood('happy')">😊 Happy</button>
-            <button onclick="setMood('thinking')">🤔 Thinking</button>
-            <button onclick="setMood('excited')">✨ Excited</button>
-            <button onclick="setMood('sleeping')">💤 Sleep</button>
+            <button onclick="setMood('happy')">ðŸ˜Š Happy</button>
+            <button onclick="setMood('thinking')">ðŸ¤” Thinking</button>
+            <button onclick="setMood('excited')">âœ¨ Excited</button>
+            <button onclick="setMood('sleeping')">ðŸ’¤ Sleep</button>
         </div>-->
     </div>
 
@@ -446,7 +446,7 @@
 
         recognition.onstart = () => {
             isListening = true;
-            document.getElementById('micButton').textContent = '🔴';
+            document.getElementById('micButton').textContent = 'ðŸ”´';
             setMood('thinking');
         };
 
@@ -458,12 +458,12 @@
 
         recognition.onerror = (event) => {
             console.error('Speech recognition error:', event.error);
-            document.getElementById('micButton').textContent = '🎤';
+            document.getElementById('micButton').textContent = 'ðŸŽ¤';
             isListening = false;
         };
 
         recognition.onend = () => {
-            document.getElementById('micButton').textContent = '🎤';
+            document.getElementById('micButton').textContent = 'ðŸŽ¤';
             isListening = false;
         };
     }
@@ -532,8 +532,8 @@ messageBox.textContent = beepResponse;
 setMood('happy');
 
 // Store for replay and show button
-lastResponse = beepResponse;
-document.getElementById('replayButton').style.display = 'block';
+// lastResponse = beepResponse;
+// document.getElementById('replayButton').style.display = 'block';
 
 // Speak the response!
 speak(beepResponse);
