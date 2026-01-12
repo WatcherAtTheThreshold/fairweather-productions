@@ -37,6 +37,7 @@
         .beep-container {
             max-width: 500px;
             width: 90%;
+            height: 90%;
             background: #ffffff;
             border-radius: 2px;
             padding: 3rem 2rem;
@@ -279,12 +280,12 @@
     </div>
  <div class="mist-overlay"></div>
     <div class="beep-container">
-        <h1 class="beep-title">BEEP</h1>
+        <h1 class="beep-title"></h1>
         
         <div class="led-display" id="ledDisplay"></div>
         
         <div class="message-box" id="messageBox">
-            Hello! I'm Beep, your friend.
+            Hello! I'm Beep.
         </div>
         
         <div class="mic-button-container">
@@ -420,7 +421,7 @@
         
         // Have Beep greet you
         setTimeout(() => {
-            const greeting = "Hello, who woke me up! I'm Beep, I was sleeping.";
+            const greeting = "Hello! Bronwyn, I'm Beep.";
             document.getElementById('messageBox').textContent = greeting;
             speak(greeting);
         }, 800);
