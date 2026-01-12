@@ -24,6 +24,16 @@
             position: relative;
         }
 
+             .mist-overlay {
+      background: url('images/mist-overlay.png') repeat;
+      opacity: 0.9;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
         .beep-container {
             max-width: 500px;
             width: 90%;
@@ -267,7 +277,7 @@
         <h2>Wake Beep?</h2>
         <button onclick="wakeBeep()">Start</button>
     </div>
-
+ <div class="mist-overlay"></div>
     <div class="beep-container">
         <h1 class="beep-title">BEEP</h1>
         
