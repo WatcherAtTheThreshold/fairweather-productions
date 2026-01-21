@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" href="images/brush_apple_touch_180x180.png" />
 
 
-    
-    <title>About Us | Fairweather Studios</title>
+
+    <title>Connect | Fairweather Studios</title>
     <style>
         * {
             margin: 0;
@@ -64,20 +64,20 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { 
-                opacity: 0; 
+            0%, 100% {
+                opacity: 0;
                 transform: scale(0.3);
             }
-            25% { 
-                opacity: 0.8; 
+            25% {
+                opacity: 0.8;
                 transform: scale(1);
             }
-            50% { 
-                opacity: 1; 
+            50% {
+                opacity: 1;
                 transform: scale(1.2);
             }
-            75% { 
-                opacity: 0.6; 
+            75% {
+                opacity: 0.6;
                 transform: scale(0.8);
             }
         }
@@ -161,13 +161,24 @@
             line-height: 1.8;
         }
 
+        /* Section titles */
+        .section-title {
+            font-size: 2.5rem;
+            color: #deb887;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
         /* Artists Section */
         .artists-section {
             position: relative;
             z-index: 5;
             padding: 2rem;
             max-width: 1200px;
-            margin: 0 auto 6rem;
+            margin: 0 auto 4rem;
         }
 
         .artists-container {
@@ -257,26 +268,16 @@
             z-index: 2;
         }
 
-        /* Sacred Ground Section */
-        .sacred-ground-section {
+        /* How We Work Section */
+        .how-we-work-section {
             position: relative;
             z-index: 5;
             padding: 4rem 2rem;
             max-width: 1000px;
-            margin: 0 auto 6rem;
-            text-align: center;
+            margin: 0 auto 4rem;
         }
 
-        .sacred-ground-title {
-            font-size: 2.5rem;
-            color: #deb887;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        .sacred-ground-content {
+        .how-we-work-content {
             background: rgba(20, 20, 20, 0.7);
             backdrop-filter: blur(15px);
             border: 2px solid rgba(139, 69, 19, 0.3);
@@ -286,7 +287,7 @@
             overflow: hidden;
         }
 
-        .sacred-ground-content::before {
+        .how-we-work-content::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -302,12 +303,127 @@
             100% { opacity: 0.7; }
         }
 
-        .sacred-ground-text {
+        .how-we-work-text {
             font-size: 1.2rem;
             color: #c8c8c8;
             line-height: 1.8;
             position: relative;
             z-index: 2;
+            text-align: center;
+        }
+
+        /* Why This Matters Section */
+        .why-matters-section {
+            position: relative;
+            z-index: 5;
+            padding: 2rem 2rem 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .why-matters-text {
+            font-size: 1.3rem;
+            color: #c9b037;
+            font-style: italic;
+            line-height: 1.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            position: relative;
+            z-index: 5;
+            padding: 4rem 2rem;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .contact-form-container {
+            background: rgba(248, 240, 227, 0.95);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(222, 184, 135, 0.3);
+            position: relative;
+        }
+
+        .contact-intro {
+            font-size: 1.1rem;
+            color: #5a4a3a;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 1.1rem;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #deb887;
+            border-radius: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #8b4513;
+            box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #8b4513, #deb887);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+
+        .form-button:active {
+            transform: translateY(0);
+        }
+
+        /* Hide honeypot field */
+        .honeypot {
+            display: none !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
         }
 
         /* Interactive Offerings */
@@ -320,17 +436,10 @@
             text-align: center;
         }
 
-        .offerings-title {
-            font-size: 3rem;
-            color: #deb887;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
         .offerings-subtitle {
             font-size: 1.3rem;
             color: #c0c0c0;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             font-style: italic;
         }
 
@@ -371,12 +480,6 @@
             transform: translateY(-5px);
             border-color: rgba(222, 184, 135, 0.5);
             box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
-        }
-
-        .offering-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #deb887;
         }
 
         .offering-name {
@@ -503,7 +606,7 @@
                 font-size: 0.95rem;
             }
 
-            .sacred-ground-content {
+            .how-we-work-content {
                 padding: 2.5rem;
             }
         }
@@ -532,16 +635,21 @@
                 grid-template-columns: 1fr;
             }
 
-            .sacred-ground-title {
+            .section-title {
                 font-size: 2rem;
             }
 
-            .sacred-ground-content {
+            .how-we-work-content {
                 padding: 2rem;
             }
 
-            .sacred-ground-text {
+            .how-we-work-text {
                 font-size: 1.1rem;
+            }
+
+            .contact-form-container {
+                padding: 2rem;
+                margin: 0 1rem;
             }
         }
 
@@ -567,11 +675,15 @@
                 padding: 1.5rem;
             }
 
-            .sacred-ground-section {
+            .how-we-work-section {
                 padding: 3rem 1rem;
             }
 
-            .sacred-ground-content {
+            .how-we-work-content {
+                padding: 1.5rem;
+            }
+
+            .contact-form-container {
                 padding: 1.5rem;
             }
         }
@@ -585,32 +697,34 @@
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="gallery.html">Gallery</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
+            <a href="prints.html">Prints</a>
+            <a href="about.html">Connect</a>
         </div>
     </nav>
 
+    <!-- Who We Are -->
     <header class="about-header">
         <h1 class="about-title">About Fairweather</h1>
         <p class="about-subtitle">Two Souls, One Sacred Vision</p>
         <p class="about-description">
-            Born from love and nurtured by shared passion, Fairweather Studios is where our individual 
-            artistic voices harmonize into something greater. We are Shannon and Jessop Hunt, two artists 
-            who chose to dream together, creating a sanctuary where impressionistic wonder meets mystical 
-            visions, where each brushstroke carries both personal truth and universal magic.
+            We are Shannon and Jessop Hunt, two artists who chose to dream together.
+            Fairweather Studios is where our individual voices harmonize into something greater,
+            creating a sanctuary where impressionistic wonder meets mystical visions,
+            where each brushstroke carries both personal truth and universal magic.
         </p>
     </header>
 
+    <!-- Our Artists -->
     <section class="artists-section">
         <div class="artists-container">
             <div class="artist-card">
                 <img src="images/JessopPortrait.png" alt="Jessop Hunt Portrait" class="artist-portrait">
                 <h2 class="artist-name">Jessop Hunt</h2>
-                <p class="artist-title">Seeker of Light & Shadow</p>
+                <p class="artist-title">Seeker of Light and Shadow</p>
                 <p class="artist-description">
-                    Jessop explores the liminal spaces where light meets shadow, capturing atmospheric moments 
-                    that speak to the soul's quiet contemplations. Through impressionistic oil paintings and 
-                    digital explorations, he seeks to illuminate the sacred in the everyday, finding divinity 
+                    Jessop explores the liminal spaces where light meets shadow, capturing atmospheric moments
+                    that speak to the soul's quiet contemplations. Through impressionistic oil paintings and
+                    digital explorations, he seeks to illuminate the sacred in the everyday, finding divinity
                     in mist-veiled landscapes and the gentle play of color across time.
                 </p>
                 <div class="sparkle" style="top: 20px; right: 30px; animation-delay: 0.5s;"></div>
@@ -621,9 +735,9 @@
                 <h2 class="artist-name">Shannon Hunt</h2>
                 <p class="artist-title">Guardian of the Sacred Feminine</p>
                 <p class="artist-description">
-                    Shannon channels ancient wisdom through contemporary vision, painting portals between 
-                    worlds where goddesses whisper and spirits dance. Her acrylic paintings pulse with 
-                    mythic energy, each piece a doorway to understanding the divine feminine that flows 
+                    Shannon channels ancient wisdom through contemporary vision, painting portals between
+                    worlds where goddesses whisper and spirits dance. Her acrylic paintings pulse with
+                    mythic energy, each piece a doorway to understanding the divine feminine that flows
                     through all creation, weaving stories of transformation and empowerment.
                 </p>
                 <div class="sparkle" style="bottom: 25px; left: 25px; animation-delay: 1.2s;"></div>
@@ -631,27 +745,96 @@
         </div>
     </section>
 
-    <section class="sacred-ground-section">
-        <h2 class="sacred-ground-title">Sacred Ground</h2>
-        <div class="sacred-ground-content">
-            <p class="sacred-ground-text">
-                Our studio rests upon enchanted land at 63 Jefferson Road, where creative spirits have danced for decades. For twenty-seven years, this space was home to Mary Fairweather's beloved antique shop, welcoming seekers of beauty and forgotten treasures. When we acquired this mystical property, we felt the ancient creative energy that had blessed these rooms and called us home. Through our years as craftspeople with Littleton Sign Company and now as fine artists, the Fairweather name continues, not through blood, but through the deeper understanding that some places are destined to remain sanctuaries for those who see the world through artist's eyes.
+    <!-- How We Work -->
+    <section class="how-we-work-section">
+        <h2 class="section-title">How We Work</h2>
+        <div class="how-we-work-content">
+            <p class="how-we-work-text">
+                Every piece begins with intention. We paint with care, print with our own hands,
+                and package each work with small handcrafted treasures. When you receive a Fairweather print,
+                you're receiving something we made for you, with our hands and hearts,
+                just like the original paintings themselves. We believe art should arrive
+                like a gift from a friend, wrapped in warmth and purpose.
             </p>
             <div class="sparkle" style="top: 15px; right: 20px; animation-delay: 1s;"></div>
             <div class="sparkle" style="bottom: 20px; left: 30px; animation-delay: 2s;"></div>
         </div>
     </section>
 
+    <!-- Why This Matters -->
+    <section class="why-matters-section">
+        <p class="why-matters-text">
+            Our studio rests upon enchanted land at 63 Jefferson Road, where creative spirits have danced for decades.
+            The Fairweather name continues, not through blood, but through the deeper understanding
+            that some places are destined to remain sanctuaries for those who see the world through artist's eyes.
+        </p>
+    </section>
+
+    <!-- Reach Out (Contact Form) -->
+    <section id="reach-out" class="contact-section">
+        <h2 class="section-title">Reach Out</h2>
+        <div class="contact-form-container">
+            <p class="contact-intro">
+                We believe every connection is sacred. Whether you seek to share in the magic we create
+                or have questions about our work, we are here, ready to weave something beautiful together.
+            </p>
+
+            <form class="contact-form" action="https://formsubmit.co/monahanhunt@gmail.com" method="POST">
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject" class="form-label">Nature of Inquiry</label>
+                    <select id="subject" name="subject" class="form-select" required>
+                        <option value="">Choose your path...</option>
+                        <option value="gallery">Gallery Inquiry</option>
+                        <option value="workshop">Workshop or Teaching</option>
+                        <option value="press">Press and Media</option>
+                        <option value="general">General Question</option>
+                        <option value="other">Other Business</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Your Message</label>
+                    <textarea id="message" name="message" class="form-textarea"
+                            placeholder="Share your thoughts, questions, or inquiry..." required></textarea>
+                </div>
+
+                <!-- FormSubmit.co hidden fields -->
+                <input type="text" name="_honey" class="honeypot" tabindex="-1">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://fairweatherproductions.com/thank-you.html">
+                <input type="hidden" name="_subject" value="New Contact from Fairweather Studios">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_autoresponse" value="Thank you for reaching out to Fairweather Studios! We typically respond within 24-48 hours.">
+
+                <button type="submit" class="form-button">Send Message</button>
+            </form>
+
+            <!-- Decorative sparkles -->
+            <div class="sparkle" style="top: 30px; right: 40px; animation-delay: 0.8s;"></div>
+            <div class="sparkle" style="bottom: 50px; left: 30px; animation-delay: 1.2s;"></div>
+        </div>
+    </section>
+
+    <!-- Other Offerings -->
     <section class="offerings-section">
-        <h2 class="offerings-title">Other Offerings</h2>
+        <h2 class="section-title">Other Offerings</h2>
         <p class="offerings-subtitle">Explore our individual realms and mystical tools</p>
-        
+
         <div class="offerings-grid">
             <div class="offering-card">
-                <div class="offering-icon">💭</div>
                 <h3 class="offering-name">The Gentle Machine</h3>
                 <p class="offering-description">
-                    Jessop's creative sanctuary where logic and spirit meet in quiet reflection, 
+                    Jessop's creative sanctuary where logic and spirit meet in quiet reflection,
                     showcasing atmospheric paintings and thoughtful artistic musings.
                 </p>
                 <a href="./gentle-machine/" class="offering-link" target="_blank">
@@ -660,10 +843,9 @@
             </div>
 
             <div class="offering-card">
-                <div class="offering-icon">🔮</div>
                 <h3 class="offering-name">Sigil Oracle</h3>
                 <p class="offering-description">
-                    A mystical AI-driven oracle guided by a wise cat spirit, offering symbolic insights 
+                    A mystical AI-driven oracle guided by a wise cat spirit, offering symbolic insights
                     through sacred geometry and ancient wisdom.
                 </p>
                 <a href="./gentle-machine/sigil-oracle.html" class="offering-link" target="_blank">
@@ -672,10 +854,9 @@
             </div>
 
             <div class="offering-card">
-                <div class="offering-icon">👁</div>
                 <h3 class="offering-name">The Second Gaze</h3>
                 <p class="offering-description">
-                    Shannon's visionary realm where myth meets canvas, exploring the sacred feminine 
+                    Shannon's visionary realm where myth meets canvas, exploring the sacred feminine
                     through powerful acrylic paintings and mystical narratives.
                 </p>
                 <a href="./second-gaze/" class="offering-link" target="_blank">
@@ -684,10 +865,9 @@
             </div>
 
             <div class="offering-card">
-                <div class="offering-icon">🃏</div>
                 <h3 class="offering-name">Sacred Tarot</h3>
                 <p class="offering-description">
-                    Draw wisdom from Shannon's original artwork through one or three-card tarot readings, 
+                    Draw wisdom from Shannon's original artwork through one or three-card tarot readings,
                     where each card reveals layers of intuitive guidance.
                 </p>
                 <a href="./second-gaze/cards.html" class="offering-link" target="_blank">
@@ -703,18 +883,18 @@
         <a href="./second-gaze/" style="text-decoration: none;">The Second Gaze</a>
     </div>
     <p style="color: #888; margin-top: 1rem;">
-        © 2025 Fairweather Studios • Jessop & Shannon Hunt • Where Art & Love Converge
+        2025 Fairweather Studios - Jessop and Shannon Hunt - Where Art and Love Converge
     </p>
 </footer>
 
-    <button id="backToTopBtn" title="Back to Top">↑ Top</button>
+    <button id="backToTopBtn" title="Back to Top">Top</button>
 
     <script>
         // Create twinkling star particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 80;
-            
+
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -730,7 +910,7 @@
         function addRandomSparkles() {
             const sparkleCount = 5;
             const body = document.body;
-            
+
             for (let i = 0; i < sparkleCount; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
@@ -740,7 +920,7 @@
                 sparkle.style.animationDelay = Math.random() * 2 + 's';
                 sparkle.style.zIndex = '2';
                 body.appendChild(sparkle);
-                
+
                 // Remove sparkle after animation
                 setTimeout(() => {
                     if (sparkle.parentNode) {
@@ -769,7 +949,7 @@
                 sparkle.style.top = Math.random() * 100 + '%';
                 sparkle.style.zIndex = '3';
                 this.appendChild(sparkle);
-                
+
                 setTimeout(() => {
                     if (sparkle.parentNode) {
                         sparkle.parentNode.removeChild(sparkle);
@@ -791,11 +971,18 @@
             });
         });
 
+        // Form submission feedback
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            const button = this.querySelector('.form-button');
+            button.textContent = 'Sending Message...';
+            button.disabled = true;
+        });
+
         // Initialize effects
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             setInterval(addRandomSparkles, 4000);
-            
+
             // Ensure page starts at top on load
             window.scrollTo(0, 0);
         });
