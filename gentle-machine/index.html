@@ -449,7 +449,7 @@
 
   <div class="content">
     <!-- ORACLE GLYPH ABOVE TITLE -->
-    <a href="#" class="oracle-link" id="oracleGlyph" title="The Oracle">✶</a>
+    <a href="./card-gallery.html" class="oracle-link" id="oracleGlyph" title="The Card Gallery">✶</a>
 
     <h1>The Gentle Machine</h1>
     <p class="subtitle">A quiet space for tools, reflections, and experiments in thinking with care - including collaborations between human and machine.</p>
@@ -540,9 +540,9 @@
       e.preventDefault();
       triggerSigilAnimation('sigil-oracle');
       // 3 second delay before navigation to show the sigil unfold
-      // setTimeout(() => {
-      //   window.location.href = 'sigil-oracle.html';
-      // }, 3000);
+      setTimeout(() => {
+        window.location.href = 'card-gallery.html';
+      }, 3000);
     });
 
     document.getElementById('mysteryGlyph').addEventListener('click', (e) => {
