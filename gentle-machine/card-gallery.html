@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Standard Favicons -->
+<link rel="icon" href="images/quill_favicon.ico" type="image/x-icon" />
+<link rel="icon" href="images/quill_32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="images/quill_64x64.png" sizes="64x64" type="image/png" />
+<link rel="icon" href="images/quill_128x128.png" sizes="128x128" type="image/png" />
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
+
+
+  <title>Card Gallery — The Gentle Machine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .background {
+      background: rgba(3, 3, 3, 0.4);
+      opacity: 1;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    .mist-overlay {
+      background: url('images/mist-overlay.png') repeat;
+      opacity: 0.9;
+      position: fixed;
+      width: 100%;
+      height: 500vh;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      animation: mistScroll 120s linear infinite;
+    }
+
+    @keyframes mistScroll {
+      from { background-position: 0 0; }
+      to { background-position: -500px 500px; }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 25s infinite linear;
+      opacity: 0;
+    }
+
+    .particle.golden {
+      background: radial-gradient(circle, rgba(222, 184, 135, 0.6) 0%, rgba(222, 184, 135, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 4px rgba(222, 184, 135, 0.4);
+    }
+
+    .particle.purple {
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, rgba(138, 43, 226, 0.1) 70%, transparent 100%);
+      box-shadow: 0 0 4px rgba(138, 43, 226, 0.3);
+    }
+
+    .particle.silver {
+      background: radial-gradient(circle, rgba(192, 192, 192, 0.4) 0%, rgba(192, 192, 192, 0.08) 70%, transparent 100%);
+      box-shadow: 0 0 3px rgba(192, 192, 192, 0.2);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.6;
+        transform: translateY(95vh) translateX(10px) rotate(18deg) scale(0.5);
+      }
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 50px)) rotate(180deg) scale(0.8);
+        opacity: 0.4;
+      }
+      95% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(calc(var(--drift, 50px) * 2)) rotate(360deg) scale(0.1);
+        opacity: 0;
+      }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2);
+      margin-bottom: 0.5rem;
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2); }
+      100% { text-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 50px rgba(138, 43, 226, 0.4); }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0 auto 1rem;
+      width: fit-content;
+    }
+
+    .mobile-menu-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav a {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .nav a.creative {
+      border-color: rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.creative:hover {
+      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(138, 43, 226, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .nav a.current {
+      background: rgba(138, 43, 226, 0.2);
+      border-color: rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .cruxfade-link {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.7) !important;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: none !important;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .cruxfade-link:hover {
+      color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: none !important;
+    }
+
+    /* --- Card Gallery Grid --- */
+    .gallery-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-intro p {
+      font-family: 'Crimson Text', 'Georgia', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.8;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2.5rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- Flip Card --- */
+    .card-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .card-wrapper:nth-child(2n) { animation-delay: 0.1s; }
+    .card-wrapper:nth-child(3n) { animation-delay: 0.2s; }
+    .card-wrapper:nth-child(4n) { animation-delay: 0.3s; }
+
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .card {
+      width: 280px;
+      height: 400px;
+      perspective: 1200px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+      border-radius: 15px;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    /* Front face */
+    .card-front {
+      background-color: #111;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(138, 43, 226, 0.15);
+      transition: box-shadow 0.4s ease;
+    }
+
+    .card:hover .card-front {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(138, 43, 226, 0.3);
+    }
+
+    /* Purple top-edge glow on hover */
+    .card-front::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .card:hover .card-front::before {
+      opacity: 1;
+    }
+
+    /* Back face */
+    .card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, #1a1325 0%, #0f0a18 60%, #110e1a 100%);
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(138, 43, 226, 0.2);
+    }
+
+    .card-back::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(222, 184, 135, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      border-radius: 15px;
+    }
+
+    .card-back::after {
+      content: '\2726';
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 1.1rem;
+      color: rgba(138, 43, 226, 0.4);
+      animation: gentle-pulse 4s infinite ease-in-out;
+    }
+
+    @keyframes gentle-pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.15); }
+    }
+
+    .card-back h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: rgba(222, 184, 135, 0.9);
+      text-align: center;
+      margin-bottom: 1.2rem;
+      position: relative;
+      text-shadow: 0 0 10px rgba(222, 184, 135, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .card-back h2::before,
+    .card-back h2::after {
+      content: '\25C6';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.6rem;
+      color: rgba(138, 43, 226, 0.5);
+    }
+
+    .card-back h2::before { left: -20px; }
+    .card-back h2::after { right: -20px; }
+
+    .card-back p {
+      font-family: 'Crimson Text', 'Georgia', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.7;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      position: relative;
+      padding: 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      border: 1px solid rgba(138, 43, 226, 0.15);
+    }
+
+    .card-label {
+      margin-top: 0.8rem;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 300;
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Source Sans Pro', sans-serif;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.5);
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: rgba(255,255,255,0.8);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .nav {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        max-height: 60vh;
+        overflow-y: auto;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .nav-links.open {
+        display: grid;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .nav a {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1rem;
+      }
+
+      .card-grid .card-wrapper {
+        justify-self: center;
+      }
+
+      .header {
+        padding: 2rem 1rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="mist-overlay"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="header">
+    <h1>Card Gallery</h1>
+    <p class="subtitle">Every image holds a whisper. Turn the cards and listen.</p>
+  </div>
+
+  <div class="nav">
+    <button class="mobile-menu-button" id="mobileMenuButton">&#9776; Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="./index.html">Home</a>
+      <a href="./gallery.html">Gallery</a>
+      <a href="./games.html" class="creative">Games</a>
+      <a href="./music.html" class="creative">Music</a>
+      <a href="./writing.html">Writing</a>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="https://watcheratthethreshold.github.io/shadows-of-the-deck/" class="cruxfade-link" title="Enter Cruxfade">&#x27C1; Shadows</a>
+    </div>
+  </div>
+
+  <div class="gallery-intro">
+    <p>A living deck drawn from the studio walls. Click any card to glimpse the thought it carries on the other side.</p>
+  </div>
+
+  <div class="card-grid" id="cardGrid"></div>
+
+  <button class="back-to-top" id="scrollTop" title="Back to top">&uarr;</button>
+
+  <footer>
+    &copy; 2025 The Gentle Machine | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> &amp; <a href="../" style="text-decoration: none;">Fairweather</a> - quietly relentless.
+  </footer>
+
+  <script>
+    // =============================================
+    // CARD DATA — 68 artworks with titles & messages
+    // =============================================
+    const cards = [
+      // --- Portraits & Character Works ---
+      {
+        image: 'AlexandraPortrait.png',
+        title: 'Alexandra',
+        message: 'She carries the room like a rumor of thunder. There is power in stillness when the stillness belongs to you.'
+      },
+      {
+        image: 'FeePortrait.png',
+        title: 'Fee',
+        message: 'Some faces hold entire landscapes. Hers holds the hour before dawn, when everything is almost.'
+      },
+      {
+        image: 'JenAndTerry.png',
+        title: 'Jen & Terry',
+        message: 'Two lives leaned together become an architecture no storm can undo. Love is the oldest engineering.'
+      },
+      {
+        image: 'JessopPortrait.png',
+        title: 'Jessop',
+        message: 'The quiet ones are not empty. They are reservoirs. When he speaks, the water runs deep and clear.'
+      },
+      {
+        image: 'RowanPortrait.png',
+        title: 'Rowan',
+        message: 'Named for the tree that wards off shadows. There is a kind of protection that comes from simply being unafraid to grow.'
+      },
+      {
+        image: 'SaraQuinn.png',
+        title: 'Sara Quinn',
+        message: 'She sits at the edge of the frame the way some people sit at the edge of the world \u2014 deliberate, luminous, unhurried.'
+      },
+      {
+        image: 'ShanPortrait.png',
+        title: 'Shan',
+        message: 'The artist\u2019s hand and the artist\u2019s eye are never the same creature. Both are wild. Both are faithful.'
+      },
+      {
+        image: 'Shan-Crabby.png',
+        title: 'Crabby',
+        message: 'Even tenderness has teeth. Honor the claw alongside the caress \u2014 both are honest.'
+      },
+      {
+        image: 'Shan-Ego-Ink22.png',
+        title: 'Ego',
+        message: 'The self is not the enemy. It is the first canvas, the one you must learn to see before all others.'
+      },
+      {
+        image: 'Shan-Flame.png',
+        title: 'Flame',
+        message: 'You were not built for smoldering. Let the burning be visible. Let it warm what needs warming.'
+      },
+      {
+        image: 'Shan-Forget-Ink22.png',
+        title: 'Forget',
+        message: 'To forget is not failure. It is the tide pulling back, making room for what the shore truly needs.'
+      },
+      {
+        image: 'Shan-Trip-Ink22-ForWeb.png',
+        title: 'Trip',
+        message: 'Every stumble is a secret door. You were not falling \u2014 you were arriving somewhere you hadn\u2019t planned.'
+      },
+      {
+        image: 'MrBinnSmallerFile.png',
+        title: 'Mr. Binn',
+        message: 'He watches the world with the patience of old furniture. Loyalty does not announce itself. It simply stays.'
+      },
+
+      // --- Nature & Landscape Works ---
+      {
+        image: 'Atrium2.png',
+        title: 'Atrium',
+        message: 'Light enters the room like a guest who was always expected. Make space for what already knows the way in.'
+      },
+      {
+        image: 'Birch.png',
+        title: 'Birch',
+        message: 'She sheds her bark to grow. There is courage in letting the old skin fall where it falls.'
+      },
+      {
+        image: 'BirchesWc.png',
+        title: 'Birches',
+        message: 'A congregation of white trunks, swaying in the same wind but dancing alone. Solitude and belonging are not opposites.'
+      },
+      {
+        image: 'BirchMeadow.png',
+        title: 'Birch Meadow',
+        message: 'The meadow holds what the forest cannot \u2014 open air, the long view, the courage to stand without cover.'
+      },
+      {
+        image: 'BlueLandscape.png',
+        title: 'Blue Landscape',
+        message: 'Some distances are not to be crossed but contemplated. The blue asks nothing of you. That is its gift.'
+      },
+      {
+        image: 'Chickadee.png',
+        title: 'Chickadee',
+        message: 'Small and unshakable. She sings in the cold because the cold is no reason to stop singing.'
+      },
+      {
+        image: 'Flowers.png',
+        title: 'Flowers',
+        message: 'Emerging from the garden of earthly delights, crowned in nature\u2019s gentle wisdom, eyes closed in perfect trust of becoming.'
+      },
+      {
+        image: 'GoldenInvitation.png',
+        title: 'Golden Invitation',
+        message: 'The path does not insist. It glows faintly and waits. Acceptance is a kind of bravery the world underestimates.'
+      },
+      {
+        image: 'LaPuertaAzul.png',
+        title: 'La Puerta Azul',
+        message: 'Behind the blue door, the air smells of clay and thyme. Some thresholds exist only for those who already belong.'
+      },
+      {
+        image: 'MoonGarden-CC.png',
+        title: 'Moon Garden',
+        message: 'What grows in the dark will bloom under moonlight. Let patience and wonder be your guide.'
+      },
+      {
+        image: 'MoonlightDoctrine.png',
+        title: 'Moonlight Doctrine',
+        message: 'The moon does not argue with the sun. It simply waits its turn and illuminates what needs softer seeing.'
+      },
+      {
+        image: 'MorningPrayer.png',
+        title: 'Morning Prayer',
+        message: 'Before the day claims you, claim yourself. The first light belongs to no one. Take your share.'
+      },
+      {
+        image: 'NerudaAoede-CC.png',
+        title: 'Neruda Aoede',
+        message: 'Poetry is not written. It is overheard \u2014 the muse singing to herself in a room she thought was empty.'
+      },
+      {
+        image: 'Nuthatch.png',
+        title: 'Nuthatch',
+        message: 'He walks the tree upside down and finds what everyone else missed. Perspective is its own kind of magic.'
+      },
+      {
+        image: 'PaintedLady.png',
+        title: 'Painted Lady',
+        message: 'Fragile is not the same as weak. She crosses oceans on wings thinner than thought.'
+      },
+      {
+        image: 'ShadowoftheMountain.png',
+        title: 'Shadow of the Mountain',
+        message: 'The mountain casts its shadow not to darken but to cool. Even great things create shelter without meaning to.'
+      },
+      {
+        image: 'Solitude.png',
+        title: 'Solitude',
+        message: 'Alone is not lonely when you are your own good company. The silence hums if you let it.'
+      },
+      {
+        image: 'SummerStroll.png',
+        title: 'Summer Stroll',
+        message: 'No destination. No hurry. The path unfolds because you are walking it, not because it leads somewhere.'
+      },
+      {
+        image: 'SunriseDoctrine.png',
+        title: 'Sunrise Doctrine',
+        message: 'The sun returns without apology. It does not ask if you are ready. Begin anyway.'
+      },
+      {
+        image: 'ThePaintedLady.png',
+        title: 'The Painted Lady',
+        message: 'She wears every migration like a jewel. Endurance, worn beautifully, becomes indistinguishable from grace.'
+      },
+      {
+        image: 'TwoChickadees.png',
+        title: 'Two Chickadees',
+        message: 'They share a branch the way old friends share silence \u2014 without weight, without worry, with complete trust in the limb beneath.'
+      },
+      {
+        image: 'WizardScreen.png',
+        title: 'Wizard Screen',
+        message: 'Behind every veil is another veil. The mystery is not meant to be solved. It is meant to be inhabited.'
+      },
+      {
+        image: 'YellowLandscape.png',
+        title: 'Yellow Landscape',
+        message: 'The field pours itself out in gold, keeping nothing back. Generosity is the landscape\u2019s native tongue.'
+      },
+      {
+        image: 'IMG-3868.png',
+        title: 'Untitled Study I',
+        message: 'Before a painting has a name, it has a feeling. This one feels like the moment before you remember something important.'
+      },
+      {
+        image: 'IMG-3869.png',
+        title: 'Untitled Study II',
+        message: 'The brush moved before the mind caught up. Trust the hand \u2014 it knows what the eye is still learning.'
+      },
+      {
+        image: 'IMG-3870.png',
+        title: 'Untitled Study III',
+        message: 'Raw and unhurried, the pigment settles where it wants to. Some truths refuse to be arranged.'
+      },
+
+      // --- Mythological & Mystical Works ---
+      {
+        image: 'Ellie and the Cosmic Swaddle.png',
+        title: 'Ellie & the Cosmic Swaddle',
+        message: 'Wrapped in stardust before her first breath. The universe tucks its smallest wonders in the safest cloth.'
+      },
+      {
+        image: 'astraea-star-maiden.webp',
+        title: 'Astraea Star Maiden',
+        message: 'Justice flows through you like starlight. Stand firm in what is right, even when the world grows dark around you.'
+      },
+      {
+        image: 'oshun.webp',
+        title: 'Oshun',
+        message: 'You are river and honey, beauty and power entwined. Let love flow through you, fierce and life-giving.'
+      },
+      {
+        image: 'oracle-at-delphi.webp',
+        title: 'Oracle at Delphi',
+        message: 'You already know what you came here to learn. Trust the whispers rising from the depths of your own knowing.'
+      },
+      {
+        image: 'hypatia.webp',
+        title: 'Hypatia',
+        message: 'Knowledge is your rebellion, wisdom your weapon. Question everything, and let no one dim the flame of your mind.'
+      },
+      {
+        image: 'lyras-weaver.webp',
+        title: 'Lyra\u2019s Weaver',
+        message: 'Your voice carries the music of the spheres. Speak your truth, and let harmony rise from the chaos.'
+      },
+      {
+        image: 'PotniaTheron.webp',
+        title: 'Potnia Theron',
+        message: 'You are keeper of wild spaces. Let instinct move you, and let your power remain untamed.'
+      },
+      {
+        image: 'under-the-aegis-of-inanna.webp',
+        title: 'Under Inanna\u2019s Aegis',
+        message: 'Your duality is your strength. Embrace boldness and beauty, destruction and rebirth.'
+      },
+      {
+        image: 'under-the-aegis-of-ishtarr.webp',
+        title: 'Under Ishtar\u2019s Aegis',
+        message: 'Warrior and lover, hunter and healer \u2014 you are more than one story. Honor the fullness of your being.'
+      },
+      {
+        image: 'hypolimnus-anomala.webp',
+        title: 'Hypolimnus Anomala',
+        message: 'She mimics no one. Her strangeness is her sovereignty. The anomaly is always the one who changes the pattern.'
+      },
+
+      // --- Additional Works ---
+      {
+        image: 'Apple Blossom.webp',
+        title: 'Apple Blossom',
+        message: 'Before the fruit, the blossom. Before the harvest, the fragile pink audacity of opening at all.'
+      },
+      {
+        image: 'BarnOwlandSnowMoon.webp',
+        title: 'Barn Owl & Snow Moon',
+        message: 'She hunts by sound in the white silence. When the world goes quiet, the keenest senses sharpen.'
+      },
+      {
+        image: 'bookmarks.webp',
+        title: 'Bookmarks',
+        message: 'Every page you marked is a place you promised to return to. The story waits. It always waits.'
+      },
+      {
+        image: 'FlowerPot.webp',
+        title: 'Flower Pot',
+        message: 'Containment is not confinement. Even the smallest vessel can hold a riot of becoming.'
+      },
+      {
+        image: 'ForestDweller.webp',
+        title: 'Forest Dweller',
+        message: 'She lives where the canopy closes and the light arrives in fragments. Not lost \u2014 simply somewhere the map doesn\u2019t reach.'
+      },
+      {
+        image: 'forget.webp',
+        title: 'Forget',
+        message: 'Memory loosens its grip and something lighter rushes in. Forgetting can be an act of mercy toward yourself.'
+      },
+      {
+        image: 'GazingBall.webp',
+        title: 'Gazing Ball',
+        message: 'In the silvered moonlight she contemplates the gazing ball \u2014 seeking not prediction but reflection, the ancient art of seeing oneself truly.'
+      },
+      {
+        image: 'MinervasWisdom.webp',
+        title: 'Minerva\u2019s Wisdom',
+        message: 'Insight is not given, it is earned. Today, trust in your learning and seek the deeper layer in all things.'
+      },
+      {
+        image: 'Moonlit Silence.webp',
+        title: 'Moonlit Silence',
+        message: 'The world hushes itself for no one. When silence finds you, it is because you finally stopped to hear it.'
+      },
+      {
+        image: 'nest.webp',
+        title: 'Nest',
+        message: 'Built from what was found, not what was bought. The safest places are woven from ordinary devotion.'
+      },
+      {
+        image: 'Scurry.webp',
+        title: 'Scurry',
+        message: 'Quick and low to the ground, she gathers what she needs without apology. Survival is its own elegance.'
+      },
+      {
+        image: 'Stand.webp',
+        title: 'Stand',
+        message: 'Roots do not grip the earth in fear. They hold it in commitment. Stand where you are planted and mean it.'
+      },
+      {
+        image: 'The Dreamer.webp',
+        title: 'The Dreamer',
+        message: 'She walks a country that only exists when her eyes are closed. The dreamer builds worlds the waking mind borrows from.'
+      },
+      {
+        image: 'TheGirlFromIpanema.webp',
+        title: 'The Girl from Ipanema',
+        message: 'She passes and the air rearranges itself. Some presences are weather \u2014 warm, undeniable, impossible to hold.'
+      },
+      {
+        image: 'TheSoundofFallingSnow.webp',
+        title: 'The Sound of Falling Snow',
+        message: 'It makes no sound and changes everything. The quietest transformations are the ones that remake the world.'
+      },
+      {
+        image: 'UglyMug.webp',
+        title: 'Ugly Mug',
+        message: 'Beauty is a story we tell selectively. The mug holds the coffee just fine. Function has its own fierce dignity.'
+      },
+      {
+        image: 'ValentineFoxs.webp',
+        title: 'Valentine Foxes',
+        message: 'They meet at the edge of the clearing where the light turns amber. Love in the wild wears no disguise.'
+      },
+      {
+        image: 'Way Home.webp',
+        title: 'Way Home',
+        message: 'The path bends but does not break. Home is not a place you find \u2014 it is the direction your bones already know.'
+      },
+      {
+        image: 'IMG_0131.png',
+        title: 'Untitled Study IV',
+        message: 'Caught between gesture and intention, the paint remembers what the painter was feeling before the feeling had a name.'
+      }
+    ];
+
+    // =============================================
+    // RENDER CARDS
+    // =============================================
+    const cardGrid = document.getElementById('cardGrid');
+
+    cards.forEach(cardData => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'card-wrapper';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.addEventListener('click', () => card.classList.toggle('flipped'));
+
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="card-face card-front" style="background-image: url('../images/${encodeURI(cardData.image)}')"></div>
+          <div class="card-face card-back">
+            <h2>${cardData.title}</h2>
+            <p>${cardData.message}</p>
+          </div>
+        </div>
+      `;
+
+      const label = document.createElement('div');
+      label.className = 'card-label';
+      label.textContent = cardData.title;
+
+      wrapper.appendChild(card);
+      wrapper.appendChild(label);
+      cardGrid.appendChild(wrapper);
+    });
+
+    // =============================================
+    // PARTICLES
+    // =============================================
+    const container = document.getElementById('particles');
+    const colors = ['golden', 'purple', 'silver'];
+
+    for (let i = 0; i < 60; i++) {
+      const particle = document.createElement('div');
+      particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
+
+      const size = Math.random() * 5 + 1;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 30 + 's';
+      particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+      particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
+
+      container.appendChild(particle);
+    }
+
+    // =============================================
+    // BACK TO TOP
+    // =============================================
+    const topButton = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        topButton.classList.add('show');
+      } else {
+        topButton.classList.remove('show');
+      }
+    });
+
+    topButton.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // =============================================
+    // MIST PARALLAX
+    // =============================================
+    let ticking = false;
+    function updateParallax() {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick);
+
+    // =============================================
+    // MOBILE MENU
+    // =============================================
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      if (navLinks.classList.contains('open')) {
+        mobileMenuButton.textContent = '\u2715 Close';
+      } else {
+        mobileMenuButton.textContent = '\u2630 Menu';
+      }
+    });
+
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '\u2630 Menu';
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav')) {
+        navLinks.classList.remove('open');
+        mobileMenuButton.textContent = '\u2630 Menu';
+      }
+    });
+
+    // =============================================
+    // STAGGERED CARD ANIMATIONS ON SCROLL
+    // =============================================
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.animationDelay = '0s';
+            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+          }, index * 80);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '50px'
+    });
+
+    document.querySelectorAll('.card-wrapper').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
