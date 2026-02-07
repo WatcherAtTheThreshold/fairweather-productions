@@ -374,8 +374,30 @@
       text-align: center;
       padding: 1.5rem;
       color: rgba(200, 196, 188, 0.7);
+    }
+
+    .back-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #e8e6e1;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .back-details {
       font-size: 0.95rem;
+      color: rgba(200, 196, 188, 0.6);
+      font-weight: 300;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.03em;
+    }
+
+    .back-medium {
+      font-size: 0.85rem;
+      color: rgba(140, 160, 185, 0.6);
       font-style: italic;
+      font-weight: 300;
     }
 
     .image-container {
@@ -665,32 +687,32 @@
   <script>
     // Gallery data
     const galleryImages = [
-      { src: 'images/Apple Blossom.webp', caption: 'Apple Blossom' },
-      { src: 'images/Atrium2.png', caption: 'Atrium2' },
-      { src: 'images/Birch.png', caption: 'Birch' },
-      { src: 'images/BirchesWc.png', caption: 'BirchesWc' },
-      { src: 'images/BirchMeadow.png', caption: 'Birch Meadow' },
-      { src: 'images/BlueLandscape.png', caption: 'Blue Landscape' },
-      { src: 'images/Chickadee.png', caption: 'Chickadee' },
-      { src: 'images/EvenTheSmallestThings.png', caption: 'Even The Smallest Things' },
-      { src: 'images/ForestDweller.webp', caption: 'Forest Dweller' },
-      { src: 'images/GoldenInvitation.png', caption: 'Golden Invitation' },
-      { src: 'images/IMG-3868.png', caption: 'Untitled Study' },
-      { src: 'images/IMG-3869.png', caption: 'Untitled Study' },
-      { src: 'images/IMG-3870.png', caption: 'Untitled Study' },
-      { src: 'images/LaPuertaAzul.png', caption: 'La Puerta Azul' },
-      { src: 'images/MoonlightDoctrine.png', caption: 'Moonlight Doctrine' },
-      { src: 'images/MorningPrayer.png', caption: 'Morning Prayer' },
-      { src: 'images/Nuthatch.png', caption: 'Nuthatch' },
-      { src: 'images/PaintedLady.png', caption: 'Painted Lady' },
-      { src: 'images/ShadowoftheMountain.png', caption: 'Shadow of the Mountain' },
-      { src: 'images/Solitude.png', caption: 'Solitude' },
-      { src: 'images/SummerStroll.png', caption: 'Summer Stroll' },
-      { src: 'images/SunriseDoctrine.png', caption: 'Sunrise Doctrine' },
-      { src: 'images/ThePaintedLady.png', caption: 'The Painted Lady' },
-      { src: 'images/TwoChickadees.png', caption: 'Two Chickadees' },
-      { src: 'images/Way Home.webp', caption: 'Way Home' },
-      { src: 'images/YellowLandscape.png', caption: 'Yellow Landscape' },
+      { src: 'images/Apple Blossom.webp', title: 'Apple Blossom', size: '16\u2033 \u00d7 20\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/Atrium2.png', title: 'Atrium', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/Birch.png', title: 'Whispers of Birch', size: '18\u2033 \u00d7 24\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/BirchesWc.png', title: 'Stand', size: '8\u2033 \u00d7 10\u2033', medium: 'Watercolor on Paper' },
+      { src: 'images/BirchMeadow.png', title: 'Birch Meadow', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/BlueLandscape.png', title: 'Landscape in Blue', size: '36\u2033 \u00d7 12\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/Chickadee.png', title: 'Chickadee', size: '12\u2033 \u00d7 16\u2033', medium: 'Oil on Paper' },
+      { src: 'images/EvenTheSmallestThings.png', title: 'Even The Smallest Things', size: '5\u2033 \u00d7 8\u2033', medium: 'Watercolor on Paper' },
+      { src: 'images/ForestDweller.webp', title: 'Forest Dweller', size: '8\u2033 \u00d7 10\u2033', medium: 'Ink on Paper' },
+      { src: 'images/GoldenInvitation.png', title: 'Golden Invitation', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/IMG-3868.png', title: 'Morning', size: '12\u2033 \u00d7 12\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/IMG-3869.png', title: 'Afternoon', size: '12\u2033 \u00d7 12\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/IMG-3870.png', title: 'Evening', size: '12\u2033 \u00d7 12\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/LaPuertaAzul.png', title: 'La Puerta Azul', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/MoonlightDoctrine.png', title: 'Moonlight Doctrine', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/MorningPrayer.png', title: 'Morning Prayer', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/Nuthatch.png', title: 'Nuthatch', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/PaintedLady.png', title: 'Painted Lady', size: '18\u2033 \u00d7 24\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/ShadowoftheMountain.png', title: 'Shadow of the Mountain', size: '24\u2033 \u00d7 36\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/Solitude.png', title: 'Solitude', size: '24\u2033 \u00d7 20\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/SummerStroll.png', title: 'Summer Stroll', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/SunriseDoctrine.png', title: 'Sunrise Doctrine', size: '20\u2033 \u00d7 16\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/ThePaintedLady.png', title: 'The Painted Lady 2', size: '18\u2033 \u00d7 24\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/TwoChickadees.png', title: 'Two Little Birds', size: '16\u2033 \u00d7 12\u2033', medium: 'Oil on Canvas' },
+      { src: 'images/Way Home.webp', title: 'Way Home', size: '8\u2033 \u00d7 10\u2033', medium: 'Ink on Paper' },
+      { src: 'images/YellowLandscape.png', title: 'Landscape in Yellow', size: '36\u2033 \u00d7 12\u2033', medium: 'Oil on Canvas' },
     ];
 
     // Build gallery cards
@@ -703,12 +725,16 @@
         <div class="card-inner">
           <div class="card-face card-front">
             <div class="image-container">
-              <img src="${item.src}" alt="${item.caption}" />
+              <img src="${item.src}" alt="${item.title}" />
             </div>
-            <div class="caption">${item.caption}</div>
+            <div class="caption">${item.title}</div>
           </div>
           <div class="card-face card-back">
-            <div class="card-back-inner">${item.caption}</div>
+            <div class="card-back-inner">
+              <div class="back-title">${item.title}</div>
+              <div class="back-details">${item.size}</div>
+              <div class="back-medium">${item.medium}</div>
+            </div>
           </div>
         </div>
       `;
@@ -802,71 +828,77 @@
       isAnimating = true;
       activeCard = card;
 
-      // Phase 1: Flip the card + dim the screen together
-      card.classList.add('flipping');
-      screenDim.classList.add('dimmed');
-
-      // Get card position
+      // Get card position before anything moves
       const rect = card.getBoundingClientRect();
 
-      // Phase 2: At peak dim (flip ~done), create clone and start expanding
+      // Phase 1: Flip the card to reveal back (title, size, medium)
+      card.classList.add('flipping');
+
+      // Phase 2: Hold — let the card back be readable
       setTimeout(() => {
-        // Hide original card (hidden behind dim)
-        card.style.visibility = 'hidden';
 
-        // Create clone that will expand
-        const clone = document.createElement('div');
-        clone.className = 'lightbox-card';
-        clone.innerHTML = `<img src="${card.dataset.src}" alt="">`;
-        clone.style.top = rect.top + 'px';
-        clone.style.left = rect.left + 'px';
-        clone.style.width = rect.width + 'px';
-        clone.style.height = rect.height + 'px';
-        document.body.appendChild(clone);
-        activeClone = clone;
+        // Phase 3: Dim the screen over the flipped card
+        screenDim.classList.add('dimmed');
 
-        // Show lightbox overlay and start expanding
-        overlay.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        // Phase 4: At peak dim, swap card for expanding clone
+        setTimeout(() => {
+          card.style.visibility = 'hidden';
 
-        requestAnimationFrame(() => {
-          overlay.classList.add('active');
+          // Create clone that will expand
+          const clone = document.createElement('div');
+          clone.className = 'lightbox-card';
+          clone.innerHTML = `<img src="${card.dataset.src}" alt="">`;
+          clone.style.top = rect.top + 'px';
+          clone.style.left = rect.left + 'px';
+          clone.style.width = rect.width + 'px';
+          clone.style.height = rect.height + 'px';
+          document.body.appendChild(clone);
+          activeClone = clone;
 
-          // Lift the dim — the lightbox overlay takes over as the backdrop
-          screenDim.classList.remove('dimmed');
+          // Show lightbox overlay and start expanding
+          overlay.style.display = 'block';
+          document.body.style.overflow = 'hidden';
 
-          // Calculate target size (90% of viewport, maintain aspect)
-          const img = new Image();
-          img.onload = function() {
-            const vw = window.innerWidth * 0.9;
-            const vh = window.innerHeight * 0.9;
-            const imgRatio = this.naturalWidth / this.naturalHeight;
-            let targetW, targetH;
-            if (vw / vh > imgRatio) {
-              targetH = vh;
-              targetW = vh * imgRatio;
-            } else {
-              targetW = vw;
-              targetH = vw / imgRatio;
-            }
-            const targetTop = (window.innerHeight - targetH) / 2;
-            const targetLeft = (window.innerWidth - targetW) / 2;
+          requestAnimationFrame(() => {
+            overlay.classList.add('active');
 
-            clone.style.top = targetTop + 'px';
-            clone.style.left = targetLeft + 'px';
-            clone.style.width = targetW + 'px';
-            clone.style.height = targetH + 'px';
-            clone.classList.add('expanded');
+            // Lift the dim — the lightbox overlay takes over
+            screenDim.classList.remove('dimmed');
 
-            // Show close button after expand
-            setTimeout(() => {
-              closeBtn.classList.add('visible');
-              isAnimating = false;
-            }, 800);
-          };
-          img.src = card.dataset.src;
-        });
-      }, 1000); // match flip duration
+            // Calculate target size (90% of viewport, maintain aspect)
+            const img = new Image();
+            img.onload = function() {
+              const vw = window.innerWidth * 0.9;
+              const vh = window.innerHeight * 0.9;
+              const imgRatio = this.naturalWidth / this.naturalHeight;
+              let targetW, targetH;
+              if (vw / vh > imgRatio) {
+                targetH = vh;
+                targetW = vh * imgRatio;
+              } else {
+                targetW = vw;
+                targetH = vw / imgRatio;
+              }
+              const targetTop = (window.innerHeight - targetH) / 2;
+              const targetLeft = (window.innerWidth - targetW) / 2;
+
+              clone.style.top = targetTop + 'px';
+              clone.style.left = targetLeft + 'px';
+              clone.style.width = targetW + 'px';
+              clone.style.height = targetH + 'px';
+              clone.classList.add('expanded');
+
+              // Show close button after expand
+              setTimeout(() => {
+                closeBtn.classList.add('visible');
+                isAnimating = false;
+              }, 800);
+            };
+            img.src = card.dataset.src;
+          });
+        }, 700); // dim duration before swap
+
+      }, 1200); // reading pause after flip
     }
 
     function closeLightbox() {
@@ -875,7 +907,7 @@
 
       closeBtn.classList.remove('visible');
 
-      // Phase 1: Shrink clone back to card position
+      // Phase 1: Shrink clone back + dim screen
       const rect = activeCard.getBoundingClientRect();
       activeClone.style.top = rect.top + 'px';
       activeClone.style.left = rect.left + 'px';
@@ -883,29 +915,35 @@
       activeClone.style.height = rect.height + 'px';
       activeClone.classList.remove('expanded');
 
-      // Dim screen as clone shrinks (covers the handoff back to card)
       screenDim.classList.add('dimmed');
       overlay.classList.remove('active');
 
-      // Phase 2: At peak dim, swap clone for card and flip back
+      // Phase 2: At peak dim, swap clone for card (still flipped — back visible)
       setTimeout(() => {
         activeClone.remove();
         activeClone = null;
         overlay.style.display = 'none';
 
-        // Restore card (still flipped) — hidden behind dim
+        // Restore card (still flipped) behind dim
         activeCard.style.visibility = 'visible';
 
-        // Flip back + lift dim together
-        activeCard.classList.remove('flipping');
+        // Lift dim to reveal the card back (reading pause)
         screenDim.classList.remove('dimmed');
-        document.body.style.overflow = 'auto';
 
-        // Wait for flip-back to finish
+        // Phase 3: Hold — let the card back be readable again
         setTimeout(() => {
-          isAnimating = false;
-          activeCard = null;
-        }, 1000);
+
+          // Phase 4: Flip back to front
+          activeCard.classList.remove('flipping');
+          document.body.style.overflow = 'auto';
+
+          // Wait for flip-back to finish
+          setTimeout(() => {
+            isAnimating = false;
+            activeCard = null;
+          }, 1000);
+
+        }, 1200); // reading pause before flip-back
       }, 800);
     }
 
