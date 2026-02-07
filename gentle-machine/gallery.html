@@ -407,6 +407,23 @@
       background: rgba(26, 31, 46, 0.3);
     }
 
+    /* Screen dim – transitional fade between flip and expand */
+    .screen-dim {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1999;
+      background: rgba(10, 12, 20, 0);
+      pointer-events: none;
+      transition: background 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    .screen-dim.dimmed {
+      background: rgba(10, 12, 20, 0.85);
+    }
+
     /* Lightbox overlay */
     .lightbox-overlay {
       display: none;
@@ -632,6 +649,9 @@
 
   <div class="gallery" id="gallery"></div>
 
+  <!-- Screen dim (transitional) -->
+  <div id="screenDim" class="screen-dim"></div>
+
   <!-- Lightbox overlay -->
   <div id="lightboxOverlay" class="lightbox-overlay" onclick="closeLightbox()"></div>
   <span id="lightboxClose" class="lightbox-close" onclick="closeLightbox()">&times;</span>
@@ -774,6 +794,7 @@
     // ── Flip-to-lightbox system ──
     const overlay = document.getElementById('lightboxOverlay');
     const closeBtn = document.getElementById('lightboxClose');
+    const screenDim = document.getElementById('screenDim');
     let activeCard = null;
     let activeClone = null;
     let isAnimating = false;
@@ -783,15 +804,16 @@
       isAnimating = true;
       activeCard = card;
 
-      // Flip the card
+      // Phase 1: Flip the card + dim the screen together
       card.classList.add('flipping');
+      screenDim.classList.add('dimmed');
 
       // Get card position
       const rect = card.getBoundingClientRect();
 
-      // After flip completes, create expanding clone
+      // Phase 2: At peak dim (flip ~done), create clone and start expanding
       setTimeout(() => {
-        // Hide original card
+        // Hide original card (hidden behind dim)
         card.style.visibility = 'hidden';
 
         // Create clone that will expand
@@ -805,13 +827,15 @@
         document.body.appendChild(clone);
         activeClone = clone;
 
-        // Show overlay
+        // Show lightbox overlay and start expanding
         overlay.style.display = 'block';
         document.body.style.overflow = 'hidden';
 
-        // Expand to center after a frame
         requestAnimationFrame(() => {
           overlay.classList.add('active');
+
+          // Lift the dim — the lightbox overlay takes over as the backdrop
+          screenDim.classList.remove('dimmed');
 
           // Calculate target size (90% of viewport, maintain aspect)
           const img = new Image();
@@ -852,9 +876,8 @@
       isAnimating = true;
 
       closeBtn.classList.remove('visible');
-      overlay.classList.remove('active');
 
-      // Shrink clone back to card position
+      // Phase 1: Shrink clone back to card position
       const rect = activeCard.getBoundingClientRect();
       activeClone.style.top = rect.top + 'px';
       activeClone.style.left = rect.left + 'px';
@@ -862,15 +885,25 @@
       activeClone.style.height = rect.height + 'px';
       activeClone.classList.remove('expanded');
 
-      // After shrink, remove clone and flip card back
+      // Dim screen as clone shrinks (covers the handoff back to card)
+      screenDim.classList.add('dimmed');
+      overlay.classList.remove('active');
+
+      // Phase 2: At peak dim, swap clone for card and flip back
       setTimeout(() => {
         activeClone.remove();
         activeClone = null;
-        activeCard.style.visibility = 'visible';
-        activeCard.classList.remove('flipping');
         overlay.style.display = 'none';
+
+        // Restore card (still flipped) — hidden behind dim
+        activeCard.style.visibility = 'visible';
+
+        // Flip back + lift dim together
+        activeCard.classList.remove('flipping');
+        screenDim.classList.remove('dimmed');
         document.body.style.overflow = 'auto';
 
+        // Wait for flip-back to finish
         setTimeout(() => {
           isAnimating = false;
           activeCard = null;
