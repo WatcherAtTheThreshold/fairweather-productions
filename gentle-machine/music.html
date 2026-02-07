@@ -13,7 +13,7 @@
 <!-- Apple Touch Icon -->
 <link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
 
-  
+
   <title>Music — The Gentle Machine</title>
 
   <!-- Fonts -->
@@ -29,14 +29,14 @@
     body {
       min-height: 100vh;
       font-family: 'Source Sans Pro', sans-serif;
-      background-color: #0a0a0a;
-      color: #f0f0f0;
+      background-color: #1a1f2e;
+      color: #e8e6e1;
       overflow-x: hidden;
       position: relative;
     }
 
     .background {
-      background: rgba(3, 3, 3, 0.4);
+      background: rgba(26, 31, 46, 0.6);
       opacity: 1;
       position: fixed;
       width: 100%;
@@ -46,7 +46,7 @@
 
     .mist-overlay {
       background: url('images/mist-overlay.png') repeat;
-      opacity: 0.9;
+      opacity: 0.15;
       position: fixed;
       width: 100%;
       height: 500vh;
@@ -54,6 +54,7 @@
       left: 0;
       z-index: -1;
       animation: mistScroll 120s linear infinite;
+      filter: hue-rotate(200deg) saturate(0.3);
     }
 
     @keyframes mistScroll {
@@ -61,7 +62,7 @@
       to { background-position: -500px 500px; }
     }
 
-    /* Enhanced floating particles */
+    /* Subtle floating particles */
     .particles {
       position: fixed;
       top: 0;
@@ -79,143 +80,39 @@
       opacity: 0;
     }
 
-    .particle.golden {
-      background: radial-gradient(circle, rgba(222, 184, 135, 0.8) 0%, rgba(222, 184, 135, 0.2) 70%, transparent 100%);
-      box-shadow: 0 0 8px rgba(222, 184, 135, 0.6), 0 0 16px rgba(222, 184, 135, 0.3);
-      animation: floatGolden 20s infinite linear;
+    .particle.mist {
+      background: radial-gradient(circle, rgba(160, 175, 195, 0.5) 0%, rgba(160, 175, 195, 0.1) 70%, transparent 100%);
+      animation: floatGentle 30s infinite linear;
     }
 
-    .particle.purple {
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.7) 0%, rgba(138, 43, 226, 0.2) 70%, transparent 100%);
-      box-shadow: 0 0 8px rgba(138, 43, 226, 0.5), 0 0 16px rgba(138, 43, 226, 0.2);
-      animation: floatPurple 25s infinite linear;
+    .particle.steel {
+      background: radial-gradient(circle, rgba(100, 140, 180, 0.4) 0%, rgba(100, 140, 180, 0.1) 70%, transparent 100%);
+      animation: floatGentle 35s infinite linear;
     }
 
-    .particle.silver {
-      background: radial-gradient(circle, rgba(192, 192, 192, 0.6) 0%, rgba(192, 192, 192, 0.15) 70%, transparent 100%);
-      box-shadow: 0 0 6px rgba(192, 192, 192, 0.4), 0 0 12px rgba(192, 192, 192, 0.2);
-      animation: floatSilver 30s infinite linear;
+    .particle.dust {
+      background: radial-gradient(circle, rgba(180, 175, 165, 0.35) 0%, rgba(180, 175, 165, 0.08) 70%, transparent 100%);
+      animation: floatGentle 40s infinite linear;
     }
 
-    .particle.crystal {
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(200, 200, 255, 0.3) 50%, transparent 100%);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(200, 200, 255, 0.3);
-      animation: floatCrystal 35s infinite linear;
-    }
-
-    .particle.cosmic {
-      background: radial-gradient(circle, rgba(75, 0, 130, 0.6) 0%, rgba(138, 43, 226, 0.3) 50%, transparent 100%);
-      box-shadow: 0 0 12px rgba(75, 0, 130, 0.4), 0 0 24px rgba(138, 43, 226, 0.2);
-      animation: floatCosmic 40s infinite linear;
-    }
-
-    @keyframes floatGolden {
-      0% { 
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.4); 
-        opacity: 0; 
+    @keyframes floatGentle {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
       }
-      8% { 
-        opacity: 0.8;
-        transform: translateY(92vh) translateX(15px) rotate(25deg) scale(0.7);
-      }
-      50% {
-        transform: translateY(50vh) translateX(var(--drift, 60px)) rotate(180deg) scale(1);
-        opacity: 0.6;
-      }
-      92% { 
-        opacity: 0.4; 
-      }
-      100% { 
-        transform: translateY(-10vh) translateX(calc(var(--drift, 60px) * 2.2)) rotate(360deg) scale(0.2); 
-        opacity: 0; 
-      }
-    }
-
-    @keyframes floatPurple {
-      0% { 
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3); 
-        opacity: 0; 
-      }
-      10% { 
-        opacity: 0.9;
-        transform: translateY(90vh) translateX(20px) rotate(30deg) scale(0.6);
-      }
-      50% {
-        transform: translateY(50vh) translateX(var(--drift, 80px)) rotate(200deg) scale(1.1);
-        opacity: 0.7;
-      }
-      90% { 
-        opacity: 0.5; 
-      }
-      100% { 
-        transform: translateY(-15vh) translateX(calc(var(--drift, 80px) * 2.5)) rotate(380deg) scale(0.1); 
-        opacity: 0; 
-      }
-    }
-
-    @keyframes floatSilver {
-      0% { 
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5); 
-        opacity: 0; 
-      }
-      6% { 
-        opacity: 0.7;
-        transform: translateY(94vh) translateX(10px) rotate(20deg) scale(0.8);
-      }
-      50% {
-        transform: translateY(50vh) translateX(var(--drift, 40px)) rotate(160deg) scale(0.9);
-        opacity: 0.5;
-      }
-      94% { 
-        opacity: 0.3; 
-      }
-      100% { 
-        transform: translateY(-8vh) translateX(calc(var(--drift, 40px) * 1.8)) rotate(340deg) scale(0.3); 
-        opacity: 0; 
-      }
-    }
-
-    @keyframes floatCrystal {
-      0% { 
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.2); 
-        opacity: 0; 
-      }
-      12% { 
-        opacity: 1;
-        transform: translateY(88vh) translateX(25px) rotate(35deg) scale(0.5);
-      }
-      50% {
-        transform: translateY(50vh) translateX(var(--drift, 100px)) rotate(220deg) scale(0.8);
-        opacity: 0.8;
-      }
-      88% { 
-        opacity: 0.6; 
-      }
-      100% { 
-        transform: translateY(-20vh) translateX(calc(var(--drift, 100px) * 3)) rotate(400deg) scale(0.1); 
-        opacity: 0; 
-      }
-    }
-
-    @keyframes floatCosmic {
-      0% { 
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.6); 
-        opacity: 0; 
-      }
-      5% { 
-        opacity: 0.6;
-        transform: translateY(95vh) translateX(30px) rotate(15deg) scale(0.9);
-      }
-      50% {
-        transform: translateY(50vh) translateX(var(--drift, 120px)) rotate(240deg) scale(1.2);
+      10% {
         opacity: 0.4;
       }
-      95% { 
-        opacity: 0.2; 
+      50% {
+        transform: translateY(50vh) translateX(var(--drift, 40px));
+        opacity: 0.3;
       }
-      100% { 
-        transform: translateY(-25vh) translateX(calc(var(--drift, 120px) * 3.5)) rotate(420deg) scale(0.05); 
-        opacity: 0; 
+      90% {
+        opacity: 0.15;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(calc(var(--drift, 40px) * 2));
+        opacity: 0;
       }
     }
 
@@ -223,7 +120,7 @@
       text-align: center;
       padding: 3rem 2rem 2rem;
       backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(26, 31, 46, 0.3);
       margin-bottom: 2rem;
       position: relative;
       z-index: 1;
@@ -233,42 +130,36 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 3.5rem;
       font-weight: 500;
-      color: #f2f2f2;
-      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2);
+      color: #e8e6e1;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
       margin-bottom: 0.5rem;
-      animation: titleGlow 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes titleGlow {
-      0% { text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2); }
-      100% { text-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 50px rgba(138, 43, 226, 0.4); }
     }
 
     .subtitle {
       font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(200, 196, 188, 0.8);
       font-weight: 300;
       font-style: italic;
     }
 
     .mobile-menu-button {
       display: none;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(100, 140, 180, 0.1);
       backdrop-filter: blur(10px);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #e8e6e1;
+      border: 1px solid rgba(120, 130, 150, 0.3);
       padding: 1rem;
       border-radius: 8px;
       font-size: 1.2rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       margin: 0 auto 1rem;
       width: fit-content;
     }
 
     .mobile-menu-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(100, 140, 180, 0.2);
+      border-color: rgba(140, 160, 185, 0.5);
       transform: translateY(-2px);
     }
 
@@ -290,11 +181,11 @@
 
     .cruxfade-link {
       font-size: 1.3rem;
-      color: rgba(255, 255, 255, 0.7) !important;
+      color: rgba(200, 196, 188, 0.7) !important;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       padding: 0.5rem 1rem !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border: 1px solid rgba(120, 130, 150, 0.3) !important;
       border-radius: 8px;
       backdrop-filter: blur(5px);
       background: transparent !important;
@@ -307,24 +198,24 @@
     }
 
     .cruxfade-link:hover {
-      color: #fff !important;
-      border-color: rgba(255, 255, 255, 0.6) !important;
-      background: rgba(255, 255, 255, 0.1) !important;
+      color: #e8e6e1 !important;
+      border-color: rgba(140, 160, 185, 0.5) !important;
+      background: rgba(100, 140, 180, 0.1) !important;
       transform: translateY(-2px) !important;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
     }
 
     .nav a {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(26, 31, 46, 0.4);
       backdrop-filter: blur(10px);
-      color: #fff;
+      color: #e8e6e1;
       text-decoration: none;
       padding: 1rem 1.5rem;
       border-radius: 8px;
       font-size: 1rem;
       font-weight: 400;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+      border: 1px solid rgba(120, 130, 150, 0.25);
       text-align: center;
       height: 60px;
       display: flex;
@@ -341,7 +232,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
       transition: left 0.5s;
     }
 
@@ -350,26 +241,25 @@
     }
 
     .nav a:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(100, 140, 180, 0.1);
+      border-color: rgba(140, 160, 185, 0.4);
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     .nav a.creative {
-      border-color: rgba(138, 43, 226, 0.4);
+      border-color: rgba(100, 140, 180, 0.35);
     }
 
     .nav a.creative:hover {
-      border-color: rgba(138, 43, 226, 0.8);
-      background: rgba(138, 43, 226, 0.1);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+      border-color: rgba(120, 160, 200, 0.6);
+      background: rgba(100, 140, 180, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     .nav a.current {
-      background: rgba(138, 43, 226, 0.2);
-      border-color: rgba(138, 43, 226, 0.6);
-      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+      background: rgba(100, 140, 180, 0.15);
+      border-color: rgba(100, 140, 180, 0.5);
     }
 
     .intro-section {
@@ -377,9 +267,9 @@
       max-width: 700px;
       margin: 0 auto 3rem;
       padding: 2rem;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(30, 36, 52, 0.5);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(120, 130, 150, 0.15);
       border-radius: 15px;
       position: relative;
       overflow: hidden;
@@ -392,12 +282,12 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(100, 140, 180, 0.4), transparent);
     }
 
     .intro-section p {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(200, 196, 188, 0.85);
       line-height: 1.6;
       font-size: 1.1rem;
       margin-bottom: 1.5rem;
@@ -419,510 +309,87 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 3rem;
-      margin-bottom: 3rem;
-      padding: 2rem;
-      background: rgba(0, 0, 0, 0.3);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding: 1rem 1.5rem;
+      background: rgba(30, 36, 52, 0.5);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border: 1px solid rgba(120, 130, 150, 0.15);
+      border-radius: 10px;
       flex-wrap: wrap;
-      max-width: 800px;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 3rem;
     }
 
     .dynamic-control {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
       cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      background: rgba(100, 140, 180, 0.08);
+      border: 1px solid rgba(120, 130, 150, 0.2);
+      transition: all 0.25s ease;
+      user-select: none;
     }
 
     .dynamic-control:hover {
-      transform: translateY(-3px);
+      background: rgba(100, 140, 180, 0.15);
+      border-color: rgba(140, 160, 185, 0.35);
     }
 
-    .control-orb {
-      position: relative;
-      width: 80px;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    .dynamic-control.active {
+      background: rgba(100, 140, 180, 0.2);
+      border-color: rgba(100, 140, 180, 0.5);
     }
 
-    .orb-core {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.2), rgba(138, 43, 226, 0.05));
-      border: 2px solid rgba(138, 43, 226, 0.3);
-      border-radius: 50%;
-      transition: all 0.4s ease;
-      backdrop-filter: blur(5px);
-    }
-
-    .orb-ring {
-      position: absolute;
-      width: 76px;
-      height: 76px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      border-top-color: rgba(138, 43, 226, 0.4);
-      border-right-color: rgba(138, 43, 226, 0.2);
-      transition: all 0.6s ease;
-      opacity: 0;
-    }
-
-    .orb-particles {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      opacity: 0;
-      transition: all 0.4s ease;
-    }
-
-    .orb-particles::before,
-    .orb-particles::after {
+    .dynamic-control.active::before {
       content: '';
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(138, 43, 226, 0.6);
+      width: 6px;
+      height: 6px;
+      background: rgba(120, 160, 200, 0.8);
       border-radius: 50%;
-      transition: all 0.4s ease;
-    }
-
-    .orb-particles::before {
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: particle1 3s ease-in-out infinite;
-    }
-
-    .orb-particles::after {
-      bottom: 10px;
-      right: 20px;
-      animation: particle2 2.5s ease-in-out infinite reverse;
-    }
-
-    /* Starburst particles - only visible when active */
-    .orb-starburst {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    .orb-starburst::before,
-    .orb-starburst::after {
-      content: '';
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: radial-gradient(circle, rgba(138, 43, 226, 1), rgba(255, 255, 255, 0.8));
-      border-radius: 50%;
-      box-shadow: 0 0 6px rgba(138, 43, 226, 0.8);
-    }
-
-    .orb-starburst::before {
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .orb-starburst::after {
-      bottom: 20px;
-      right: 30px;
-    }
-
-    /* Additional starburst particles using pseudo-elements */
-    .orb-starburst-2 {
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    .orb-starburst-2::before,
-    .orb-starburst-2::after {
-      content: '';
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 1), rgba(138, 43, 226, 0.6));
-      border-radius: 50%;
-      box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
-    }
-
-    .orb-starburst-2::before {
-      top: 30px;
-      right: 25px;
-    }
-
-    .orb-starburst-2::after {
-      bottom: 35px;
-      left: 20px;
-    }
-
-    .orb-starburst-3 {
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    .orb-starburst-3::before,
-    .orb-starburst-3::after {
-      content: '';
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.8), rgba(255, 255, 255, 0.4));
-      border-radius: 50%;
-      box-shadow: 0 0 3px rgba(138, 43, 226, 0.6);
-    }
-
-    .orb-starburst-3::before {
-      top: 40px;
-      left: 40px;
-    }
-
-    .orb-starburst-3::after {
-      bottom: 45px;
-      right: 35px;
-    }
-
-    @keyframes particle1 {
-      0%, 100% { 
-        opacity: 0.4; 
-        transform: translateX(-50%) scale(0.8);
-      }
-      50% { 
-        opacity: 1; 
-        transform: translateX(-50%) scale(1.2);
-      }
-    }
-
-    @keyframes particle2 {
-      0%, 100% { 
-        opacity: 0.3; 
-        transform: scale(0.6);
-      }
-      50% { 
-        opacity: 0.8; 
-        transform: scale(1.4);
-      }
+      flex-shrink: 0;
     }
 
     .control-label {
       font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(200, 196, 188, 0.7);
       font-weight: 400;
-      transition: all 0.3s ease;
+      transition: color 0.25s ease;
       text-align: center;
     }
 
-    /* Hover States */
-    .dynamic-control:hover .orb-core {
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.3), rgba(138, 43, 226, 0.1));
-      border-color: rgba(138, 43, 226, 0.5);
-      box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
-      transform: scale(1.05);
-    }
-
-    .dynamic-control:hover .orb-ring {
-      opacity: 1;
-      transform: rotate(90deg);
-    }
-
-    .dynamic-control:hover .orb-particles {
-      opacity: 1;
-    }
-
-    .dynamic-control:hover .control-icon {
-      filter: grayscale(0) opacity(1);
-      transform: scale(1.1);
-    }
-
     .dynamic-control:hover .control-label {
-      color: rgba(255, 255, 255, 0.9);
-      transform: translateY(-2px);
-    }
-
-    /* Active States */
-    .dynamic-control.active .orb-core {
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.6), rgba(138, 43, 226, 0.2));
-      border-color: rgba(138, 43, 226, 0.8);
-      box-shadow: 0 0 30px rgba(138, 43, 226, 0.5), inset 0 0 20px rgba(138, 43, 226, 0.2);
-      animation: orbPulse 2s ease-in-out infinite;
-    }
-
-    .dynamic-control.active .orb-ring {
-      opacity: 1;
-      border-color: rgba(138, 43, 226, 0.6);
-      animation: ringRotate 4s linear infinite;
-    }
-
-    .dynamic-control.active .orb-particles {
-      opacity: 1;
-      animation: particleOrbit 6s linear infinite;
-    }
-
-    .dynamic-control.active .control-icon {
-      filter: grayscale(0) opacity(1);
-      color: #fff;
-      text-shadow: 0 0 10px rgba(138, 43, 226, 0.8);
-      animation: iconGlow 3s ease-in-out infinite;
+      color: rgba(200, 196, 188, 0.95);
     }
 
     .dynamic-control.active .control-label {
-      color: rgba(138, 43, 226, 0.9);
+      color: rgba(140, 175, 210, 0.95);
       font-weight: 500;
-      text-shadow: 0 0 8px rgba(138, 43, 226, 0.5);
-    }
-
-    @keyframes orbPulse {
-      0%, 100% { 
-        transform: scale(1);
-        box-shadow: 0 0 30px rgba(138, 43, 226, 0.5), inset 0 0 20px rgba(138, 43, 226, 0.2);
-      }
-      50% { 
-        transform: scale(1.02);
-        box-shadow: 0 0 40px rgba(138, 43, 226, 0.7), inset 0 0 25px rgba(138, 43, 226, 0.3);
-      }
-    }
-
-    @keyframes ringRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes particleOrbit {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Starburst animations */
-    @keyframes starburst1 {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-      }
-      20% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(2.5);
-      }
-    }
-
-    @keyframes starburst1Before {
-      0% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(0) scale(0.5);
-      }
-      20% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-80px) scale(0.3);
-      }
-    }
-
-    @keyframes starburst1After {
-      0% {
-        opacity: 0;
-        transform: translateX(0) translateY(0) scale(0.5);
-      }
-      20% {
-        opacity: 1;
-        transform: translateX(0) translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(60px) translateY(60px) scale(0.3);
-      }
-    }
-
-    @keyframes starburst2 {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.3);
-      }
-      30% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(3);
-      }
-    }
-
-    @keyframes starburst2Before {
-      0% {
-        opacity: 0;
-        transform: translateX(0) translateY(0) scale(0.8);
-      }
-      30% {
-        opacity: 1;
-        transform: translateX(0) translateY(0) scale(1.2);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(70px) translateY(-70px) scale(0.2);
-      }
-    }
-
-    @keyframes starburst2After {
-      0% {
-        opacity: 0;
-        transform: translateX(0) translateY(0) scale(0.6);
-      }
-      30% {
-        opacity: 1;
-        transform: translateX(0) translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(-65px) translateY(75px) scale(0.2);
-      }
-    }
-
-    @keyframes starburst3 {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.4);
-      }
-      40% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(2.8);
-      }
-    }
-
-    @keyframes starburst3Before {
-      0% {
-        opacity: 0;
-        transform: translateX(0) translateY(0) scale(0.7);
-      }
-      40% {
-        opacity: 1;
-        transform: translateX(0) translateY(0) scale(1.1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(-80px) translateY(-60px) scale(0.3);
-      }
-    }
-
-    @keyframes starburst3After {
-      0% {
-        opacity: 0;
-        transform: translateX(0) translateY(0) scale(0.9);
-      }
-      40% {
-        opacity: 1;
-        transform: translateX(0) translateY(0) scale(1.3);
-      }
-      100% {
-        opacity: 0;
-        transform: translateX(85px) translateY(-85px) scale(0.2);
-      }
-    }
-
-    /* Active starburst effects */
-    .dynamic-control.active .orb-starburst {
-      opacity: 1;
-      animation: starburst1 2s ease-out infinite;
-    }
-
-    .dynamic-control.active .orb-starburst::before {
-      animation: starburst1Before 2s ease-out infinite;
-    }
-
-    .dynamic-control.active .orb-starburst::after {
-      animation: starburst1After 2s ease-out infinite;
-    }
-
-    .dynamic-control.active .orb-starburst-2 {
-      opacity: 1;
-      animation: starburst2 2.5s ease-out infinite;
-      animation-delay: 0.3s;
-    }
-
-    .dynamic-control.active .orb-starburst-2::before {
-      animation: starburst2Before 2.5s ease-out infinite;
-      animation-delay: 0.3s;
-    }
-
-    .dynamic-control.active .orb-starburst-2::after {
-      animation: starburst2After 2.5s ease-out infinite;
-      animation-delay: 0.3s;
-    }
-
-    .dynamic-control.active .orb-starburst-3 {
-      opacity: 1;
-      animation: starburst3 3s ease-out infinite;
-      animation-delay: 0.6s;
-    }
-
-    .dynamic-control.active .orb-starburst-3::before {
-      animation: starburst3Before 3s ease-out infinite;
-      animation-delay: 0.6s;
-    }
-
-    .dynamic-control.active .orb-starburst-3::after {
-      animation: starburst3After 3s ease-out infinite;
-      animation-delay: 0.6s;
     }
 
     .tracks-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 1.5rem;
       margin-bottom: 3rem;
     }
 
     .track-card {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 15px;
-      padding: 2rem;
-      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      background: rgba(30, 36, 52, 0.65);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(120, 130, 150, 0.15);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       transform: translateY(20px);
       opacity: 0;
-      animation: fadeInUp 0.8s ease forwards;
+      animation: fadeInUp 0.6s ease forwards;
     }
 
     .track-card:nth-child(2n) {
@@ -945,19 +412,9 @@
     }
 
     .track-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
-      animation: cardPulse 2s infinite ease-in-out;
-    }
-
-    @keyframes cardPulse {
-      0%, 100% {
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
-      }
-      50% {
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.4);
-      }
+      transform: translateY(-4px);
+      border-color: rgba(140, 160, 185, 0.35);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
 
     .track-card::before {
@@ -966,8 +423,8 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(100, 140, 180, 0.4), transparent);
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -983,7 +440,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(45deg, transparent 30%, rgba(138, 43, 226, 0.1) 50%, transparent 70%);
+      background: linear-gradient(135deg, transparent 40%, rgba(100, 140, 180, 0.03) 60%, transparent 80%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
@@ -994,41 +451,32 @@
     }
 
     .track-card.playing {
-      border-color: rgba(138, 43, 226, 0.8);
-      background: rgba(138, 43, 226, 0.1);
-      animation: playingPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes playingPulse {
-      0%, 100% {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.5);
-      }
-      50% {
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 35px rgba(138, 43, 226, 0.7);
-      }
+      border-color: rgba(100, 140, 180, 0.5);
+      background: rgba(35, 42, 62, 0.7);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
     .track-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: #f2f2f2;
+      margin-bottom: 0.4rem;
+      color: #e8e6e1;
     }
 
     .track-description {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.95rem;
+      color: rgba(200, 196, 188, 0.65);
+      font-size: 0.9rem;
       line-height: 1.5;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       font-style: italic;
     }
 
     .waveform-visual {
-      height: 40px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      margin: 1rem 0;
+      height: 32px;
+      background: rgba(120, 130, 150, 0.06);
+      border-radius: 6px;
+      margin: 0.75rem 0;
       position: relative;
       overflow: hidden;
       cursor: pointer;
@@ -1036,7 +484,7 @@
     }
 
     .waveform-visual:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(120, 130, 150, 0.1);
     }
 
     .waveform-bars {
@@ -1049,20 +497,20 @@
 
     .waveform-bar {
       flex: 1;
-      background: rgba(138, 43, 226, 0.4);
+      background: rgba(100, 140, 180, 0.3);
       border-radius: 2px;
       height: 20%;
       transition: all 0.3s ease;
     }
 
     .track-card:hover .waveform-bar {
-      height: 60%;
-      background: rgba(138, 43, 226, 0.6);
+      height: 50%;
+      background: rgba(100, 140, 180, 0.45);
     }
 
     .track-card.playing .waveform-bar {
       animation: waveAnimation 1.5s ease-in-out infinite;
-      background: rgba(138, 43, 226, 0.8);
+      background: rgba(120, 160, 200, 0.6);
     }
 
     @keyframes waveAnimation {
@@ -1090,36 +538,30 @@
     }
 
     .play-button {
-      background: rgba(138, 43, 226, 0.3);
-      border: 2px solid rgba(138, 43, 226, 0.6);
-      color: #fff;
+      background: rgba(100, 140, 180, 0.15);
+      border: 1.5px solid rgba(100, 140, 180, 0.4);
+      color: #e8e6e1;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1.2rem;
+      transition: all 0.25s ease;
+      font-size: 1.1rem;
       font-family: Arial, sans-serif;
     }
 
     .play-button:hover {
-      background: rgba(138, 43, 226, 0.5);
-      border-color: rgba(138, 43, 226, 0.8);
-      transform: scale(1.1);
+      background: rgba(100, 140, 180, 0.25);
+      border-color: rgba(120, 160, 200, 0.6);
+      transform: scale(1.05);
     }
 
     .play-button.playing {
-      background: rgba(138, 43, 226, 0.6);
-      border-color: rgba(138, 43, 226, 1);
-      animation: buttonPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes buttonPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      background: rgba(100, 140, 180, 0.3);
+      border-color: rgba(120, 160, 200, 0.7);
     }
 
     .track-info {
@@ -1129,14 +571,14 @@
 
     .track-name {
       font-weight: 500;
-      color: #f2f2f2;
+      color: #e8e6e1;
       font-size: 1rem;
       margin-bottom: 0.25rem;
     }
 
     .track-time {
       font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(200, 196, 188, 0.6);
       font-family: monospace;
     }
 
@@ -1146,24 +588,24 @@
 
     .progress-bar {
       width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 3px;
+      height: 4px;
+      background: rgba(120, 130, 150, 0.12);
+      border-radius: 2px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      transition: all 0.3s ease;
+      transition: height 0.2s ease;
     }
 
     .progress-bar:hover {
-      height: 8px;
-      background: rgba(255, 255, 255, 0.15);
+      height: 6px;
+      background: rgba(120, 130, 150, 0.18);
     }
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, rgba(138, 43, 226, 0.8), rgba(138, 43, 226, 0.6));
-      border-radius: 3px;
+      background: linear-gradient(90deg, rgba(100, 140, 180, 0.7), rgba(130, 165, 200, 0.5));
+      border-radius: 2px;
       width: 0%;
       transition: width 0.1s ease;
     }
@@ -1175,36 +617,36 @@
     }
 
     .volume-icon {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 1rem;
+      color: rgba(200, 196, 188, 0.6);
+      font-size: 0.9rem;
       min-width: 20px;
     }
 
     .volume-slider {
       flex: 1;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
+      height: 3px;
+      background: rgba(120, 130, 150, 0.12);
+      border-radius: 1.5px;
       cursor: pointer;
       position: relative;
-      transition: all 0.3s ease;
+      transition: height 0.2s ease;
     }
 
     .volume-slider:hover {
-      height: 6px;
-      background: rgba(255, 255, 255, 0.15);
+      height: 5px;
+      background: rgba(120, 130, 150, 0.18);
     }
 
     .volume-fill {
       height: 100%;
-      background: linear-gradient(90deg, rgba(138, 43, 226, 0.8), rgba(138, 43, 226, 0.6));
-      border-radius: 2px;
+      background: linear-gradient(90deg, rgba(100, 140, 180, 0.7), rgba(130, 165, 200, 0.5));
+      border-radius: 1.5px;
       width: 70%;
     }
 
     .volume-text {
       font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(160, 155, 145, 0.6);
       min-width: 35px;
       text-align: right;
       font-family: monospace;
@@ -1216,10 +658,10 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(0, 0, 0, 0.95);
+      background: rgba(20, 25, 38, 0.95);
       backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 1rem 2rem;
+      border-top: 1px solid rgba(120, 130, 150, 0.2);
+      padding: 0.75rem 1.5rem;
       display: none;
       align-items: center;
       gap: 1rem;
@@ -1241,52 +683,49 @@
 
     .nav-button {
       background: transparent;
-      border: 1px solid rgba(138, 43, 226, 0.3);
-      color: rgba(138, 43, 226, 0.7);
+      border: 1px solid rgba(100, 140, 180, 0.25);
+      color: rgba(160, 175, 195, 0.7);
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-      backdrop-filter: blur(5px);
+      transition: all 0.25s ease;
+      font-size: 0.85rem;
     }
 
     .nav-button:hover {
-      background: rgba(138, 43, 226, 0.1);
-      border-color: rgba(138, 43, 226, 0.6);
-      color: rgba(138, 43, 226, 1);
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+      background: rgba(100, 140, 180, 0.1);
+      border-color: rgba(100, 140, 180, 0.45);
+      color: rgba(200, 210, 225, 0.9);
     }
 
     .global-play-button {
-      background: rgba(138, 43, 226, 0.3);
-      border: 2px solid rgba(138, 43, 226, 0.6);
-      color: #fff;
+      background: rgba(100, 140, 180, 0.2);
+      border: 1.5px solid rgba(100, 140, 180, 0.45);
+      color: #e8e6e1;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      margin: 0 0.5rem;
+      transition: all 0.25s ease;
+      font-size: 0.95rem;
+      margin: 0 0.25rem;
     }
 
     .global-play-button:hover {
-      background: rgba(138, 43, 226, 0.5);
-      border-color: rgba(138, 43, 226, 0.8);
+      background: rgba(100, 140, 180, 0.3);
+      border-color: rgba(120, 160, 200, 0.6);
     }
 
     .global-play-button.playing {
-      background: rgba(138, 43, 226, 0.6);
-      border-color: rgba(138, 43, 226, 1);
+      background: rgba(100, 140, 180, 0.35);
+      border-color: rgba(120, 160, 200, 0.65);
     }
 
     .now-playing-info {
@@ -1297,8 +736,8 @@
 
     .now-playing-title {
       font-weight: 500;
-      color: #f2f2f2;
-      font-size: 0.95rem;
+      color: #e8e6e1;
+      font-size: 0.9rem;
       margin-bottom: 0.25rem;
       white-space: nowrap;
       overflow: hidden;
@@ -1306,22 +745,22 @@
     }
 
     .now-playing-progress {
-      height: 3px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 1.5px;
+      height: 2px;
+      background: rgba(120, 130, 150, 0.2);
+      border-radius: 1px;
       overflow: hidden;
     }
 
     .now-playing-fill {
       height: 100%;
-      background: linear-gradient(90deg, rgba(138, 43, 226, 0.8), rgba(138, 43, 226, 0.6));
+      background: linear-gradient(90deg, rgba(100, 140, 180, 0.7), rgba(130, 165, 200, 0.5));
       width: 0%;
       transition: width 0.1s ease;
     }
 
     .time-display {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 0.85rem;
+      color: rgba(200, 196, 188, 0.7);
+      font-size: 0.8rem;
       white-space: nowrap;
       font-family: monospace;
       min-width: 80px;
@@ -1329,8 +768,8 @@
     }
 
     .track-counter {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.75rem;
+      color: rgba(160, 155, 145, 0.5);
+      font-size: 0.7rem;
       white-space: nowrap;
       min-width: 40px;
       text-align: center;
@@ -1340,10 +779,10 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(30, 36, 52, 0.7);
       backdrop-filter: blur(10px);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e8e6e1;
+      border: 1px solid rgba(120, 130, 150, 0.2);
       border-radius: 50%;
       width: 50px;
       height: 50px;
@@ -1353,14 +792,14 @@
       display: none;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
     }
 
     .back-to-top:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(100, 140, 180, 0.15);
+      border-color: rgba(140, 160, 185, 0.35);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .back-to-top.show {
@@ -1375,13 +814,23 @@
       text-align: center;
       padding: 3rem 2rem;
       font-size: 0.9rem;
-      color: rgba(255,255,255,0.5);
+      color: rgba(160, 155, 145, 0.6);
       font-family: 'Source Sans Pro', sans-serif;
       backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(20, 25, 38, 0.3);
       margin-top: 3rem;
       position: relative;
       z-index: 1;
+    }
+
+    footer a {
+      color: rgba(100, 140, 180, 0.6);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    footer a:hover {
+      color: rgba(140, 175, 210, 0.8);
     }
 
     /* Custom audio element styling */
@@ -1394,7 +843,7 @@
       h1 {
         font-size: 2.5rem;
       }
-      
+
       .mobile-menu-button {
         display: block;
       }
@@ -1428,7 +877,7 @@
           transform: translateY(0);
         }
       }
-      
+
       .nav a {
         padding: 0.8rem 1rem;
         font-size: 0.9rem;
@@ -1452,75 +901,31 @@
       }
 
       .playlist-controls {
-        flex-direction: column;
-        gap: 2rem;
-        padding: 1.5rem;
-      }
-
-      .dynamic-control {
-        gap: 0.75rem;
-      }
-
-      .control-orb {
-        width: 70px;
-        height: 70px;
-      }
-
-      .orb-core {
-        width: 50px;
-        height: 50px;
-      }
-
-      .orb-ring {
-        width: 66px;
-        height: 66px;
-      }
-
-      .orb-particles {
-        width: 86px;
-        height: 86px;
-      }
-
-      .orb-starburst {
-        width: 100px;
-        height: 100px;
-      }
-
-      .orb-starburst-2 {
-        width: 115px;
-        height: 115px;
-      }
-
-      .orb-starburst-3 {
-        width: 130px;
-        height: 130px;
-      }
-
-      .control-label {
-        font-size: 0.85rem;
+        gap: 1rem;
+        padding: 1rem;
       }
 
       .now-playing-bar {
         padding: 0.75rem 1rem;
         gap: 0.75rem;
       }
-      
+
       .nav-button {
         width: 32px;
         height: 32px;
         font-size: 0.8rem;
       }
-      
+
       .global-play-button {
         width: 36px;
         height: 36px;
       }
-      
+
       .time-display {
         font-size: 0.75rem;
         min-width: 70px;
       }
-      
+
       .track-counter {
         font-size: 0.7rem;
         min-width: 35px;
@@ -1533,7 +938,7 @@
         right: 20px;
         bottom: 25px;
       }
-      
+
       .back-to-top.music-playing {
         bottom: 100px;
       }
@@ -1556,7 +961,7 @@
       .track-counter {
         display: none;
       }
-      
+
       .now-playing-bar {
         gap: 0.5rem;
       }
@@ -1568,54 +973,22 @@
         right: 15px;
         bottom: 20px;
       }
-      
+
       .back-to-top.music-playing {
         bottom: 95px;
       }
 
       .playlist-controls {
-        flex-direction: row;
-        gap: 1.5rem;
-        padding: 1rem;
+        gap: 0.75rem;
+        padding: 0.75rem;
       }
 
-      .control-orb {
-        width: 60px;
-        height: 60px;
-      }
-
-      .orb-core {
-        width: 40px;
-        height: 40px;
-      }
-
-      .orb-ring {
-        width: 56px;
-        height: 56px;
-      }
-
-      .orb-particles {
-        width: 76px;
-        height: 76px;
-      }
-
-      .orb-starburst {
-        width: 90px;
-        height: 90px;
-      }
-
-      .orb-starburst-2 {
-        width: 105px;
-        height: 105px;
-      }
-
-      .orb-starburst-3 {
-        width: 120px;
-        height: 120px;
+      .tracks-grid {
+        grid-template-columns: 1fr;
       }
 
       .control-label {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -1653,38 +1026,14 @@
 
     <div class="playlist-controls">
       <div class="dynamic-control" id="shuffleControl">
-        <div class="control-orb">
-          <div class="orb-core"></div>
-          <div class="orb-ring"></div>
-          <div class="orb-particles"></div>
-          <div class="orb-starburst"></div>
-          <div class="orb-starburst-2"></div>
-          <div class="orb-starburst-3"></div>
-        </div>
         <span class="control-label">Shuffle</span>
       </div>
-      
+
       <div class="dynamic-control" id="repeatControl">
-        <div class="control-orb">
-          <div class="orb-core"></div>
-          <div class="orb-ring"></div>
-          <div class="orb-particles"></div>
-          <div class="orb-starburst"></div>
-          <div class="orb-starburst-2"></div>
-          <div class="orb-starburst-3"></div>
-        </div>
         <span class="control-label">Repeat All</span>
       </div>
-      
+
       <div class="dynamic-control" id="continuousControl">
-        <div class="control-orb">
-          <div class="orb-core"></div>
-          <div class="orb-ring"></div>
-          <div class="orb-particles"></div>
-          <div class="orb-starburst"></div>
-          <div class="orb-starburst-2"></div>
-          <div class="orb-starburst-3"></div>
-        </div>
         <span class="control-label">Continuous</span>
       </div>
     </div>
@@ -2618,6 +1967,305 @@
         </div>
         <audio src="music/TuesdayMeh.mp3" preload="metadata"></audio>
       </div>
+
+<!-- New tracks -->
+
+      <div class="track-card" data-track="Subdue.mp3">
+        <div class="track-title">Subdue</div>
+        <div class="track-description">Quiet intensity held in restraint, where power whispers rather than shouts.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Subdue</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/Subdue.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="ambient2.mp3">
+        <div class="track-title">Ambient II</div>
+        <div class="track-description">A second expedition into ambient territory, layering atmosphere upon atmosphere.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Ambient II</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/ambient2.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="daily-routine.mp3">
+        <div class="track-title">Daily Routine</div>
+        <div class="track-description">The rhythm of ordinary moments, finding music in the familiar patterns of each day.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Daily Routine</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/daily-routine.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="jaunt.mp3">
+        <div class="track-title">Jaunt</div>
+        <div class="track-description">A lighthearted excursion through sound, stepping lightly and going wherever curiosity leads.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Jaunt</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/jaunt.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="outspired.mp3">
+        <div class="track-title">Outspired</div>
+        <div class="track-description">When inspiration overflows and takes on a life of its own.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Outspired</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/outspired.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="soft-drift.mp3">
+        <div class="track-title">Soft Drift</div>
+        <div class="track-description">Floating gently through ambient space, carried by warm currents of sound.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Soft Drift</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/soft-drift.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="stroll2.mp3">
+        <div class="track-title">Stroll II</div>
+        <div class="track-description">Another unhurried walk through sonic landscapes, taking the long way around.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Stroll II</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/stroll2.mp3" preload="metadata"></audio>
+      </div>
+
+      <div class="track-card" data-track="wizard-masters.mp3">
+        <div class="track-title">Wizard Masters</div>
+        <div class="track-description">Arcane energies channeled through rhythm and melody, conjuring sonic spells.</div>
+        <div class="waveform-visual">
+          <div class="waveform-bars">
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+            <div class="waveform-bar"></div>
+          </div>
+        </div>
+        <div class="player-controls">
+          <button class="play-button">▶</button>
+          <div class="track-info">
+            <div class="track-name">Wizard Masters</div>
+            <div class="track-time">0:00 / 0:00</div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <div class="volume-slider">
+            <div class="volume-fill"></div>
+          </div>
+          <span class="volume-text">70%</span>
+        </div>
+        <audio src="music/wizard-masters.mp3" preload="metadata"></audio>
+      </div>
+
     </div>
   </div>
 
@@ -2628,14 +2276,14 @@
       <button class="global-play-button" id="globalPlayButton">▶</button>
       <button class="nav-button" id="nextButton">⏭</button>
     </div>
-    
+
     <div class="now-playing-info">
       <div class="now-playing-title" id="nowPlayingTitle">No Track Playing</div>
       <div class="now-playing-progress">
         <div class="now-playing-fill" id="nowPlayingFill"></div>
       </div>
     </div>
-    
+
     <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
     <div class="track-counter" id="trackCounter">0 / 0</div>
   </div>
@@ -2643,81 +2291,64 @@
   <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
 
   <footer>
-    © 2025 The Gentle Machine | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> - quietly relentless.
+    © 2025 The Gentle Machine | In collaboration with <a href="../second-gaze/">The Second Gaze</a> & <a href="../">Fairweather</a> - quietly relentless.
 </footer>
 
   <script>
-    // Enhanced floating particles
+    // Subtle floating particles
     const container = document.getElementById('particles');
-    const colors = ['golden', 'purple', 'silver', 'crystal', 'cosmic'];
-    
-    // Create many more particles for immersive effect
-    for (let i = 0; i < 150; i++) {
+    const colors = ['mist', 'steel', 'dust'];
+
+    for (let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
       const colorType = colors[Math.floor(Math.random() * colors.length)];
       particle.className = `particle ${colorType}`;
-      
-      // Varied sizes based on particle type
+
       let size;
       switch(colorType) {
-        case 'golden':
-          size = Math.random() * 6 + 2; // 2-8px
+        case 'mist':
+          size = Math.random() * 4 + 2;
           break;
-        case 'purple':
-          size = Math.random() * 8 + 3; // 3-11px
+        case 'steel':
+          size = Math.random() * 3 + 1.5;
           break;
-        case 'silver':
-          size = Math.random() * 4 + 1; // 1-5px
-          break;
-        case 'crystal':
-          size = Math.random() * 3 + 1; // 1-4px (smaller, more subtle)
-          break;
-        case 'cosmic':
-          size = Math.random() * 10 + 4; // 4-14px (largest)
+        case 'dust':
+          size = Math.random() * 3 + 1;
           break;
         default:
-          size = Math.random() * 5 + 2;
+          size = Math.random() * 3 + 2;
       }
-      
+
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
       particle.style.left = Math.random() * 100 + '%';
-      
-      // Staggered animation delays for continuous flow
+
       particle.style.animationDelay = Math.random() * 40 + 's';
-      
-      // Varied animation durations based on type
+
       let duration;
       switch(colorType) {
-        case 'golden':
-          duration = Math.random() * 10 + 15; // 15-25s
+        case 'mist':
+          duration = Math.random() * 15 + 25;
           break;
-        case 'purple':
-          duration = Math.random() * 15 + 20; // 20-35s
+        case 'steel':
+          duration = Math.random() * 20 + 30;
           break;
-        case 'silver':
-          duration = Math.random() * 20 + 25; // 25-45s
-          break;
-        case 'crystal':
-          duration = Math.random() * 25 + 30; // 30-55s
-          break;
-        case 'cosmic':
-          duration = Math.random() * 30 + 35; // 35-65s
+        case 'dust':
+          duration = Math.random() * 25 + 35;
           break;
         default:
-          duration = Math.random() * 20 + 20;
+          duration = Math.random() * 20 + 30;
       }
-      
+
       particle.style.animationDuration = duration + 's';
-      
-      // Random horizontal drift - more varied
-      const driftRange = Math.random() * 400 - 200; // -200px to +200px
+
+      const driftRange = Math.random() * 150 - 75;
       particle.style.setProperty('--drift', driftRange + 'px');
-      
+
       container.appendChild(particle);
     }
 
-    // Enhanced parallax effect
+    // Parallax effect
     let ticking = false;
     function updateParallax() {
       const scrolled = window.pageYOffset;
@@ -2765,7 +2396,7 @@
     window.addEventListener('scroll', () => {
       const shouldShow = window.scrollY > 300;
       backToTop.classList.toggle('show', shouldShow);
-      
+
       if (shouldShow) {
         const isPlaying = nowPlayingBar.classList.contains('show');
         backToTop.classList.toggle('music-playing', isPlaying);
@@ -2874,17 +2505,17 @@
     // Play specific track
     function playTrack(trackData) {
       stopAllTracks();
-      
+
       const { card, audio } = trackData;
       currentTrack = audio;
       currentCard = card;
-      
+
       audio.play();
       card.classList.add('playing');
       card.querySelector('.play-button').textContent = '⏸';
       globalPlayButton.textContent = '⏸';
       globalPlayButton.classList.add('playing');
-      
+
       showNowPlayingBar();
       nowPlayingTitle.textContent = card.querySelector('.track-name').textContent;
       updateTrackCounter();
@@ -2893,9 +2524,9 @@
     // Get next track
     function getNextTrack() {
       if (!currentTrack) return allTracks[0];
-      
+
       const currentIndex = allTracks.findIndex(t => t.audio === currentTrack);
-      
+
       if (isShuffled) {
         let nextIndex;
         do {
@@ -2911,7 +2542,7 @@
     // Get previous track
     function getPrevTrack() {
       if (!currentTrack) return allTracks[allTracks.length - 1];
-      
+
       const currentIndex = allTracks.findIndex(t => t.audio === currentTrack);
       const prevIndex = (currentIndex - 1 + allTracks.length) % allTracks.length;
       return allTracks[prevIndex];
@@ -2938,7 +2569,7 @@
           card.classList.remove('playing');
           return;
         }
-        
+
         playTrack(allTracks[index]);
       });
 
@@ -2947,7 +2578,7 @@
         const percent = (audio.currentTime / audio.duration) * 100;
         progressFill.style.width = percent + '%';
         nowPlayingFill.style.width = percent + '%';
-        
+
         trackTime.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
         timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
       });
@@ -3038,13 +2669,13 @@
     // Initialize
     updateTrackCounter();
 
-    // Enhanced card animations
+    // Card animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.style.animationDelay = '0s';
-            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
           }, index * 100);
         }
       });
