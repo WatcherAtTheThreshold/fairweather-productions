@@ -287,14 +287,9 @@
       z-index: 1;
     }
 
+    /* Card flip wrapper */
     .image-card {
-      background: rgba(30, 36, 52, 0.65);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(120, 130, 150, 0.15);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      position: relative;
+      perspective: 1200px;
       cursor: pointer;
       transform: translateY(20px);
       opacity: 0;
@@ -312,7 +307,33 @@
       }
     }
 
-    .image-card::before {
+    .card-inner {
+      position: relative;
+      width: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+      border-radius: 12px;
+    }
+
+    .image-card.flipping .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      backface-visibility: hidden;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-front {
+      background: rgba(30, 36, 52, 0.65);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(120, 130, 150, 0.15);
+      position: relative;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-front::before {
       content: '';
       position: absolute;
       top: 0;
@@ -325,14 +346,36 @@
       z-index: 2;
     }
 
-    .image-card:hover::before {
+    .image-card:hover .card-front::before {
       opacity: 1;
     }
 
-    .image-card:hover {
-      transform: translateY(-3px);
+    .image-card:hover .card-front {
       border-color: rgba(140, 160, 185, 0.4);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotateY(180deg);
+      background: rgba(30, 36, 52, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(100, 140, 180, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-back-inner {
+      text-align: center;
+      padding: 1.5rem;
+      color: rgba(200, 196, 188, 0.7);
+      font-size: 0.95rem;
+      font-style: italic;
     }
 
     .image-container {
@@ -364,8 +407,8 @@
       background: rgba(26, 31, 46, 0.3);
     }
 
-    /* Lightbox */
-    .lightbox {
+    /* Lightbox overlay */
+    .lightbox-overlay {
       display: none;
       position: fixed;
       top: 0;
@@ -373,40 +416,50 @@
       width: 100%;
       height: 100%;
       z-index: 2000;
+      background: rgba(20, 25, 38, 0);
+      backdrop-filter: blur(0px);
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .lightbox-overlay.active {
       background: rgba(20, 25, 38, 0.95);
       backdrop-filter: blur(20px);
-      animation: lightboxFadeIn 0.3s ease;
     }
 
-    @keyframes lightboxFadeIn {
-      from { opacity: 0; backdrop-filter: blur(0px); }
-      to { opacity: 1; backdrop-filter: blur(20px); }
+    /* The expanding card clone */
+    .lightbox-card {
+      position: fixed;
+      z-index: 2001;
+      border-radius: 12px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition: top 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  left 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  width 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                  border-radius 0.5s ease;
     }
 
-    .lightbox img {
-      margin: auto;
-      display: block;
-      max-width: 90%;
-      max-height: 90%;
-      position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
+    .lightbox-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: rgba(20, 25, 38, 1);
       border-radius: 8px;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
-      animation: lightboxZoomIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    @keyframes lightboxZoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .lightbox-card.expanded {
+      border-radius: 8px;
     }
 
     .lightbox-close {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 35px;
       width: 50px;
       height: 50px;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       background: rgba(30, 36, 52, 0.6);
@@ -416,9 +469,16 @@
       border: 1px solid rgba(120, 130, 150, 0.25);
       border-radius: 50%;
       cursor: pointer;
-      z-index: 2001;
+      z-index: 2002;
       transition: all 0.25s ease;
       line-height: 1;
+      opacity: 0;
+    }
+
+    .lightbox-close.visible {
+      display: flex;
+      opacity: 1;
+      transition: opacity 0.3s ease 0.3s;
     }
 
     .lightbox-close:hover {
@@ -535,14 +595,6 @@
       .header {
         padding: 2rem 1rem 1rem;
       }
-
-      .lightbox-close {
-        top: 15px;
-        right: 15px;
-        width: 44px;
-        height: 44px;
-        font-size: 24px;
-      }
     }
 
     @media (max-width: 480px) {
@@ -578,185 +630,11 @@
     </div>
   </div>
 
-  <div class="gallery">
-    <div class="image-card" onclick="openLightbox('images/Apple Blossom.webp', 'Apple Blossom')">
-      <div class="image-container">
-        <img src="images/Apple Blossom.webp" alt="Apple Blossom" />
-      </div>
-      <div class="caption">Apple Blossom</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/Atrium2.png', 'Atrium2')">
-      <div class="image-container">
-        <img src="images/Atrium2.png" alt="Atrium2" />
-      </div>
-      <div class="caption">Atrium2</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/Birch.png', 'Birch')">
-      <div class="image-container">
-        <img src="images/Birch.png" alt="Birch" />
-      </div>
-      <div class="caption">Birch</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/BirchesWc.png', 'BirchesWc')">
-      <div class="image-container">
-        <img src="images/BirchesWc.png" alt="BirchesWc" />
-      </div>
-      <div class="caption">BirchesWc</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/BirchMeadow.png', 'BirchMeadow')">
-      <div class="image-container">
-        <img src="images/BirchMeadow.png" alt="BirchMeadow" />
-      </div>
-      <div class="caption">Birch Meadow</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/BlueLandscape.png', 'BlueLandscape')">
-      <div class="image-container">
-        <img src="images/BlueLandscape.png" alt="BlueLandscape" />
-      </div>
-      <div class="caption">Blue Landscape</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/Chickadee.png', 'Chickadee')">
-      <div class="image-container">
-        <img src="images/Chickadee.png" alt="Chickadee" />
-      </div>
-      <div class="caption">Chickadee</div>
-    </div>
-    
-    <div class="image-card" onclick="openLightbox('images/EvenTheSmallestThings.png', 'EvenTheSmallestThings')">
-      <div class="image-container">
-        <img src="images/EvenTheSmallestThings.png" alt="EvenTheSmallestThings" />
-      </div>
-      <div class="caption">Even The Smallest Things</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/ForestDweller.webp', 'Forest Dweller')">
-      <div class="image-container">
-        <img src="images/ForestDweller.webp" alt="Forest Dweller" />
-      </div>
-      <div class="caption">Forest Dweller</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/GoldenInvitation.png', 'GoldenInvitation')">
-      <div class="image-container">
-        <img src="images/GoldenInvitation.png" alt="GoldenInvitation" />
-      </div>
-      <div class="caption">Golden Invitation</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/IMG-3868.png', 'IMG-3868')">
-      <div class="image-container">
-        <img src="images/IMG-3868.png" alt="IMG-3868" />
-      </div>
-      <div class="caption">Untitled Study</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/IMG-3869.png', 'IMG-3869')">
-      <div class="image-container">
-        <img src="images/IMG-3869.png" alt="IMG-3869" />
-      </div>
-      <div class="caption">Untitled Study</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/IMG-3870.png', 'IMG-3870')">
-      <div class="image-container">
-        <img src="images/IMG-3870.png" alt="IMG-3870" />
-      </div>
-      <div class="caption">Untitled Study</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/LaPuertaAzul.png', 'LaPuertaAzul')">
-      <div class="image-container">
-        <img src="images/LaPuertaAzul.png" alt="LaPuertaAzul" />
-      </div>
-      <div class="caption">La Puerta Azul</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/MoonlightDoctrine.png', 'MoonlightDoctrine')">
-      <div class="image-container">
-        <img src="images/MoonlightDoctrine.png" alt="MoonlightDoctrine" />
-      </div>
-      <div class="caption">Moonlight Doctrine</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/MorningPrayer.png', 'MorningPrayer')">
-      <div class="image-container">
-        <img src="images/MorningPrayer.png" alt="MorningPrayer" />
-      </div>
-      <div class="caption">Morning Prayer</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/Nuthatch.png', 'Nuthatch')">
-      <div class="image-container">
-        <img src="images/Nuthatch.png" alt="Nuthatch" />
-      </div>
-      <div class="caption">Nuthatch</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/PaintedLady.png', 'PaintedLady')">
-      <div class="image-container">
-        <img src="images/PaintedLady.png" alt="PaintedLady" />
-      </div>
-      <div class="caption">Painted Lady</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/ShadowoftheMountain.png', 'ShadowoftheMountain')">
-      <div class="image-container">
-        <img src="images/ShadowoftheMountain.png" alt="ShadowoftheMountain" />
-      </div>
-      <div class="caption">Shadow of the Mountain</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/Solitude.png', 'Solitude')">
-      <div class="image-container">
-        <img src="images/Solitude.png" alt="Solitude" />
-      </div>
-      <div class="caption">Solitude</div>
-    </div>
-    
-    <div class="image-card" onclick="openLightbox('images/SummerStroll.png', 'SummerStroll')">
-      <div class="image-container">
-        <img src="images/SummerStroll.png" alt="SummerStroll" />
-      </div>
-      <div class="caption">Summer Stroll</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/SunriseDoctrine.png', 'SunriseDoctrine')">
-      <div class="image-container">
-        <img src="images/SunriseDoctrine.png" alt="SunriseDoctrine" />
-      </div>
-      <div class="caption">Sunrise Doctrine</div>
-    </div>
-    
-    <div class="image-card" onclick="openLightbox('images/ThePaintedLady.png', 'ThePaintedLady')">
-      <div class="image-container">
-        <img src="images/ThePaintedLady.png" alt="ThePaintedLady" />
-      </div>
-      <div class="caption">The Painted Lady</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/ThePokeWitch.png', 'ThePokeWitch')">
-      <div class="image-container">
-        <img src="images/ThePokeWitch.png" alt="ThePokeWitch" />
-      </div>
-      <div class="caption">The Poke Witch</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/TwoChickadees.png', 'TwoChickadees')">
-      <div class="image-container">
-        <img src="images/TwoChickadees.png" alt="TwoChickadees" />
-      </div>
-      <div class="caption">Two Chickadees</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/Way Home.webp', 'Way Home')">
-      <div class="image-container">
-        <img src="images/Way Home.webp" alt="Way Home" />
-      </div>
-      <div class="caption">Way Home</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/WizardScreen.png', 'WizardScreen')">
-      <div class="image-container">
-        <img src="images/WizardScreen.png" alt="WizardScreen" />
-      </div>
-      <div class="caption">Wizard Screen</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/YellowLandscape.png', 'YellowLandscape')">
-      <div class="image-container">
-        <img src="images/YellowLandscape.png" alt="YellowLandscape" />
-      </div>
-      <div class="caption">Yellow Landscape</div>
-    </div>
-  </div>
+  <div class="gallery" id="gallery"></div>
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <img id="lightbox-img" src="" alt="">
-  </div>
+  <!-- Lightbox overlay -->
+  <div id="lightboxOverlay" class="lightbox-overlay" onclick="closeLightbox()"></div>
+  <span id="lightboxClose" class="lightbox-close" onclick="closeLightbox()">&times;</span>
 
   <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
 
@@ -765,33 +643,82 @@
   </footer>
 
   <script>
-    // Particle system — 40 particles, 3 types (mist, steel, dust)
+    // Gallery data
+    const galleryImages = [
+      { src: 'images/Apple Blossom.webp', caption: 'Apple Blossom' },
+      { src: 'images/Atrium2.png', caption: 'Atrium2' },
+      { src: 'images/Birch.png', caption: 'Birch' },
+      { src: 'images/BirchesWc.png', caption: 'BirchesWc' },
+      { src: 'images/BirchMeadow.png', caption: 'Birch Meadow' },
+      { src: 'images/BlueLandscape.png', caption: 'Blue Landscape' },
+      { src: 'images/Chickadee.png', caption: 'Chickadee' },
+      { src: 'images/EvenTheSmallestThings.png', caption: 'Even The Smallest Things' },
+      { src: 'images/ForestDweller.webp', caption: 'Forest Dweller' },
+      { src: 'images/GoldenInvitation.png', caption: 'Golden Invitation' },
+      { src: 'images/IMG-3868.png', caption: 'Untitled Study' },
+      { src: 'images/IMG-3869.png', caption: 'Untitled Study' },
+      { src: 'images/IMG-3870.png', caption: 'Untitled Study' },
+      { src: 'images/LaPuertaAzul.png', caption: 'La Puerta Azul' },
+      { src: 'images/MoonlightDoctrine.png', caption: 'Moonlight Doctrine' },
+      { src: 'images/MorningPrayer.png', caption: 'Morning Prayer' },
+      { src: 'images/Nuthatch.png', caption: 'Nuthatch' },
+      { src: 'images/PaintedLady.png', caption: 'Painted Lady' },
+      { src: 'images/ShadowoftheMountain.png', caption: 'Shadow of the Mountain' },
+      { src: 'images/Solitude.png', caption: 'Solitude' },
+      { src: 'images/SummerStroll.png', caption: 'Summer Stroll' },
+      { src: 'images/SunriseDoctrine.png', caption: 'Sunrise Doctrine' },
+      { src: 'images/ThePaintedLady.png', caption: 'The Painted Lady' },
+      { src: 'images/ThePokeWitch.png', caption: 'The Poke Witch' },
+      { src: 'images/TwoChickadees.png', caption: 'Two Chickadees' },
+      { src: 'images/Way Home.webp', caption: 'Way Home' },
+      { src: 'images/WizardScreen.png', caption: 'Wizard Screen' },
+      { src: 'images/YellowLandscape.png', caption: 'Yellow Landscape' },
+    ];
+
+    // Build gallery cards
+    const gallery = document.getElementById('gallery');
+    galleryImages.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'image-card';
+      card.dataset.src = item.src;
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="image-container">
+              <img src="${item.src}" alt="${item.caption}" />
+            </div>
+            <div class="caption">${item.caption}</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="card-back-inner">${item.caption}</div>
+          </div>
+        </div>
+      `;
+      gallery.appendChild(card);
+    });
+
+    // Particle system
     const container = document.getElementById('particles');
     const colors = ['mist', 'steel', 'dust'];
-
     for (let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
       const type = colors[Math.floor(Math.random() * colors.length)];
       particle.className = `particle ${type}`;
-
       let size;
       if (type === 'mist') size = Math.random() * 4 + 2;
       else if (type === 'steel') size = Math.random() * 3 + 1;
       else size = Math.random() * 2 + 1;
-
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
       particle.style.left = Math.random() * 100 + '%';
       particle.style.animation = `floatGentle ${Math.random() * 10 + 30}s linear ${Math.random() * 30}s infinite`;
-
       const peakOpacity = type === 'mist' ? 0.4 : type === 'steel' ? 0.3 : 0.25;
       particle.style.setProperty('--peak-opacity', peakOpacity);
       particle.style.setProperty('--drift', (Math.random() - 0.5) * 150 + 'px');
-
       container.appendChild(particle);
     }
 
-    // Parallax — 3 mist layers at different rates
+    // Parallax
     let ticking = false;
     function updateParallax() {
       const scrolled = window.pageYOffset;
@@ -800,106 +727,164 @@
       document.querySelector('.mist-overlay-3').style.transform = `translateY(${scrolled * -0.5}px)`;
       ticking = false;
     }
-
     function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
     }
-
     window.addEventListener('scroll', requestTick);
 
     // Back to top
     const topButton = document.getElementById('scrollTop');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        topButton.classList.add('show');
-      } else {
-        topButton.classList.remove('show');
-      }
+      topButton.classList.toggle('show', window.scrollY > 300);
     });
-
     topButton.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Lightbox
-    function openLightbox(imageSrc, imageAlt) {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      lightboxImg.src = imageSrc;
-      lightboxImg.alt = imageAlt;
-      lightbox.style.display = 'block';
-      document.body.style.overflow = 'hidden';
-      event.stopPropagation();
-    }
-
-    function closeLightbox() {
-      const lightbox = document.getElementById('lightbox');
-      lightbox.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        closeLightbox();
-      }
-    });
-
-    document.getElementById('lightbox-img').addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-
-    // Image loading animation
+    // Image loading
     document.querySelectorAll('.image-card img').forEach(img => {
-      img.addEventListener('load', function() {
-        this.classList.add('loaded');
-      });
-      if (img.complete) {
-        img.classList.add('loaded');
-      }
+      img.addEventListener('load', function() { this.classList.add('loaded'); });
+      if (img.complete) img.classList.add('loaded');
     });
 
     // Mobile menu
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const navLinks = document.getElementById('navLinks');
-
     mobileMenuButton.addEventListener('click', () => {
       navLinks.classList.toggle('open');
       mobileMenuButton.textContent = navLinks.classList.contains('open') ? '✕ Close' : '☰ Menu';
     });
-
     navLinks.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        navLinks.classList.remove('open');
-        mobileMenuButton.textContent = '☰ Menu';
-      }
+      if (e.target.tagName === 'A') { navLinks.classList.remove('open'); mobileMenuButton.textContent = '☰ Menu'; }
     });
-
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.nav')) {
-        navLinks.classList.remove('open');
-        mobileMenuButton.textContent = '☰ Menu';
-      }
+      if (!e.target.closest('.nav')) { navLinks.classList.remove('open'); mobileMenuButton.textContent = '☰ Menu'; }
     });
 
     // Card entrance animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-          }, index * 80);
+          setTimeout(() => { entry.target.style.animation = 'fadeInUp 0.6s ease forwards'; }, index * 80);
         }
       });
-    }, {
-      threshold: 0.1,
-      rootMargin: '50px'
+    }, { threshold: 0.1, rootMargin: '50px' });
+    document.querySelectorAll('.image-card').forEach(card => observer.observe(card));
+
+    // ── Flip-to-lightbox system ──
+    const overlay = document.getElementById('lightboxOverlay');
+    const closeBtn = document.getElementById('lightboxClose');
+    let activeCard = null;
+    let activeClone = null;
+    let isAnimating = false;
+
+    function openLightbox(card) {
+      if (isAnimating) return;
+      isAnimating = true;
+      activeCard = card;
+
+      // Flip the card
+      card.classList.add('flipping');
+
+      // Get card position
+      const rect = card.getBoundingClientRect();
+
+      // After flip completes, create expanding clone
+      setTimeout(() => {
+        // Hide original card
+        card.style.visibility = 'hidden';
+
+        // Create clone that will expand
+        const clone = document.createElement('div');
+        clone.className = 'lightbox-card';
+        clone.innerHTML = `<img src="${card.dataset.src}" alt="">`;
+        clone.style.top = rect.top + 'px';
+        clone.style.left = rect.left + 'px';
+        clone.style.width = rect.width + 'px';
+        clone.style.height = rect.height + 'px';
+        document.body.appendChild(clone);
+        activeClone = clone;
+
+        // Show overlay
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // Expand to center after a frame
+        requestAnimationFrame(() => {
+          overlay.classList.add('active');
+
+          // Calculate target size (90% of viewport, maintain aspect)
+          const img = new Image();
+          img.onload = function() {
+            const vw = window.innerWidth * 0.9;
+            const vh = window.innerHeight * 0.9;
+            const imgRatio = this.naturalWidth / this.naturalHeight;
+            let targetW, targetH;
+            if (vw / vh > imgRatio) {
+              targetH = vh;
+              targetW = vh * imgRatio;
+            } else {
+              targetW = vw;
+              targetH = vw / imgRatio;
+            }
+            const targetTop = (window.innerHeight - targetH) / 2;
+            const targetLeft = (window.innerWidth - targetW) / 2;
+
+            clone.style.top = targetTop + 'px';
+            clone.style.left = targetLeft + 'px';
+            clone.style.width = targetW + 'px';
+            clone.style.height = targetH + 'px';
+            clone.classList.add('expanded');
+
+            // Show close button after expand
+            setTimeout(() => {
+              closeBtn.classList.add('visible');
+              isAnimating = false;
+            }, 500);
+          };
+          img.src = card.dataset.src;
+        });
+      }, 600); // match flip duration
+    }
+
+    function closeLightbox() {
+      if (isAnimating || !activeCard || !activeClone) return;
+      isAnimating = true;
+
+      closeBtn.classList.remove('visible');
+      overlay.classList.remove('active');
+
+      // Shrink clone back to card position
+      const rect = activeCard.getBoundingClientRect();
+      activeClone.style.top = rect.top + 'px';
+      activeClone.style.left = rect.left + 'px';
+      activeClone.style.width = rect.width + 'px';
+      activeClone.style.height = rect.height + 'px';
+      activeClone.classList.remove('expanded');
+
+      // After shrink, remove clone and flip card back
+      setTimeout(() => {
+        activeClone.remove();
+        activeClone = null;
+        activeCard.style.visibility = 'visible';
+        activeCard.classList.remove('flipping');
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+
+        setTimeout(() => {
+          isAnimating = false;
+          activeCard = null;
+        }, 600);
+      }, 500);
+    }
+
+    // Click handlers
+    document.querySelectorAll('.image-card').forEach(card => {
+      card.addEventListener('click', () => openLightbox(card));
     });
 
-    document.querySelectorAll('.image-card').forEach(card => {
-      observer.observe(card);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
     });
   </script>
 </body>
