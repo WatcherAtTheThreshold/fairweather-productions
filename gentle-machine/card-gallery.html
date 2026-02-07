@@ -383,18 +383,18 @@
       opacity: 1;
     }
 
-    /* Back face */
+    /* Back face — soft grey-blue earthy palette */
     .card-back {
       transform: rotateY(180deg);
-      background: linear-gradient(135deg, #1a1325 0%, #0f0a18 60%, #110e1a 100%);
-      border: 1px solid rgba(138, 43, 226, 0.3);
+      background: linear-gradient(135deg, #2a2f38 0%, #1e2430 50%, #232832 100%);
+      border: 1px solid rgba(140, 160, 180, 0.25);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 2rem 1.5rem;
       position: relative;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(138, 43, 226, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(100, 130, 160, 0.12);
     }
 
     .card-back::before {
@@ -405,8 +405,8 @@
       right: 0;
       bottom: 0;
       background:
-        radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(222, 184, 135, 0.08) 0%, transparent 50%);
+        radial-gradient(circle at 25% 25%, rgba(120, 150, 180, 0.1) 0%, transparent 55%),
+        radial-gradient(circle at 75% 75%, rgba(160, 145, 125, 0.07) 0%, transparent 50%);
       pointer-events: none;
       border-radius: 15px;
     }
@@ -417,24 +417,24 @@
       top: 12px;
       right: 16px;
       font-size: 1.1rem;
-      color: rgba(138, 43, 226, 0.4);
+      color: rgba(140, 165, 190, 0.35);
       animation: gentle-pulse 4s infinite ease-in-out;
     }
 
     @keyframes gentle-pulse {
-      0%, 100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.15); }
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.15); }
     }
 
     .card-back h2 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.5rem;
       font-weight: 500;
-      color: rgba(222, 184, 135, 0.9);
+      color: rgba(200, 195, 185, 0.9);
       text-align: center;
       margin-bottom: 1.2rem;
       position: relative;
-      text-shadow: 0 0 10px rgba(222, 184, 135, 0.3);
+      text-shadow: 0 0 8px rgba(160, 155, 145, 0.2);
       letter-spacing: 0.5px;
     }
 
@@ -445,7 +445,7 @@
       top: 50%;
       transform: translateY(-50%);
       font-size: 0.6rem;
-      color: rgba(138, 43, 226, 0.5);
+      color: rgba(140, 165, 190, 0.4);
     }
 
     .card-back h2::before { left: -20px; }
@@ -457,12 +457,12 @@
       font-size: 1rem;
       line-height: 1.7;
       text-align: center;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(220, 218, 214, 0.8);
       position: relative;
       padding: 0.8rem;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(180, 190, 200, 0.06);
       border-radius: 12px;
-      border: 1px solid rgba(138, 43, 226, 0.15);
+      border: 1px solid rgba(140, 160, 180, 0.12);
     }
 
     .card-label {
@@ -858,7 +858,7 @@
         message: 'You already know what you came here to learn. Trust the whispers rising from the depths of your own knowing.'
       },
       {
-        image: 'hypatia.webp',
+        image: 'Hypatia.webp',
         title: 'Hypatia',
         message: 'Knowledge is your rebellion, wisdom your weapon. Question everything, and let no one dim the flame of your mind.'
       },
