@@ -335,6 +335,14 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
+    .wide-card {
+      grid-column: 1 / -1;
+    }
+
+    .wide-card .image-container {
+      aspect-ratio: 3 / 1;
+    }
+
     .image-container {
       aspect-ratio: 4 / 3;
       overflow: hidden;
@@ -612,7 +620,7 @@
       </div>
       <div class="caption">Birch Meadow</div>
     </div>
-    <div class="image-card" onclick="openLightbox('images/BlueLandscape.png', 'BlueLandscape')">
+    <div class="image-card wide-card" onclick="openLightbox('images/BlueLandscape.png', 'BlueLandscape')">
       <div class="image-container">
         <img src="images/BlueLandscape.png" alt="BlueLandscape" />
       </div>
@@ -762,7 +770,7 @@
       </div>
       <div class="caption">Woods View 2</div>
     </div>
-    <div class="image-card" onclick="openLightbox('images/YellowLandscape.png', 'YellowLandscape')">
+    <div class="image-card wide-card" onclick="openLightbox('images/YellowLandscape.png', 'YellowLandscape')">
       <div class="image-container">
         <img src="images/YellowLandscape.png" alt="YellowLandscape" />
       </div>
