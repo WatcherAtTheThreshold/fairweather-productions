@@ -383,34 +383,21 @@
       to { opacity: 1; backdrop-filter: blur(20px); }
     }
 
-    .lightbox-content {
+    .lightbox img {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 90%;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 94vw;
-      max-height: 90vh;
+      top: 0; left: 0; bottom: 0; right: 0;
+      border-radius: 8px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
       animation: lightboxZoomIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
     @keyframes lightboxZoomIn {
-      from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
-      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    }
-
-    .lightbox-content.lightbox-wide {
-      max-width: 98vw;
-    }
-
-    .lightbox img {
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     .lightbox-close {
@@ -750,9 +737,7 @@
   <!-- Lightbox -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="">
-    </div>
+    <img id="lightbox-img" src="" alt="">
   </div>
 
   <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
@@ -825,19 +810,8 @@
     function openLightbox(imageSrc, imageAlt) {
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
-      const lightboxContent = document.querySelector('.lightbox-content');
       lightboxImg.src = imageSrc;
       lightboxImg.alt = imageAlt;
-
-      // Detect panoramic images and widen the lightbox
-      lightboxImg.onload = function() {
-        if (this.naturalWidth / this.naturalHeight >= 2) {
-          lightboxContent.classList.add('lightbox-wide');
-        } else {
-          lightboxContent.classList.remove('lightbox-wide');
-        }
-      };
-
       lightbox.style.display = 'block';
       document.body.style.overflow = 'hidden';
       event.stopPropagation();
@@ -845,9 +819,7 @@
 
     function closeLightbox() {
       const lightbox = document.getElementById('lightbox');
-      const lightboxContent = document.querySelector('.lightbox-content');
       lightbox.style.display = 'none';
-      lightboxContent.classList.remove('lightbox-wide');
       document.body.style.overflow = 'auto';
     }
 
