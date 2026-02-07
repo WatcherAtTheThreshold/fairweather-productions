@@ -335,14 +335,6 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .wide-card {
-      grid-column: 1 / -1;
-    }
-
-    .wide-card .image-container {
-      aspect-ratio: 3 / 1;
-    }
-
     .image-container {
       aspect-ratio: 4 / 3;
       overflow: hidden;
@@ -407,6 +399,10 @@
     @keyframes lightboxZoomIn {
       from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
       to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    .lightbox-content.lightbox-wide {
+      max-width: 98vw;
     }
 
     .lightbox img {
@@ -620,7 +616,7 @@
       </div>
       <div class="caption">Birch Meadow</div>
     </div>
-    <div class="image-card wide-card" onclick="openLightbox('images/BlueLandscape.png', 'BlueLandscape')">
+    <div class="image-card" onclick="openLightbox('images/BlueLandscape.png', 'BlueLandscape')">
       <div class="image-container">
         <img src="images/BlueLandscape.png" alt="BlueLandscape" />
       </div>
@@ -743,19 +739,7 @@
       </div>
       <div class="caption">Wizard Screen</div>
     </div>
-    <div class="image-card" onclick="openLightbox('images/WoodsView.png', 'WoodsView')">
-      <div class="image-container">
-        <img src="images/WoodsView.png" alt="WoodsView" />
-      </div>
-      <div class="caption">Woods View</div>
-    </div>
-    <div class="image-card" onclick="openLightbox('images/WoodsView2Screen.png', 'WoodsView2Screen')">
-      <div class="image-container">
-        <img src="images/WoodsView2Screen.png" alt="WoodsView2Screen" />
-      </div>
-      <div class="caption">Woods View 2</div>
-    </div>
-    <div class="image-card wide-card" onclick="openLightbox('images/YellowLandscape.png', 'YellowLandscape')">
+    <div class="image-card" onclick="openLightbox('images/YellowLandscape.png', 'YellowLandscape')">
       <div class="image-container">
         <img src="images/YellowLandscape.png" alt="YellowLandscape" />
       </div>
@@ -841,8 +825,19 @@
     function openLightbox(imageSrc, imageAlt) {
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxContent = document.querySelector('.lightbox-content');
       lightboxImg.src = imageSrc;
       lightboxImg.alt = imageAlt;
+
+      // Detect panoramic images and widen the lightbox
+      lightboxImg.onload = function() {
+        if (this.naturalWidth / this.naturalHeight >= 2) {
+          lightboxContent.classList.add('lightbox-wide');
+        } else {
+          lightboxContent.classList.remove('lightbox-wide');
+        }
+      };
+
       lightbox.style.display = 'block';
       document.body.style.overflow = 'hidden';
       event.stopPropagation();
@@ -850,7 +845,9 @@
 
     function closeLightbox() {
       const lightbox = document.getElementById('lightbox');
+      const lightboxContent = document.querySelector('.lightbox-content');
       lightbox.style.display = 'none';
+      lightboxContent.classList.remove('lightbox-wide');
       document.body.style.overflow = 'auto';
     }
 
