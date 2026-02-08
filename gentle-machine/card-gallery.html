@@ -729,11 +729,11 @@
 
     .card-wrapper.in-focus {
       transform: scale(1.03) !important;
-      transition: transform 0.6s ease, filter 0.6s ease;
+      transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), filter 1.2s ease;
     }
 
     .card-wrapper:not(.in-focus) {
-      transition: transform 0.6s ease, filter 0.6s ease;
+      transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), filter 1.2s ease;
     }
 
     @media (max-width: 768px) {
@@ -1907,21 +1907,32 @@
     // =============================================
     // CENTER-CARD FOCUS HIGHLIGHT
     // =============================================
-    const focusObserver = new IntersectionObserver((entries) => {
+    // Add focus when card enters center zone
+    const focusEnterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
           entry.target.classList.add('in-focus');
-        } else {
+        }
+      });
+    }, {
+      threshold: [0.6],
+      rootMargin: '-30% 0px -30% 0px'
+    });
+
+    // Remove focus only when card leaves the viewport
+    const focusLeaveObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
           entry.target.classList.remove('in-focus');
         }
       });
     }, {
-      threshold: [0, 0.3, 0.6, 1.0],
-      rootMargin: '-30% 0px -30% 0px'
+      threshold: [0]
     });
 
     document.querySelectorAll('.card-wrapper').forEach(card => {
-      focusObserver.observe(card);
+      focusEnterObserver.observe(card);
+      focusLeaveObserver.observe(card);
     });
   </script>
 </body>
