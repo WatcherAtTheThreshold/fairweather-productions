@@ -1790,21 +1790,28 @@
     const cardGridEl = document.getElementById('cardGrid');
     let hoverResumeTimer = null;
 
-    // Pause when mouse enters any card
+    // Track real mouse movement to distinguish user hover from scroll-under-cursor
+    let lastMouseMoveTime = 0;
+    document.addEventListener('mousemove', () => {
+      lastMouseMoveTime = Date.now();
+    });
+
+    // Pause when mouse enters a card — but only if user actually moved their mouse
     cardGridEl.addEventListener('mouseover', (e) => {
       const wrapper = e.target.closest('.card-wrapper');
       if (wrapper && isExperienceActive && !isPausedByUser) {
+        // Ignore if mouse hasn't moved recently (card scrolled under cursor)
+        if (Date.now() - lastMouseMoveTime > 300) return;
         clearTimeout(hoverResumeTimer);
         isPausedByInteraction = true;
       }
     });
 
-    // Resume when mouse leaves a card (with short delay)
+    // Resume when mouse leaves a card
     cardGridEl.addEventListener('mouseout', (e) => {
       const wrapper = e.target.closest('.card-wrapper');
       if (wrapper && isExperienceActive) {
         const related = e.relatedTarget;
-        // Only resume if we're actually leaving the card area
         if (!related || !related.closest('.card-wrapper')) {
           hoverResumeTimer = setTimeout(() => {
             isPausedByInteraction = false;
