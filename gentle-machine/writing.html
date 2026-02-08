@@ -13,7 +13,7 @@
 <!-- Apple Touch Icon -->
 <link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
 
-  
+
   <title>Writing — The Gentle Machine</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -26,39 +26,66 @@
     body {
       min-height: 100vh;
       font-family: 'Source Sans Pro', sans-serif;
-      background-color: #0a0a0a;
-      color: #f0f0f0;
+      background-color: #1a1f2e;
+      color: #e8e6e1;
       overflow-x: hidden;
       position: relative;
     }
 
     .background {
-      background: rgba(3, 3, 3, 0.4);
+      background: rgba(26, 31, 46, 0.6);
       opacity: 1;
       position: fixed;
       width: 100%;
       height: 100%;
-      z-index: -2;
+      z-index: -4;
     }
 
+    /* 3-layer mist overlay system */
     .mist-overlay {
       background: url('images/mist-overlay.png') repeat;
-      opacity: 0.9;
       position: fixed;
       width: 100%;
       height: 500vh;
       top: 0;
       left: 0;
+      filter: hue-rotate(200deg) saturate(0.3);
+    }
+
+    .mist-overlay-1 {
+      opacity: 0.65;
+      z-index: -3;
+      animation: mistDrift1 140s linear infinite;
+    }
+
+    .mist-overlay-2 {
+      opacity: 0.45;
+      z-index: -2;
+      animation: mistDrift2 100s linear infinite;
+    }
+
+    .mist-overlay-3 {
+      opacity: 0.25;
       z-index: -1;
-      animation: mistScroll 120s linear infinite;
+      animation: mistDrift3 80s linear infinite;
     }
 
-    @keyframes mistScroll {
+    @keyframes mistDrift1 {
       from { background-position: 0 0; }
-      to { background-position: -500px 500px; }
+      to { background-position: -600px 400px; }
     }
 
-    /* Enhanced floating particles */
+    @keyframes mistDrift2 {
+      from { background-position: -200px 100px; }
+      to { background-position: 300px -500px; }
+    }
+
+    @keyframes mistDrift3 {
+      from { background-position: 100px -50px; }
+      to { background-position: -400px 600px; }
+    }
+
+    /* Particle system — mist/steel/dust */
     .particles {
       position: fixed;
       top: 0;
@@ -73,52 +100,48 @@
     .particle {
       position: absolute;
       border-radius: 50%;
-      animation: float 25s infinite linear;
       opacity: 0;
     }
 
-    .particle.golden {
-      background: radial-gradient(circle, rgba(222, 184, 135, 0.6) 0%, rgba(222, 184, 135, 0.1) 70%, transparent 100%);
-      box-shadow: 0 0 4px rgba(222, 184, 135, 0.4);
+    .particle.mist {
+      background: radial-gradient(circle, rgba(160, 175, 195, 0.5) 0%, rgba(160, 175, 195, 0.1) 70%, transparent 100%);
     }
 
-    .particle.purple {
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, rgba(138, 43, 226, 0.1) 70%, transparent 100%);
-      box-shadow: 0 0 4px rgba(138, 43, 226, 0.3);
+    .particle.steel {
+      background: radial-gradient(circle, rgba(100, 140, 180, 0.4) 0%, rgba(100, 140, 180, 0.1) 70%, transparent 100%);
     }
 
-    .particle.silver {
-      background: radial-gradient(circle, rgba(192, 192, 192, 0.4) 0%, rgba(192, 192, 192, 0.08) 70%, transparent 100%);
-      box-shadow: 0 0 3px rgba(192, 192, 192, 0.2);
+    .particle.dust {
+      background: radial-gradient(circle, rgba(180, 175, 165, 0.35) 0%, rgba(180, 175, 165, 0.08) 70%, transparent 100%);
     }
 
-    @keyframes float {
-      0% { 
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3); 
-        opacity: 0; 
+    @keyframes floatGentle {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
       }
-      5% { 
-        opacity: 0.6;
-        transform: translateY(95vh) translateX(10px) rotate(18deg) scale(0.5);
+      5% {
+        opacity: var(--peak-opacity, 0.4);
       }
       50% {
-        transform: translateY(50vh) translateX(var(--drift, 50px)) rotate(180deg) scale(0.8);
-        opacity: 0.4;
+        transform: translateY(50vh) translateX(var(--drift, 50px));
+        opacity: var(--mid-opacity, 0.3);
       }
-      95% { 
-        opacity: 0.3; 
+      95% {
+        opacity: 0.1;
       }
-      100% { 
-        transform: translateY(-10vh) translateX(calc(var(--drift, 50px) * 2)) rotate(360deg) scale(0.1); 
-        opacity: 0; 
+      100% {
+        transform: translateY(-10vh) translateX(calc(var(--drift, 50px) * -0.5));
+        opacity: 0;
       }
     }
 
+    /* Header */
     .header {
       text-align: center;
       padding: 3rem 2rem 2rem;
       backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(26, 31, 46, 0.3);
       margin-bottom: 2rem;
       position: relative;
       z-index: 1;
@@ -128,30 +151,25 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 3.5rem;
       font-weight: 500;
-      color: #f2f2f2;
-      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2);
+      color: #e8e6e1;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(100, 140, 180, 0.15);
       margin-bottom: 0.5rem;
-      animation: titleGlow 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes titleGlow {
-      0% { text-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(138, 43, 226, 0.2); }
-      100% { text-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 50px rgba(138, 43, 226, 0.4); }
     }
 
     .subtitle {
       font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(200, 196, 188, 0.85);
       font-weight: 300;
       font-style: italic;
     }
 
+    /* Mobile menu button */
     .mobile-menu-button {
       display: none;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(26, 31, 46, 0.4);
       backdrop-filter: blur(10px);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #e8e6e1;
+      border: 1px solid rgba(120, 130, 150, 0.25);
       padding: 1rem;
       border-radius: 8px;
       font-size: 1.2rem;
@@ -162,11 +180,12 @@
     }
 
     .mobile-menu-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(30, 36, 52, 0.6);
+      border-color: rgba(140, 160, 185, 0.4);
       transform: translateY(-2px);
     }
 
+    /* Navigation */
     .nav {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -184,16 +203,16 @@
     }
 
     .nav a {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(26, 31, 46, 0.4);
       backdrop-filter: blur(10px);
-      color: #fff;
+      color: rgba(200, 196, 188, 0.85);
       text-decoration: none;
       padding: 1rem 1.5rem;
       border-radius: 8px;
       font-size: 1rem;
       font-weight: 400;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+      border: 1px solid rgba(100, 140, 180, 0.3);
       text-align: center;
       height: 60px;
       display: flex;
@@ -210,7 +229,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(100, 140, 180, 0.08), transparent);
       transition: left 0.5s;
     }
 
@@ -219,36 +238,39 @@
     }
 
     .nav a:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.4);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(138, 43, 226, 0.2);
+      background: rgba(30, 36, 52, 0.5);
+      border-color: rgba(140, 160, 185, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      color: #e8e6e1;
     }
 
     .nav a.creative {
-      border-color: rgba(138, 43, 226, 0.4);
+      border-color: rgba(100, 140, 180, 0.35);
     }
 
     .nav a.creative:hover {
-      border-color: rgba(138, 43, 226, 0.8);
-      background: rgba(138, 43, 226, 0.1);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 25px rgba(138, 43, 226, 0.4);
+      border-color: rgba(120, 160, 200, 0.5);
+      background: rgba(100, 140, 180, 0.08);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
+    /* Active page — recedes (darker, subdued) */
     .nav a.current {
-      background: rgba(138, 43, 226, 0.2);
-      border-color: rgba(138, 43, 226, 0.6);
-      box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+      background: rgba(20, 25, 38, 0.6);
+      border-color: rgba(120, 130, 150, 0.15);
+      color: rgba(200, 196, 188, 0.6);
     }
 
+    /* Shadows link */
     .cruxfade-link {
       font-size: 1.3rem;
       margin-bottom: 2rem;
-      color: rgba(255, 255, 255, 0.7) !important;
+      color: rgba(160, 155, 145, 0.6) !important;
       text-decoration: none;
       transition: all 0.3s ease;
       padding: 0.5rem 1rem !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border: 1px solid rgba(120, 130, 150, 0.15) !important;
       border-radius: 8px;
       backdrop-filter: blur(5px);
       background: transparent !important;
@@ -261,13 +283,14 @@
     }
 
     .cruxfade-link:hover {
-      color: #fff !important;
-      border-color: rgba(255, 255, 255, 0.6) !important;
-      background: rgba(255, 255, 255, 0.1) !important;
+      color: rgba(200, 196, 188, 0.85) !important;
+      border-color: rgba(120, 130, 150, 0.3) !important;
+      background: rgba(26, 31, 46, 0.3) !important;
       transform: translateY(-2px) !important;
       box-shadow: none !important;
     }
 
+    /* Story container */
     .story-container {
       max-width: 1000px;
       margin: 0 auto;
@@ -276,40 +299,71 @@
       z-index: 1;
     }
 
+    /* Intro section */
     .intro-section {
       text-align: center;
       max-width: 700px;
       margin: 0 auto 3rem;
       padding: 2rem;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(30, 36, 52, 0.5);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(120, 130, 150, 0.15);
       border-radius: 15px;
       transform: translateY(20px);
       opacity: 0;
       animation: fadeInUp 0.8s ease forwards;
     }
 
+    .intro-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #e8e6e1;
+      margin-bottom: 0.75rem;
+    }
+
     .intro-section p {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(200, 196, 188, 0.85);
       line-height: 1.6;
       font-size: 1.1rem;
     }
 
+    .subscribe-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1.25rem;
+      background: rgba(100, 140, 180, 0.15);
+      border: 1px solid rgba(100, 140, 180, 0.4);
+      border-radius: 8px;
+      color: rgba(200, 196, 188, 0.85);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+    }
+
+    .subscribe-button:hover {
+      background: rgba(100, 140, 180, 0.25);
+      border-color: rgba(120, 160, 200, 0.5);
+      transform: translateY(-2px);
+      color: #e8e6e1;
+    }
+
+    /* Story list grid */
     .story-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
       margin-bottom: 3rem;
     }
 
+    /* Story cards */
     .story {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 15px;
-      padding: 2rem;
-      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      background: rgba(30, 36, 52, 0.65);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(120, 130, 150, 0.15);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       transform: translateY(20px);
@@ -326,41 +380,25 @@
     }
 
     .story:hover {
-      transform: translateY(-8px) scale(1.02);
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(138, 43, 226, 0.3);
+      transform: translateY(-4px);
+      border-color: rgba(140, 160, 185, 0.4);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
+    /* Accent strip on hover */
     .story::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.6), transparent);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(100, 140, 180, 0.5), transparent);
       opacity: 0;
       transition: opacity 0.3s ease;
     }
 
     .story:hover::before {
-      opacity: 1;
-    }
-
-    .story::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, transparent 30%, rgba(138, 43, 226, 0.1) 50%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    .story:hover::after {
       opacity: 1;
     }
 
@@ -373,10 +411,10 @@
 
     .story h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 500;
       margin-bottom: 1rem;
-      color: #f2f2f2;
+      color: #e8e6e1;
       position: relative;
       z-index: 2;
     }
@@ -384,15 +422,15 @@
     .story h2 a {
       color: inherit;
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: color 0.25s ease;
     }
 
     .story h2 a:hover {
-      color: rgba(138, 43, 226, 0.8);
+      color: rgba(120, 160, 200, 0.85);
     }
 
     .story-excerpt {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(200, 196, 188, 0.85);
       line-height: 1.6;
       font-style: italic;
       margin-bottom: 1.5rem;
@@ -406,45 +444,47 @@
       align-items: center;
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(120, 130, 150, 0.15);
       position: relative;
       z-index: 2;
     }
 
     .story-type {
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.7);
+      background: rgba(100, 140, 180, 0.1);
+      color: rgba(200, 196, 188, 0.7);
       padding: 0.25rem 0.75rem;
       border-radius: 15px;
       font-size: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(100, 140, 180, 0.2);
     }
 
     .story-link {
-      background: rgba(138, 43, 226, 0.2);
-      color: #fff;
+      background: rgba(100, 140, 180, 0.15);
+      color: rgba(200, 196, 188, 0.85);
       text-decoration: none;
       padding: 0.5rem 1rem;
       border-radius: 6px;
-      border: 1px solid rgba(138, 43, 226, 0.4);
-      transition: all 0.3s ease;
+      border: 1px solid rgba(100, 140, 180, 0.35);
+      transition: all 0.25s ease;
       font-size: 0.9rem;
     }
 
     .story-link:hover {
-      background: rgba(138, 43, 226, 0.4);
-      border-color: rgba(138, 43, 226, 0.6);
+      background: rgba(100, 140, 180, 0.25);
+      border-color: rgba(120, 160, 200, 0.5);
       transform: translateY(-1px);
+      color: #e8e6e1;
     }
 
+    /* Back to top button */
     .back-to-top {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(20, 25, 38, 0.8);
       backdrop-filter: blur(10px);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(200, 196, 188, 0.7);
+      border: 1px solid rgba(120, 130, 150, 0.25);
       border-radius: 50%;
       width: 50px;
       height: 50px;
@@ -454,38 +494,51 @@
       display: none;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
     }
 
     .back-to-top:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(30, 36, 52, 0.8);
+      border-color: rgba(140, 160, 185, 0.4);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      color: #e8e6e1;
     }
 
     .back-to-top.show {
       display: flex;
     }
 
+    /* Footer */
     footer {
       text-align: center;
       padding: 3rem 2rem;
       font-size: 0.9rem;
-      color: rgba(255,255,255,0.5);
+      color: rgba(160, 155, 145, 0.6);
       font-family: 'Source Sans Pro', sans-serif;
       backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(26, 31, 46, 0.3);
       margin-top: 2rem;
       position: relative;
       z-index: 1;
     }
 
+    footer a {
+      color: rgba(100, 140, 180, 0.6);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    footer a:hover {
+      color: rgba(120, 160, 200, 0.8);
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
       h1 {
         font-size: 2.5rem;
       }
-      
+
       .mobile-menu-button {
         display: block;
       }
@@ -519,7 +572,7 @@
           transform: translateY(0);
         }
       }
-      
+
       .nav a {
         padding: 0.8rem 1rem;
         font-size: 0.9rem;
@@ -558,7 +611,9 @@
 </head>
 <body>
   <div class="background"></div>
-  <div class="mist-overlay"></div>
+  <div class="mist-overlay mist-overlay-1"></div>
+  <div class="mist-overlay mist-overlay-2"></div>
+  <div class="mist-overlay mist-overlay-3"></div>
   <div class="particles" id="particles"></div>
 
   <div class="header">
@@ -587,7 +642,7 @@
          <p>This is all published on my Substack, where you can subscribe for free to receive new stories directly in your inbox.</p>
          <a href="https://monahanhunt.substack.com/" target="_blank" class="subscribe-button">Subscribe to Substack</a>
       </div>
-      
+
       <!--<p>Brief glimpses into moments where the ordinary world reveals its hidden depths. Each story captures a threshold experience, those liminal spaces where wonder breaks through the everyday.</p> -->
     </div>
 
@@ -602,7 +657,7 @@
   </div>
 </div>
 
-     
+
      <div class="story">
   <h2><a href="https://monahanhunt.substack.com/p/echoes-in-the-sub-station" target="_blank">Echoes in the Sub-Station</a></h2>
   <p class="story-excerpt">The 2nd installment of the Ash Apprentice Cycle.</p>
@@ -611,7 +666,7 @@
     <a href="https://monahanhunt.substack.com/p/echoes-in-the-sub-station" target="_blank" class="story-link">Read on Substack</a>
   </div>
 </div>
-     
+
      <div class="story">
   <h2><a href="https://monahanhunt.substack.com/p/still-smiling" target="_blank">Still Smiling</a></h2>
   <p class="story-excerpt">An Unchosen Habit...</p>
@@ -638,7 +693,7 @@
     <a href="https://monahanhunt.substack.com/p/apprentice-to-the-east?r=6ovs0v" target="_blank" class="story-link">Read on Substack</a>
   </div>
 </div>
-     
+
       <div class="story">
   <h2><a href="https://monahanhunt.substack.com/p/el-aviso?r=6ovs0v" target="_blank">El Aviso</a></h2>
   <p class="story-excerpt">A mysterious encounter in the desert reveals hidden powers and dangerous attractions when Travis visits old friends after years away...</p>
@@ -672,35 +727,49 @@
   <button class="back-to-top" id="scrollTop" title="Back to top">↑</button>
 
   <footer>
-    © 2025 The Gentle Machine | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> — quietly relentless.
+    © 2025 The Gentle Machine | In collaboration with <a href="../second-gaze/">The Second Gaze</a> & <a href="../">Fairweather</a> — quietly relentless.
 </footer>
 
   <script>
-    // Enhanced floating particles
+    // Mist/Steel/Dust particle system — 40 particles, no box-shadows
     const container = document.getElementById('particles');
-    const colors = ['golden', 'purple', 'silver'];
-    
-    for (let i = 0; i < 60; i++) {
+    const types = ['mist', 'steel', 'dust'];
+
+    for (let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
-      particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
-      
-      // Random size between 1px and 6px
-      const size = Math.random() * 5 + 1;
+      const type = types[Math.floor(Math.random() * types.length)];
+      particle.className = `particle ${type}`;
+
+      // Size by type
+      let size;
+      switch (type) {
+        case 'mist': size = Math.random() * 4 + 2; break;  // 2–6px
+        case 'steel': size = Math.random() * 3 + 1; break;  // 1–4px
+        case 'dust': size = Math.random() * 2 + 1; break;   // 1–3px
+      }
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
-      
+
       // Random horizontal position
       particle.style.left = Math.random() * 100 + '%';
-      
-      // Random animation delay
+
+      // Animation
+      particle.style.animation = `floatGentle ${Math.random() * 10 + 30}s linear infinite`;
       particle.style.animationDelay = Math.random() * 30 + 's';
-      
-      // Random animation duration between 20-40 seconds
-      particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
-      
-      // Random horizontal drift
-      particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
-      
+
+      // Opacity by type
+      let peakOpacity, midOpacity;
+      switch (type) {
+        case 'mist': peakOpacity = Math.random() * 0.4 + 0.1; midOpacity = peakOpacity * 0.7; break;
+        case 'steel': peakOpacity = Math.random() * 0.3 + 0.1; midOpacity = peakOpacity * 0.7; break;
+        case 'dust': peakOpacity = Math.random() * 0.27 + 0.08; midOpacity = peakOpacity * 0.7; break;
+      }
+      particle.style.setProperty('--peak-opacity', peakOpacity);
+      particle.style.setProperty('--mid-opacity', midOpacity);
+
+      // Gentle horizontal drift (±75px)
+      particle.style.setProperty('--drift', (Math.random() - 0.5) * 150 + 'px');
+
       container.appendChild(particle);
     }
 
@@ -718,12 +787,15 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Enhanced parallax effect for mist
+    // Parallax scrolling on mist layers
     let ticking = false;
     function updateParallax() {
       const scrolled = window.pageYOffset;
-      const rate = scrolled * -0.3;
-      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+      const layers = document.querySelectorAll('.mist-overlay');
+      const rates = [-0.2, -0.35, -0.5];
+      layers.forEach((layer, i) => {
+        layer.style.transform = `translateY(${scrolled * rates[i]}px)`;
+      });
       ticking = false;
     }
 
@@ -742,7 +814,7 @@
 
     mobileMenuButton.addEventListener('click', () => {
       navLinks.classList.toggle('open');
-      
+
       // Update button text and icon
       if (navLinks.classList.contains('open')) {
         mobileMenuButton.textContent = '✕ Close';
@@ -767,13 +839,13 @@
       }
     });
 
-    // Enhanced card animations with staggered delays
+    // Card entrance animations with IntersectionObserver
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.style.animationDelay = '0s';
-            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
           }, index * 100);
         }
       });
