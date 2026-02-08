@@ -465,6 +465,42 @@
       border: 1px solid rgba(140, 160, 180, 0.12);
     }
 
+    /* Sigil card back */
+    .card-back-sigil {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, #2a2f38 0%, #1e2430 50%, #232832 100%);
+      border: 1px solid rgba(140, 160, 180, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(100, 130, 160, 0.12);
+    }
+
+    .card-back-sigil::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(120, 150, 180, 0.1) 0%, transparent 55%),
+        radial-gradient(circle at 75% 75%, rgba(160, 145, 125, 0.07) 0%, transparent 50%);
+      pointer-events: none;
+      border-radius: 15px;
+    }
+
+    .card-back-sigil img {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+      opacity: 0.4;
+      filter: drop-shadow(0 0 15px rgba(140, 165, 190, 0.3));
+      animation: gentle-pulse 4s infinite ease-in-out;
+    }
+
     .card-label {
       margin-top: 0.8rem;
       font-family: 'Source Sans Pro', sans-serif;
@@ -983,7 +1019,93 @@
         image: 'IMG_0131.png',
         title: 'Untitled Study IV',
         message: 'Caught between gesture and intention, the paint remembers what the painter was feeling before the feeling had a name.'
-      }
+      },
+
+      // --- Jessop's Bezar (Instagram archive) ---
+      { image: 'images/jessopsbezar/jessopsbezar_1541127524_1903438091069039687_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1541127524_1903438091782119540_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1541127524_1903438097159218357_6923253267_3.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1543283268_1921521787397485083_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1543883050_1926553123818358817_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1543883051_1926553127467515293_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1545504545_1940155209267349216_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1545871167_1943230650630950483_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1559426900_2056944381314930278_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1559427043_2056945581540072790_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1561838410_2077173593669828815_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1568856663_2136046969347599541_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1570567325_2150397040239160890_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1570708400_2151580465495194539_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1571366290_2157099248154410773_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1571693695_2159845717001287703_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1572197163_2164069113641718110_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1580322646_2232230608048976107_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1582322280_2249004756024670946_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1584495497_2267235020672338118_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1584626458_2268333596089753766_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1586190339_2281452380958525037_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1588019919_2296800016213448350_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1592623807_2335420222066069039_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1592623807_2335420222082760905_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1592623807_2335420222091087052_6923253267_3.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1602617771_2419255670367734291_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1602617771_2419255670384566481_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1602621760_2419289134402274047_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1602621760_2419289135131958353_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1602786516_2420671203206162161_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1602786516_2420671203222900083_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1612461067_2501827226559970167_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1612462319_2501837727637451807_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1620750906_2571367434091165775_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1620750906_2571367434216802036_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1620750906_2571367434225340612_6923253267_3.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1664725119_2940249869387320419_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1664766537_2940597305423347409_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1664893990_2941666458661895348_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1664943517_2942081925931128321_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665028999_2942798996407060831_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665094051_2943344690037657950_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665200882_2944240859827802063_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665290750_2944994723493513983_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665456584_2946385838301938713_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665497811_2946731680493774490_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665544330_2947121903857829690_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665851504_2949698671324387190_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665852318_2949705497008671130_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665868378_2949840215360423822_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665885134_2949980774070905050_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1665958714_2950598013098755349_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666106476_2951837526450237396_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666107597_2951846934030681739_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666361271_2953974906590096899_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666362175_2953982487081697147_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666379661_2954129169375202539_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666453576_2954749215969406175_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666550352_2955561029531651702_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666652508_2956417977328260919_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666806542_2957710111175894774_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666824101_2957857405208776383_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1666983388_2959193601100750026_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1667005103_2959375760512129430_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1667144881_2960548303595978840_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1667484017_2963393176829172950_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1667484918_2963400741424304349_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1668360903_2970749035926444035_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1668627053_2972981662150385073_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1668825241_2974644186553733175_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1668825241_2974644186570314308_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1669316357_2978763959835381469_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1669576719_2980948033953982701_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1671822866_2999790082106895868_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1671822866_2999790082106981513_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1672440267_3004969220950212971_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1696201894_3204296195798728984_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1696339716_3205452326806223970_6923253267_2.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1696339716_3205452326814530277_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1696352681_3205561086467683093_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1696527898_3207030909756251840_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1696549961_3207215992597605301_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true },
+      { image: 'images/jessopsbezar/jessopsbezar_1698088350_3220120929392338115_6923253267_1.jpg', title: "Jessop's Bezar", sigil: true }
     ];
 
     // =============================================
@@ -999,13 +1121,22 @@
       card.className = 'card';
       card.addEventListener('click', () => card.classList.toggle('flipped'));
 
+      // Resolve image path: subdirectory paths used as-is, others prefixed with ../images/
+      const imagePath = cardData.image.includes('/') ? cardData.image : `../images/${cardData.image}`;
+
+      // Build card back: sigil-backed or text-backed
+      let cardBackHTML;
+      if (cardData.sigil) {
+        const randomSigil = Math.floor(Math.random() * 9) + 1;
+        cardBackHTML = `<div class="card-face card-back-sigil"><img src="sigils/sigil-${randomSigil}.png" alt="Sigil"></div>`;
+      } else {
+        cardBackHTML = `<div class="card-face card-back"><h2>${cardData.title}</h2><p>${cardData.message}</p></div>`;
+      }
+
       card.innerHTML = `
         <div class="card-inner">
-          <div class="card-face card-front" style="background-image: url('../images/${encodeURI(cardData.image)}')"></div>
-          <div class="card-face card-back">
-            <h2>${cardData.title}</h2>
-            <p>${cardData.message}</p>
-          </div>
+          <div class="card-face card-front" style="background-image: url('${encodeURI(imagePath)}')"></div>
+          ${cardBackHTML}
         </div>
       `;
 
