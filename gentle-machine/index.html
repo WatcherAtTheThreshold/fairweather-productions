@@ -13,7 +13,7 @@
 <!-- Apple Touch Icon -->
 <link rel="apple-touch-icon" href="images/quill_apple_touch_180x180.png" />
 
-  
+
   <title>The Gentle Machine</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -26,36 +26,64 @@
     body, html {
       height: 100%;
       font-family: 'Source Sans Pro', sans-serif;
-      color: #fff;
+      background-color: #1a1f2e;
+      color: #e8e6e1;
       overflow: hidden;
       position: relative;
     }
 
     .background {
-      background: rgba(3, 3, 3, 0.4);
+      background: rgba(26, 31, 46, 0.6);
       opacity: 1;
       position: absolute;
       width: 100%;
       height: 100%;
-      z-index: -2;
+      z-index: -4;
     }
 
     .mist-overlay {
       background: url('images/mist-overlay.png') repeat;
-      opacity: 0.9;
       position: fixed;
       width: 100%;
-      height: 100%;
+      height: 500vh;
+      top: 0;
+      left: 0;
+      filter: hue-rotate(200deg) saturate(0.3);
+    }
+
+    .mist-overlay-1 {
+      opacity: 0.65;
+      z-index: -3;
+      animation: mistDrift1 140s linear infinite;
+    }
+
+    .mist-overlay-2 {
+      opacity: 0.45;
+      z-index: -2;
+      animation: mistDrift2 100s linear infinite;
+    }
+
+    .mist-overlay-3 {
+      opacity: 0.25;
       z-index: -1;
-      animation: mistScroll 120s linear infinite;
+      animation: mistDrift3 80s linear infinite;
     }
 
-    @keyframes mistScroll {
+    @keyframes mistDrift1 {
       from { background-position: 0 0; }
-      to { background-position: -500px 500px; }
+      to { background-position: -600px 400px; }
     }
 
-    /* Enhanced floating particles */
+    @keyframes mistDrift2 {
+      from { background-position: -200px 100px; }
+      to { background-position: 300px -500px; }
+    }
+
+    @keyframes mistDrift3 {
+      from { background-position: 100px -50px; }
+      to { background-position: -400px 600px; }
+    }
+
     .particles {
       position: fixed;
       top: 0;
@@ -63,51 +91,42 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
       overflow: hidden;
     }
 
     .particle {
       position: absolute;
       border-radius: 50%;
-      animation: float 20s infinite linear;
       opacity: 0;
     }
 
-    .particle.golden {
-      background: radial-gradient(circle, rgba(222, 184, 135, 0.8) 0%, rgba(222, 184, 135, 0.2) 70%, transparent 100%);
-      box-shadow: 0 0 6px rgba(222, 184, 135, 0.6);
+    .particle.mist {
+      background: radial-gradient(circle, rgba(160, 175, 195, 0.5) 0%, rgba(160, 175, 195, 0.1) 70%, transparent 100%);
     }
 
-    .particle.purple {
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.7) 0%, rgba(138, 43, 226, 0.2) 70%, transparent 100%);
-      box-shadow: 0 0 6px rgba(138, 43, 226, 0.5);
+    .particle.steel {
+      background: radial-gradient(circle, rgba(100, 140, 180, 0.4) 0%, rgba(100, 140, 180, 0.1) 70%, transparent 100%);
     }
 
-    .particle.silver {
-      background: radial-gradient(circle, rgba(192, 192, 192, 0.6) 0%, rgba(192, 192, 192, 0.1) 70%, transparent 100%);
-      box-shadow: 0 0 4px rgba(192, 192, 192, 0.4);
+    .particle.dust {
+      background: radial-gradient(circle, rgba(180, 175, 165, 0.35) 0%, rgba(180, 175, 165, 0.08) 70%, transparent 100%);
     }
 
-    @keyframes float {
-      0% { 
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5); 
-        opacity: 0; 
+    @keyframes floatGentle {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
       }
-      5% { 
-        opacity: 1;
-        transform: translateY(95vh) translateX(10px) rotate(18deg) scale(0.8);
+      10% {
+        opacity: var(--peak-opacity, 0.4);
       }
-      50% {
-        transform: translateY(50vh) translateX(var(--drift, 50px)) rotate(180deg) scale(1);
-        opacity: 0.8;
+      90% {
+        opacity: var(--peak-opacity, 0.4);
       }
-      95% { 
-        opacity: 0.6; 
-      }
-      100% { 
-        transform: translateY(-10vh) translateX(calc(var(--drift, 50px) * 2)) rotate(360deg) scale(0.3); 
-        opacity: 0; 
+      100% {
+        transform: translateY(-10vh) translateX(var(--drift, 30px));
+        opacity: 0;
       }
     }
 
@@ -130,8 +149,8 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.6)) 
-              drop-shadow(0 0 40px rgba(138, 43, 226, 0.3));
+      filter: drop-shadow(0 0 20px rgba(100, 140, 180, 0.6))
+              drop-shadow(0 0 40px rgba(100, 140, 180, 0.3));
     }
 
     .sigil-overlay.animate {
@@ -199,7 +218,7 @@
     .oracle-link {
       font-size: 2rem;
       margin-bottom: 1rem;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(200, 196, 188, 0.6);
       text-decoration: none;
       animation: pulse-oracle 4s ease-in-out infinite;
       transition: all 0.3s ease;
@@ -209,8 +228,8 @@
 
     .oracle-link:hover {
       transform: scale(1.2);
-      color: #fff;
-      text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      color: #e8e6e1;
+      text-shadow: 0 0 15px rgba(100, 140, 180, 0.5);
     }
 
     @keyframes pulse-oracle {
@@ -225,7 +244,7 @@
       bottom: 15%;
       right: 10%;
       font-size: 1.5rem;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(200, 196, 188, 0.4);
       text-decoration: none;
       animation: pulse-mystery 6s ease-in-out infinite;
       transition: all 0.3s ease;
@@ -234,8 +253,8 @@
 
     .mystery-link:hover {
       transform: scale(1.15);
-      color: rgba(255, 255, 255, 0.7);
-      text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+      color: rgba(200, 196, 188, 0.7);
+      text-shadow: 0 0 10px rgba(100, 140, 180, 0.5);
     }
 
     @keyframes pulse-mystery {
@@ -250,8 +269,8 @@
       font-size: 4rem;
       font-weight: 500;
       margin-bottom: 0.5rem;
-      color: #f2f2f2;
-      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      color: #e8e6e1;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
       letter-spacing: 0.5px;
     }
 
@@ -259,7 +278,7 @@
       font-family: 'Source Sans Pro', sans-serif;
       font-size: 1.1rem;
       font-weight: 300;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(200, 196, 188, 0.7);
       margin-bottom: 2rem;
       font-style: italic;
     }
@@ -267,11 +286,11 @@
     .cruxfade-link {
       font-size: 1.3rem;
       margin-bottom: 2rem;
-      color: rgba(255, 255, 255, 0.7) !important;
+      color: rgba(200, 196, 188, 0.7) !important;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       padding: 0.5rem 1rem !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      border: 1px solid rgba(120, 130, 150, 0.3) !important;
       border-radius: 8px;
       backdrop-filter: blur(5px);
       background: transparent !important;
@@ -284,31 +303,31 @@
     }
 
     .cruxfade-link:hover {
-      color: #fff !important;
-      border-color: rgba(255, 255, 255, 0.6) !important;
-      background: rgba(255, 255, 255, 0.1) !important;
+      color: #e8e6e1 !important;
+      border-color: rgba(140, 160, 185, 0.5) !important;
+      background: rgba(100, 140, 180, 0.1) !important;
       transform: translateY(-2px) !important;
-      box-shadow: none !important;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
     }
 
     .mobile-menu-button {
       display: none;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(30, 36, 52, 0.5);
       backdrop-filter: blur(10px);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #e8e6e1;
+      border: 1px solid rgba(120, 130, 150, 0.25);
       padding: 1rem;
       border-radius: 8px;
       font-size: 1.2rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       margin: 0 auto 1rem;
       width: fit-content;
     }
 
     .mobile-menu-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(100, 140, 180, 0.1);
+      border-color: rgba(140, 160, 185, 0.4);
       transform: translateY(-2px);
     }
 
@@ -317,7 +336,7 @@
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 1rem;
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
       margin-top: 2rem;
     }
 
@@ -326,37 +345,60 @@
     }
 
     .nav a {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(100, 140, 180, 0.15);
       backdrop-filter: blur(10px);
-      color: #fff;
+      color: #e8e6e1;
       text-decoration: none;
       padding: 1rem 1.5rem;
       border-radius: 8px;
       font-size: 1rem;
       font-weight: 400;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+      border: 1px solid rgba(100, 140, 180, 0.5);
       text-align: center;
       height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav a:hover::before {
+      left: 100%;
     }
 
     .nav a:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(100, 140, 180, 0.1);
+      border-color: rgba(140, 160, 185, 0.4);
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     .nav a.creative {
-      border-color: rgba(138, 43, 226, 0.4);
+      border-color: rgba(100, 140, 180, 0.35);
     }
 
     .nav a.creative:hover {
-      border-color: rgba(138, 43, 226, 0.8);
-      background: rgba(138, 43, 226, 0.1);
+      border-color: rgba(120, 160, 200, 0.6);
+      background: rgba(100, 140, 180, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav a.current {
+      background: rgba(26, 31, 46, 0.4);
+      border-color: rgba(120, 130, 150, 0.25);
     }
 
     footer {
@@ -365,17 +407,27 @@
       width: 100%;
       text-align: center;
       font-size: 0.9rem;
-      color: rgba(255,255,255,0.3);
+      color: rgba(200, 196, 188, 0.5);
       font-family: 'Source Sans Pro', sans-serif;
       z-index: 10;
       backdrop-filter: none;
+    }
+
+    footer a {
+      color: rgba(100, 140, 180, 0.6);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    footer a:hover {
+      color: rgba(140, 175, 210, 0.8);
     }
 
     @media (max-width: 768px) {
       h1 {
         font-size: 2.5rem;
       }
-      
+
       .mobile-menu-button {
         display: block;
       }
@@ -408,7 +460,7 @@
           transform: translateY(0);
         }
       }
-      
+
       .nav a {
         padding: 0.8rem 1rem;
         font-size: 0.9rem;
@@ -436,7 +488,9 @@
 </head>
 <body>
   <div class="background"></div>
-  <div class="mist-overlay"></div>
+  <div class="mist-overlay mist-overlay-1"></div>
+  <div class="mist-overlay mist-overlay-2"></div>
+  <div class="mist-overlay mist-overlay-3"></div>
   <div class="particles" id="particles"></div>
 
   <!-- Sigil overlays -->
@@ -457,8 +511,8 @@
     <div class="nav">
     <button class="mobile-menu-button" id="mobileMenuButton">☰ Menu</button>
     <div class="nav-links" id="navLinks">
-      <a href="./index.html">Home</a>
-      <a href="./gallery.html" class="current">Gallery</a>
+      <a href="./index.html" class="current">Home</a>
+      <a href="./gallery.html">Gallery</a>
       <a href="./games.html" class="creative">Games</a>
       <a href="./music.html" class="creative">Music</a>
       <a href="./writing.html">Writing</a>
@@ -473,35 +527,28 @@
   <a href="#" class="mystery-link" id="mysteryGlyph" title="The Mystery">🜁</a>
 
   <footer>
-    © 2025 The Gentle Machine | In collaboration with <a href="../second-gaze/" style="text-decoration: none;">The Second Gaze</a> & <a href="../" style="text-decoration: none;">Fairweather</a> - quietly relentless.
+    © 2025 The Gentle Machine | In collaboration with <a href="../second-gaze/">The Second Gaze</a> & <a href="../">Fairweather</a> - quietly relentless.
 </footer>
 
   <script>
-    // Enhanced floating particles
+    // Particle system
     const container = document.getElementById('particles');
-    const colors = ['golden', 'purple', 'silver'];
-    
-    for (let i = 0; i < 80; i++) {
+    const colors = ['mist', 'steel', 'dust'];
+    for (let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
-      particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
-      
-      // Random size between 1px and 8px (slightly smaller than AMR page)
-      const size = Math.random() * 7 + 1;
+      const type = colors[Math.floor(Math.random() * colors.length)];
+      particle.className = `particle ${type}`;
+      let size;
+      if (type === 'mist') size = Math.random() * 4 + 2;
+      else if (type === 'steel') size = Math.random() * 3 + 1;
+      else size = Math.random() * 2 + 1;
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
-      
-      // Random horizontal position
       particle.style.left = Math.random() * 100 + '%';
-      
-      // Random animation delay
-      particle.style.animationDelay = Math.random() * 25 + 's';
-      
-      // Random animation duration between 15-35 seconds (slower than AMR)
-      particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
-      
-      // Random horizontal drift
-      particle.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
-      
+      particle.style.animation = `floatGentle ${Math.random() * 10 + 30}s linear ${Math.random() * 30}s infinite`;
+      const peakOpacity = type === 'mist' ? 0.4 : type === 'steel' ? 0.3 : 0.25;
+      particle.style.setProperty('--peak-opacity', peakOpacity);
+      particle.style.setProperty('--drift', (Math.random() - 0.5) * 150 + 'px');
       container.appendChild(particle);
     }
 
@@ -519,36 +566,22 @@
     function triggerSigilAnimation(sigilId) {
       const sigil = document.getElementById(sigilId);
       if (!sigil) return;
-      
-      // Reset any existing animation
       sigil.classList.remove('animate');
-      
-      // Force reflow to ensure the class removal takes effect
       void sigil.offsetWidth;
-      
-      // Add animation class
       sigil.classList.add('animate');
-      
-      // Remove animation class after completion to allow re-triggering
-      setTimeout(() => {
-        sigil.classList.remove('animate');
-      }, 6000);
+      setTimeout(() => { sigil.classList.remove('animate'); }, 6000);
     }
 
     // Add click handlers for hidden links
     document.getElementById('oracleGlyph').addEventListener('click', (e) => {
       e.preventDefault();
       triggerSigilAnimation('sigil-oracle');
-      // 3 second delay before navigation to show the sigil unfold
-      setTimeout(() => {
-        window.location.href = 'card-gallery.html';
-      }, 3000);
+      setTimeout(() => { window.location.href = 'card-gallery.html'; }, 3000);
     });
 
     document.getElementById('mysteryGlyph').addEventListener('click', (e) => {
       e.preventDefault();
       triggerSigilAnimation('sigil-mystery');
-      // 3 second delay before navigation to show the sigil unfold
       // setTimeout(() => {
       //   window.location.href = 'american-mystery-religion.html';
       // }, 3000);
@@ -557,32 +590,15 @@
     // Mobile menu functionality
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const navLinks = document.getElementById('navLinks');
-
     mobileMenuButton.addEventListener('click', () => {
       navLinks.classList.toggle('open');
-      
-      // Update button text and icon
-      if (navLinks.classList.contains('open')) {
-        mobileMenuButton.textContent = '✕ Close';
-      } else {
-        mobileMenuButton.textContent = '☰ Menu';
-      }
+      mobileMenuButton.textContent = navLinks.classList.contains('open') ? '✕ Close' : '☰ Menu';
     });
-
-    // Close mobile menu when clicking on a link
     navLinks.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        navLinks.classList.remove('open');
-        mobileMenuButton.textContent = '☰ Menu';
-      }
+      if (e.target.tagName === 'A') { navLinks.classList.remove('open'); mobileMenuButton.textContent = '☰ Menu'; }
     });
-
-    // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.nav')) {
-        navLinks.classList.remove('open');
-        mobileMenuButton.textContent = '☰ Menu';
-      }
+      if (!e.target.closest('.nav')) { navLinks.classList.remove('open'); mobileMenuButton.textContent = '☰ Menu'; }
     });
 
     // Randomize sigil images on page load
@@ -593,26 +609,20 @@
         sigil.src = `sigils/sigil-${randomSigil}.png`;
       });
     }
-
-    // Initialize random sigils
     randomizeSigils();
 
-    // Enhanced parallax effect for mist (subtle)
+    // Parallax
     let ticking = false;
     function updateParallax() {
       const scrolled = window.pageYOffset;
-      const rate = scrolled * -0.2;
-      document.querySelector('.mist-overlay').style.transform = `translateY(${rate}px)`;
+      document.querySelector('.mist-overlay-1').style.transform = `translateY(${scrolled * -0.2}px)`;
+      document.querySelector('.mist-overlay-2').style.transform = `translateY(${scrolled * -0.35}px)`;
+      document.querySelector('.mist-overlay-3').style.transform = `translateY(${scrolled * -0.5}px)`;
       ticking = false;
     }
-
     function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
     }
-
     window.addEventListener('scroll', requestTick);
   </script>
 </body>
