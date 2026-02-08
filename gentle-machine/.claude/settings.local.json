@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"d:\\\\GitHub\\\\fairweather-productions\\\\gentle-machine\\\\images\\\\shan_on_the_moon\"\" | findstr /i \".jpg .png .webp \")"
+    ]
+  }
+}
