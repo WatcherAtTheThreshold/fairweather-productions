@@ -646,24 +646,26 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    /* Begin Journey splash button */
+    /* Begin Journey button - in page flow */
+    .experience-start-wrap {
+      text-align: center;
+      padding: 1rem 2rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
     .experience-start {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(10, 10, 14, 0.6);
+      background: rgba(10, 10, 14, 0.5);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(138, 43, 226, 0.3);
       color: rgba(255, 255, 255, 0.7);
-      padding: 0.8rem 2rem;
+      padding: 0.8rem 2.5rem;
       border-radius: 30px;
       cursor: pointer;
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.1rem;
       font-weight: 400;
       letter-spacing: 2px;
-      z-index: 20;
       transition: all 0.4s ease;
       animation: gentlePulse 3s ease-in-out infinite;
     }
@@ -672,7 +674,7 @@
       background: rgba(138, 43, 226, 0.12);
       border-color: rgba(138, 43, 226, 0.6);
       color: #fff;
-      transform: translateX(-50%) translateY(-2px);
+      transform: translateY(-2px);
       box-shadow: 0 5px 20px rgba(138, 43, 226, 0.15);
     }
 
@@ -722,8 +724,8 @@
       }
 
       .experience-start {
-        bottom: 70px;
         font-size: 1rem;
+        padding: 0.7rem 1.8rem;
       }
     }
 
@@ -875,14 +877,16 @@
     <p>A living deck drawn from the studio walls. Click any card to glimpse the thought it carries on the other side.</p>
   </div>
 
-  <div class="card-grid" id="cardGrid"></div>
-
   <!-- Experience Mode -->
   <audio id="ambientAudio" loop preload="auto">
     <source src="music/meander-fin.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="experience-start" id="experienceStart">Begin Journey</button>
+  <div class="experience-start-wrap">
+    <button class="experience-start" id="experienceStart">Begin Journey</button>
+  </div>
+
+  <div class="card-grid" id="cardGrid"></div>
 
   <div class="experience-dock" id="experienceDock">
     <button class="experience-toggle" id="experienceToggle">Pause</button>
@@ -1638,9 +1642,10 @@
     let isScrolling = false;
     let isPausedByUser = false;
     let isPausedByInteraction = false;
-    let scrollSpeed = 0.5; // pixels per frame
+    let scrollSpeed = 0.8; // pixels per frame (accumulated for sub-pixel precision)
+    let scrollAccumulator = 0;
     let speedMode = 0; // 0 = slow, 1 = slower
-    const speeds = [0.5, 0.25];
+    const speeds = [0.8, 0.4];
     const speedLabels = ['Slow', 'Slower'];
 
     // Initialize audio volume
@@ -1686,12 +1691,17 @@
       }, stepTime);
     }
 
-    // Auto-scroll loop
+    // Auto-scroll loop with sub-pixel accumulator
     function autoScroll() {
       if (!isExperienceActive) return;
 
       if (isScrolling && !isPausedByUser && !isPausedByInteraction) {
-        window.scrollBy(0, scrollSpeed);
+        scrollAccumulator += scrollSpeed;
+        if (scrollAccumulator >= 1) {
+          const pixels = Math.floor(scrollAccumulator);
+          window.scrollBy(0, pixels);
+          scrollAccumulator -= pixels;
+        }
 
         // Stop at the bottom
         if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 10) {
@@ -1778,31 +1788,39 @@
 
     // Pause on card interaction (hover or flip)
     const cardGridEl = document.getElementById('cardGrid');
+    let hoverResumeTimer = null;
 
-    cardGridEl.addEventListener('mouseenter', (e) => {
+    // Pause when mouse enters any card
+    cardGridEl.addEventListener('mouseover', (e) => {
       const wrapper = e.target.closest('.card-wrapper');
       if (wrapper && isExperienceActive && !isPausedByUser) {
+        clearTimeout(hoverResumeTimer);
         isPausedByInteraction = true;
       }
-    }, true);
+    });
 
-    cardGridEl.addEventListener('mouseleave', (e) => {
+    // Resume when mouse leaves a card (with short delay)
+    cardGridEl.addEventListener('mouseout', (e) => {
       const wrapper = e.target.closest('.card-wrapper');
       if (wrapper && isExperienceActive) {
-        // Resume after a short delay so it doesn't feel jarring
-        setTimeout(() => {
-          isPausedByInteraction = false;
-        }, 600);
+        const related = e.relatedTarget;
+        // Only resume if we're actually leaving the card area
+        if (!related || !related.closest('.card-wrapper')) {
+          hoverResumeTimer = setTimeout(() => {
+            isPausedByInteraction = false;
+          }, 800);
+        }
       }
-    }, true);
+    });
 
-    // Also pause when a card is flipped (touch devices)
+    // Pause when a card is flipped (click / touch devices)
     cardGridEl.addEventListener('click', (e) => {
       const card = e.target.closest('.card');
       if (card && isExperienceActive && !isPausedByUser) {
+        clearTimeout(hoverResumeTimer);
         isPausedByInteraction = true;
         // Resume after reading time
-        setTimeout(() => {
+        hoverResumeTimer = setTimeout(() => {
           isPausedByInteraction = false;
         }, 4000);
       }
