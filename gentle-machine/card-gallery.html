@@ -307,7 +307,6 @@
       flex-direction: column;
       align-items: center;
       opacity: 0;
-      transform: translateY(20px);
       animation: fadeInUp 0.8s ease forwards;
     }
 
@@ -316,8 +315,12 @@
     .card-wrapper:nth-child(4n) { animation-delay: 0.3s; }
 
     @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
       to {
-        transform: translateY(0);
+        transform: none;
         opacity: 1;
       }
     }
@@ -1652,7 +1655,6 @@
             entry.target.addEventListener('animationend', function handler() {
               entry.target.style.animation = 'none';
               entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
               entry.target.removeEventListener('animationend', handler);
             });
           }, index * 80);
