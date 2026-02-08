@@ -514,6 +514,219 @@
       text-transform: uppercase;
     }
 
+    /* Experience control panel */
+    .experience-dock {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(10, 10, 14, 0.75);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50px;
+      z-index: 20;
+      transition: all 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .experience-dock.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .experience-dock.scrolling {
+      border-color: rgba(138, 43, 226, 0.35);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(138, 43, 226, 0.1);
+    }
+
+    .experience-toggle {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0.5rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .experience-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .experience-toggle.active {
+      background: rgba(138, 43, 226, 0.15);
+      border-color: rgba(138, 43, 226, 0.5);
+      color: #fff;
+    }
+
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .volume-icon {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: color 0.2s ease;
+      user-select: none;
+    }
+
+    .volume-icon:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 80px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .volume-slider::-webkit-slider-thumb:hover {
+      background: #fff;
+      transform: scale(1.2);
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+    }
+
+    .speed-toggle {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.5);
+      padding: 0.3rem 0.7rem;
+      border-radius: 15px;
+      cursor: pointer;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .speed-toggle:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Begin Journey splash button */
+    .experience-start {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 10, 14, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      z-index: 20;
+      transition: all 0.4s ease;
+      animation: gentlePulse 3s ease-in-out infinite;
+    }
+
+    .experience-start:hover {
+      background: rgba(138, 43, 226, 0.12);
+      border-color: rgba(138, 43, 226, 0.6);
+      color: #fff;
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 5px 20px rgba(138, 43, 226, 0.15);
+    }
+
+    .experience-start.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* Card focus highlight during experience mode */
+    .card-wrapper.in-focus .card-front {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(138, 43, 226, 0.25);
+    }
+
+    .card-wrapper.in-focus {
+      transform: scale(1.03);
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    .card-wrapper:not(.in-focus) {
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    @media (max-width: 768px) {
+      .experience-dock {
+        padding: 0.5rem 1rem;
+        gap: 0.6rem;
+        bottom: 15px;
+      }
+
+      .experience-toggle {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.9rem;
+      }
+
+      .volume-slider {
+        width: 50px;
+      }
+
+      .speed-toggle {
+        display: none;
+      }
+
+      .experience-start {
+        bottom: 70px;
+        font-size: 1rem;
+      }
+    }
+
     /* Back to top */
     .back-to-top {
       position: fixed;
@@ -663,6 +876,22 @@
   </div>
 
   <div class="card-grid" id="cardGrid"></div>
+
+  <!-- Experience Mode -->
+  <audio id="ambientAudio" loop preload="auto">
+    <source src="music/meander-fin.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="experience-start" id="experienceStart">Begin Journey</button>
+
+  <div class="experience-dock" id="experienceDock">
+    <button class="experience-toggle" id="experienceToggle">Pause</button>
+    <div class="volume-control">
+      <span class="volume-icon" id="volumeIcon">&#9835;</span>
+      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="30">
+    </div>
+    <button class="speed-toggle" id="speedToggle">Slow</button>
+  </div>
 
   <button class="back-to-top" id="scrollTop" title="Back to top">&uarr;</button>
 
@@ -1392,6 +1621,211 @@
 
     document.querySelectorAll('.card-wrapper').forEach(card => {
       observer.observe(card);
+    });
+
+    // =============================================
+    // EXPERIENCE MODE
+    // =============================================
+    const audio = document.getElementById('ambientAudio');
+    const startBtn = document.getElementById('experienceStart');
+    const dock = document.getElementById('experienceDock');
+    const toggleBtn = document.getElementById('experienceToggle');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeIcon = document.getElementById('volumeIcon');
+    const speedBtn = document.getElementById('speedToggle');
+
+    let isExperienceActive = false;
+    let isScrolling = false;
+    let isPausedByUser = false;
+    let isPausedByInteraction = false;
+    let scrollSpeed = 0.5; // pixels per frame
+    let speedMode = 0; // 0 = slow, 1 = slower
+    const speeds = [0.5, 0.25];
+    const speedLabels = ['Slow', 'Slower'];
+
+    // Initialize audio volume
+    audio.volume = 0.3;
+
+    // Begin Journey button
+    startBtn.addEventListener('click', () => {
+      isExperienceActive = true;
+      isScrolling = true;
+      isPausedByUser = false;
+      startBtn.classList.add('hidden');
+      dock.classList.add('visible');
+      dock.classList.add('scrolling');
+      toggleBtn.classList.add('active');
+      toggleBtn.textContent = 'Pause';
+
+      // Fade in audio
+      audio.volume = 0;
+      audio.play().then(() => {
+        fadeAudioTo(volumeSlider.value / 100, 1500);
+      }).catch(() => {
+        // Autoplay blocked - still scroll, just no audio
+      });
+
+      autoScroll();
+    });
+
+    // Smooth audio fade
+    function fadeAudioTo(target, duration) {
+      const start = audio.volume;
+      const diff = target - start;
+      const steps = 30;
+      const stepTime = duration / steps;
+      let step = 0;
+
+      const fade = setInterval(() => {
+        step++;
+        audio.volume = Math.max(0, Math.min(1, start + (diff * (step / steps))));
+        if (step >= steps) {
+          audio.volume = Math.max(0, Math.min(1, target));
+          clearInterval(fade);
+        }
+      }, stepTime);
+    }
+
+    // Auto-scroll loop
+    function autoScroll() {
+      if (!isExperienceActive) return;
+
+      if (isScrolling && !isPausedByUser && !isPausedByInteraction) {
+        window.scrollBy(0, scrollSpeed);
+
+        // Stop at the bottom
+        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 10) {
+          endExperience();
+          return;
+        }
+      }
+
+      requestAnimationFrame(autoScroll);
+    }
+
+    // End experience gracefully
+    function endExperience() {
+      isExperienceActive = false;
+      isScrolling = false;
+      dock.classList.remove('scrolling');
+      toggleBtn.classList.remove('active');
+      toggleBtn.textContent = 'Ended';
+      fadeAudioTo(0, 3000);
+      setTimeout(() => {
+        audio.pause();
+        audio.currentTime = 0;
+      }, 3100);
+    }
+
+    // Play/Pause toggle
+    toggleBtn.addEventListener('click', () => {
+      if (!isExperienceActive) {
+        // Restart experience
+        isExperienceActive = true;
+        isScrolling = true;
+        isPausedByUser = false;
+        toggleBtn.classList.add('active');
+        toggleBtn.textContent = 'Pause';
+        dock.classList.add('scrolling');
+        audio.play().catch(() => {});
+        fadeAudioTo(volumeSlider.value / 100, 500);
+        autoScroll();
+        return;
+      }
+
+      isPausedByUser = !isPausedByUser;
+      if (isPausedByUser) {
+        toggleBtn.textContent = 'Resume';
+        toggleBtn.classList.remove('active');
+        dock.classList.remove('scrolling');
+        fadeAudioTo(0.05, 800);
+      } else {
+        toggleBtn.textContent = 'Pause';
+        toggleBtn.classList.add('active');
+        dock.classList.add('scrolling');
+        fadeAudioTo(volumeSlider.value / 100, 800);
+      }
+    });
+
+    // Volume slider
+    volumeSlider.addEventListener('input', () => {
+      const vol = volumeSlider.value / 100;
+      audio.volume = vol;
+      volumeIcon.textContent = vol === 0 ? '\u266C' : '\u266B';
+    });
+
+    // Volume icon click = mute/unmute
+    let lastVolume = 30;
+    volumeIcon.addEventListener('click', () => {
+      if (audio.volume > 0) {
+        lastVolume = volumeSlider.value;
+        volumeSlider.value = 0;
+        audio.volume = 0;
+        volumeIcon.textContent = '\u266C';
+      } else {
+        volumeSlider.value = lastVolume;
+        audio.volume = lastVolume / 100;
+        volumeIcon.textContent = '\u266B';
+      }
+    });
+
+    // Speed toggle
+    speedBtn.addEventListener('click', () => {
+      speedMode = (speedMode + 1) % speeds.length;
+      scrollSpeed = speeds[speedMode];
+      speedBtn.textContent = speedLabels[speedMode];
+    });
+
+    // Pause on card interaction (hover or flip)
+    const cardGridEl = document.getElementById('cardGrid');
+
+    cardGridEl.addEventListener('mouseenter', (e) => {
+      const wrapper = e.target.closest('.card-wrapper');
+      if (wrapper && isExperienceActive && !isPausedByUser) {
+        isPausedByInteraction = true;
+      }
+    }, true);
+
+    cardGridEl.addEventListener('mouseleave', (e) => {
+      const wrapper = e.target.closest('.card-wrapper');
+      if (wrapper && isExperienceActive) {
+        // Resume after a short delay so it doesn't feel jarring
+        setTimeout(() => {
+          isPausedByInteraction = false;
+        }, 600);
+      }
+    }, true);
+
+    // Also pause when a card is flipped (touch devices)
+    cardGridEl.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      if (card && isExperienceActive && !isPausedByUser) {
+        isPausedByInteraction = true;
+        // Resume after reading time
+        setTimeout(() => {
+          isPausedByInteraction = false;
+        }, 4000);
+      }
+    });
+
+    // =============================================
+    // CENTER-CARD FOCUS HIGHLIGHT
+    // =============================================
+    const focusObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          entry.target.classList.add('in-focus');
+        } else {
+          entry.target.classList.remove('in-focus');
+        }
+      });
+    }, {
+      threshold: [0, 0.3, 0.6, 1.0],
+      rootMargin: '-30% 0px -30% 0px'
+    });
+
+    document.querySelectorAll('.card-wrapper').forEach(card => {
+      focusObserver.observe(card);
     });
   </script>
 </body>
