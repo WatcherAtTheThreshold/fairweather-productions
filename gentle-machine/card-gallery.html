@@ -544,6 +544,36 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(138, 43, 226, 0.1);
     }
 
+    .experience-dock.hovering {
+      border-color: rgba(138, 43, 226, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 8px rgba(138, 43, 226, 0.05);
+    }
+
+    .hover-hint {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 10, 14, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(138, 43, 226, 0.25);
+      border-radius: 20px;
+      padding: 0.5rem 1.2rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      z-index: 21;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .hover-hint.visible {
+      opacity: 1;
+    }
+
     .experience-toggle {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -896,6 +926,8 @@
     </div>
     <button class="speed-toggle" id="speedToggle">Slow</button>
   </div>
+
+  <div class="hover-hint" id="hoverHint">scroll pauses when you hover over a card</div>
 
   <button class="back-to-top" id="scrollTop" title="Back to top">&uarr;</button>
 
@@ -1642,6 +1674,8 @@
     let isScrolling = false;
     let isPausedByUser = false;
     let isPausedByInteraction = false;
+    let hasShownHoverHint = false;
+    const hoverHint = document.getElementById('hoverHint');
     let scrollSpeed = 0.8; // pixels per frame (accumulated for sub-pixel precision)
     let scrollAccumulator = 0;
     let speedMode = 0; // 0 = slow, 1 = slower
@@ -1796,6 +1830,33 @@
       lastMouseMoveTime = Date.now();
     });
 
+    // Show hover-pause state on dock
+    function enterHoverPause() {
+      isPausedByInteraction = true;
+      toggleBtn.textContent = 'Hovering\u2026';
+      dock.classList.remove('scrolling');
+      dock.classList.add('hovering');
+
+      // One-time toast hint
+      if (!hasShownHoverHint) {
+        hasShownHoverHint = true;
+        hoverHint.classList.add('visible');
+        setTimeout(() => {
+          hoverHint.classList.remove('visible');
+        }, 3500);
+      }
+    }
+
+    // Clear hover-pause state on dock
+    function exitHoverPause() {
+      isPausedByInteraction = false;
+      dock.classList.remove('hovering');
+      if (!isPausedByUser) {
+        toggleBtn.textContent = 'Pause';
+        dock.classList.add('scrolling');
+      }
+    }
+
     // Pause when mouse enters a card — but only if user actually moved their mouse
     cardGridEl.addEventListener('mouseover', (e) => {
       const wrapper = e.target.closest('.card-wrapper');
@@ -1803,7 +1864,7 @@
         // Ignore if mouse hasn't moved recently (card scrolled under cursor)
         if (Date.now() - lastMouseMoveTime > 300) return;
         clearTimeout(hoverResumeTimer);
-        isPausedByInteraction = true;
+        enterHoverPause();
       }
     });
 
@@ -1814,7 +1875,7 @@
         const related = e.relatedTarget;
         if (!related || !related.closest('.card-wrapper')) {
           hoverResumeTimer = setTimeout(() => {
-            isPausedByInteraction = false;
+            exitHoverPause();
           }, 800);
         }
       }
@@ -1825,10 +1886,10 @@
       const card = e.target.closest('.card');
       if (card && isExperienceActive && !isPausedByUser) {
         clearTimeout(hoverResumeTimer);
-        isPausedByInteraction = true;
+        enterHoverPause();
         // Resume after reading time
         hoverResumeTimer = setTimeout(() => {
-          isPausedByInteraction = false;
+          exitHoverPause();
         }, 4000);
       }
     });
