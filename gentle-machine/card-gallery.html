@@ -1647,6 +1647,14 @@
           setTimeout(() => {
             entry.target.style.animationDelay = '0s';
             entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+            // After fadeInUp finishes, clear the animation so it doesn't
+            // override transforms from .in-focus (forwards fill blocks them)
+            entry.target.addEventListener('animationend', function handler() {
+              entry.target.style.animation = 'none';
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+              entry.target.removeEventListener('animationend', handler);
+            });
           }, index * 80);
         }
       });
