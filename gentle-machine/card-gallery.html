@@ -728,12 +728,13 @@
     }
 
     .card-wrapper.in-focus {
-      transform: scale(1.03) !important;
-      transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), filter 1.2s ease;
+      opacity: 1 !important;
+      transition: opacity 1.2s ease;
     }
 
     .card-wrapper:not(.in-focus) {
-      transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), filter 1.2s ease;
+      opacity: 0.85 !important;
+      transition: opacity 1.2s ease;
     }
 
     @media (max-width: 768px) {
