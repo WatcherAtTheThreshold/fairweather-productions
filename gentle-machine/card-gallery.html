@@ -321,7 +321,7 @@
       }
       to {
         transform: none;
-        opacity: 1;
+        opacity: 0.5;
       }
     }
 
@@ -727,13 +727,21 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(138, 43, 226, 0.25);
     }
 
-    .card-wrapper.in-focus {
-      opacity: 1 !important;
+    .card-wrapper:not(.in-focus) {
+      opacity: 0.5 !important;
       transition: opacity 1.2s ease;
     }
 
-    .card-wrapper:not(.in-focus) {
+    .card-wrapper.focus-mid {
+      opacity: 0.675 !important;
+    }
+
+    .card-wrapper.focus-high {
       opacity: 0.85 !important;
+    }
+
+    .card-wrapper.in-focus {
+      opacity: 1 !important;
       transition: opacity 1.2s ease;
     }
 
@@ -1655,7 +1663,7 @@
             // override transforms from .in-focus (forwards fill blocks them)
             entry.target.addEventListener('animationend', function handler() {
               entry.target.style.animation = 'none';
-              entry.target.style.opacity = '1';
+              entry.target.style.opacity = '0.5';
               entry.target.removeEventListener('animationend', handler);
             });
           }, index * 80);
@@ -1906,9 +1914,33 @@
     });
 
     // =============================================
-    // CENTER-CARD FOCUS HIGHLIGHT
+    // GRADUATED FOCUS OPACITY
     // =============================================
-    // Add focus when card enters center zone
+    // Zone 1: Past bottom 15% of viewport → 0.675
+    const focusMidObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('focus-mid');
+        }
+      });
+    }, {
+      threshold: [0],
+      rootMargin: '0px 0px -15% 0px'
+    });
+
+    // Zone 2: Past bottom 30% of viewport → 0.85
+    const focusHighObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('focus-high');
+        }
+      });
+    }, {
+      threshold: [0],
+      rootMargin: '0px 0px -30% 0px'
+    });
+
+    // Zone 3: Center 40% of viewport → 1.0
     const focusEnterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
@@ -1920,11 +1952,11 @@
       rootMargin: '-30% 0px -30% 0px'
     });
 
-    // Remove focus only when card leaves the viewport
+    // Remove all focus classes when card leaves the viewport
     const focusLeaveObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) {
-          entry.target.classList.remove('in-focus');
+          entry.target.classList.remove('focus-mid', 'focus-high', 'in-focus');
         }
       });
     }, {
@@ -1932,6 +1964,8 @@
     });
 
     document.querySelectorAll('.card-wrapper').forEach(card => {
+      focusMidObserver.observe(card);
+      focusHighObserver.observe(card);
       focusEnterObserver.observe(card);
       focusLeaveObserver.observe(card);
     });
