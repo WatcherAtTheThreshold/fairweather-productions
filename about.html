@@ -357,75 +357,6 @@
             line-height: 1.7;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 1.1rem;
-            color: #8b4513;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #deb887;
-            border-radius: 8px;
-            font-family: 'Georgia', serif;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.9);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: #8b4513;
-            box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-button {
-            width: 100%;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #8b4513, #deb887);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .form-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
-        }
-
-        .form-button:active {
-            transform: translateY(0);
-        }
-
-        /* Hide honeypot field */
-        .honeypot {
-            display: none !important;
-            visibility: hidden !important;
-            position: absolute !important;
-            left: -9999px !important;
-        }
-
         /* Interactive Offerings */
         .offerings-section {
             position: relative;
@@ -769,54 +700,21 @@
       
     </section>
 
-    <!-- Reach Out (Contact Form) -->
+    <!-- Reach Out -->
     <section id="reach-out" class="contact-section">
         <h2 class="section-title">Reach Out</h2>
         <div class="contact-form-container">
             <p class="contact-intro">
-                We believe every connection is sacred. Whether you seek to share in the magic we create
-                or have questions about our work, we are here, ready to weave something beautiful together.
+                We believe every connection is sacred. Whether you're interested in a piece,
+                have questions about our work, or simply want to say hello - we'd love to hear from you.
             </p>
-
-            <form class="contact-form" action="https://formsubmit.co/monahanhunt@gmail.com" method="POST">
-                <div class="form-group">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" id="name" name="name" class="form-input" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input type="email" id="email" name="email" class="form-input" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="subject" class="form-label">Nature of Inquiry</label>
-                    <select id="subject" name="subject" class="form-select" required>
-                        <option value="">Choose your path...</option>
-                        <option value="gallery">Gallery Inquiry</option>
-                        <option value="workshop">Workshop or Teaching</option>
-                        <option value="press">Press and Media</option>
-                        <option value="general">General Question</option>
-                        <option value="other">Other Business</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="message" class="form-label">Your Message</label>
-                    <textarea id="message" name="message" class="form-textarea"
-                            placeholder="Share your thoughts, questions, or inquiry..." required></textarea>
-                </div>
-
-                <!-- FormSubmit.co hidden fields -->
-                <input type="text" name="_honey" class="honeypot" tabindex="-1">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_next" value="https://fairweatherproductions.com/thank-you.html">
-                <input type="hidden" name="_subject" value="New Contact from Fairweather Studios">
-                <input type="hidden" name="_captcha" value="true">
-                <input type="hidden" name="_autoresponse" value="Thank you for reaching out to Fairweather Studios! We typically respond within 24-48 hours.">
-
-                <button type="submit" class="form-button">Send Message</button>
-            </form>
+            <p style="text-align: center; font-size: 1.2rem; color: #5a4a3a; margin-top: 1.5rem;">
+                Write to us at<br>
+                <a href="mailto:monahanhunt@gmail.com" style="color: #8b4513; font-weight: 600; text-decoration: none; font-size: 1.3rem;">monahanhunt@gmail.com</a>
+            </p>
+            <p style="text-align: center; font-size: 1rem; color: #7a6a5a; margin-top: 1rem; font-style: italic;">
+                We typically respond within a day or two.
+            </p>
 
             <!-- Decorative sparkles -->
             <div class="sparkle" style="top: 30px; right: 40px; animation-delay: 0.8s;"></div>
@@ -968,13 +866,6 @@
                     });
                 }
             });
-        });
-
-        // Form submission feedback
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            const button = this.querySelector('.form-button');
-            button.textContent = 'Sending Message...';
-            button.disabled = true;
         });
 
         // Initialize effects

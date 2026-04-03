@@ -169,110 +169,6 @@
       line-height: 1.6;
     }
 
-    .form-group {
-      margin-bottom: 1.8rem;
-    }
-
-    .form-label {
-      display: block;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      color: #2e2b29;
-      margin-bottom: 0.6rem;
-      font-weight: 500;
-    }
-
-    .form-input,
-    .form-select,
-    .form-textarea {
-      width: 100%;
-      padding: 1rem;
-      border: 2px solid #cbbfb6;
-      border-radius: 8px;
-      font-family: 'Source Sans Pro', sans-serif;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.95);
-      transition: all 0.3s ease;
-      color: #2e2b29;
-      box-sizing: border-box;
-    }
-
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      outline: none;
-      border-color: #d8b26e;
-      box-shadow: 0 0 0 3px rgba(216, 178, 110, 0.15);
-      background: rgba(255, 255, 255, 1);
-    }
-
-    .form-textarea {
-      min-height: 120px;
-      resize: vertical;
-      font-family: 'Source Sans Pro', sans-serif;
-    }
-
-    .form-button {
-      width: 100%;
-      padding: 1.2rem 2rem;
-      background: linear-gradient(135deg, #2e2b29 0%, #5a504a 100%);
-      color: #e5ded8;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 1rem;
-      letter-spacing: 0.5px;
-    }
-
-    .form-button:hover {
-      background: linear-gradient(135deg, #d8b26e 0%, #cbbfb6 100%);
-      color: #2e2b29;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(216, 178, 110, 0.3);
-    }
-
-    .form-button:active {
-      transform: translateY(0);
-    }
-
-    .form-button:disabled {
-      background: #9a8e87;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* Hide honeypot field */
-    .honeypot {
-      display: none !important;
-      visibility: hidden !important;
-      position: absolute !important;
-      left: -9999px !important;
-    }
-
-    /* Email link styling */
-    .email-link {
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 0.95rem;
-      color: #5a504a;
-    }
-
-    .email-link a {
-      color: #d8b26e;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .email-link a:hover {
-      color: #2e2b29;
-      text-decoration: underline;
-    }
-
     footer {
       text-align: center;
       font-size: 0.9rem;
@@ -356,49 +252,13 @@
           Whether you're inquiring about a painting or simply want to share kind words, you're warmly invited to reach out.
         </p>
         
-        <form class="contact-form" action="https://formsubmit.co/monahanhunt@gmail.com" method="POST">
-          <div class="form-group">
-            <label for="name" class="form-label">Your Name</label>
-            <input type="text" id="name" name="name" class="form-input" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="email" class="form-label">Email Address</label>
-            <input type="email" id="email" name="email" class="form-input" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="subject" class="form-label">Nature of Inquiry</label>
-            <select id="subject" name="subject" class="form-select" required>
-              <option value="">Please choose...</option>
-              <option value="artwork">About an Artwork</option>
-              <option value="exhibition">Exhibition or Show</option>
-              <option value="press">Press & Media</option>
-              <option value="general">General Question</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="message" class="form-label">Your Message</label>
-            <textarea id="message" name="message" class="form-textarea" 
-                    placeholder="Share your thoughts, questions, or inquiry..." required></textarea>
-          </div>
-
-          <!-- FormSubmit.co hidden fields -->
-          <input type="text" name="_honey" class="honeypot" tabindex="-1">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://fairweatherproductions.com/second-gaze/thank-you.html">
-          <input type="hidden" name="_subject" value="✨ New Contact from The Second Gaze">
-          <input type="hidden" name="_captcha" value="true">
-          <input type="hidden" name="_autoresponse" value="Thank you for reaching out to The Second Gaze! Shannon typically responds within 24-48 hours.">
-          
-          <button type="submit" class="form-button">Send Message</button>
-        </form>
-
-        <div class="email-link">
-          <p>Prefer email? You can also reach Shannon directly at <a href="mailto:monahanhunt@gmail.com">monahanhunt@gmail.com</a></p>
-        </div>
+        <p style="text-align: center; font-size: 1.15rem; color: #5a504a; margin-top: 0.5rem; margin-bottom: 2rem; line-height: 1.7;">
+          Write to us at
+        </p>
+        <p style="text-align: center;">
+          <a href="mailto:monahanhunt@gmail.com" style="color: #d8b26e; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(216, 178, 110, 0.5); padding-bottom: 3px;">monahanhunt@gmail.com</a>
+        </p>
+        <p style="text-align: center; font-size: 0.95rem; color: #9a8e87; font-style: italic; margin-top: 1.2rem;">We typically respond within a day or two.</p>
       </section>
     </main>
 
@@ -418,19 +278,6 @@
     void mistOverlay.offsetHeight;
     mistOverlay.style.display = 'block';
 
-    // Form submission feedback
-    document.querySelector('.contact-form').addEventListener('submit', function(e) {
-      const button = this.querySelector('.form-button');
-      const originalText = button.textContent;
-      button.textContent = 'Sending Message...';
-      button.disabled = true;
-      
-      // Re-enable after a delay if submission fails
-      setTimeout(() => {
-        button.textContent = originalText;
-        button.disabled = false;
-      }, 5000);
-    });
   </script>
 </body>
 </html>
